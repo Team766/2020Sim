@@ -23,11 +23,11 @@ public class RobotController : MonoBehaviour {
     {
         if (transform.position.z > 35)
         {
-            newSpeed = 15f;
+            newSpeed = 1.5f;
         }
 
         else {
-            newSpeed = 10;
+            newSpeed = 1;
         }
         var current = Heading;
         var diff = Mathf.DeltaAngle(current, headingPrev);
@@ -49,6 +49,7 @@ public class RobotController : MonoBehaviour {
 	public void SetMotors(float left, float right, float center)
 	{
         Debug.Log("Left: " + left + "Right: " + right + "Center: " + center);
+
 		foreach(var h in leftWheels)
 		{
 			h.RunJoint(motorScaler * left * newSpeed);

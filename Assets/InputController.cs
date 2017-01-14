@@ -29,14 +29,13 @@ public class InputController : MonoBehaviour
 		float leftPower, rightPower, centerPower;
 		if (tankDrive)
 		{
-            Debug.Log("TANL");
 			leftPower = Input.GetAxis("P" + playerNumber + " Left");
 			rightPower = Input.GetAxis("P" + playerNumber + " Right");
             centerPower = Input.GetAxis("P" + playerNumber + " Center");
 		}
 		else
 		{
-			float drive = Input.GetAxis("P" + playerNumber + " Vertical");
+            float drive = Input.GetAxis("P" + playerNumber + " Vertical");
 			float steer =-1* Input.GetAxis("P" + playerNumber + " Horizontal");
 			leftPower = Mathf.Clamp(drive + steer, -1, 1);
 			rightPower = Mathf.Clamp(drive - steer, -1, 1);
