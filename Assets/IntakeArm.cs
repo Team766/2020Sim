@@ -64,8 +64,6 @@ public class IntakeArm : MonoBehaviour
     {
         float targetVel = speed;
 
-        Debug.Log(speed);
-
         // set joint motor parameters
         JointMotor myMotor = GetComponent<HingeJoint>().motor;
         myMotor.targetVelocity = targetVel;
