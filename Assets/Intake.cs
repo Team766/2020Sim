@@ -40,7 +40,7 @@ public class Intake : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(intakeArm.Angle);
+        //Debug.Log(intakeArm.Angle);
         if (payload.Get() != null && speed > 0 && holding == null && intakeArm.Angle > -5) {
             Grab();
         }

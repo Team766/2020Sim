@@ -17,6 +17,7 @@ public class Network : MonoBehaviour {
   
 	const int LEFT_MOTOR = 10;
 	const int RIGHT_MOTOR = 11;
+    const int CENTER_MOTOR = 14;
 	const int INTAKE = 12;
 	const int LAUNCH = 13;
 
@@ -101,7 +102,7 @@ public class Network : MonoBehaviour {
           }
           
           teleop.gameObject.SetActive(false);
-          robot.SetMotors(commands[LEFT_MOTOR] / 512.0f, commands[RIGHT_MOTOR] / 512.0f);
+          robot.SetMotors(commands[LEFT_MOTOR] / 512.0f, commands[RIGHT_MOTOR] / 512.0f, commands[CENTER_MOTOR] / 512.0f);
           robot.SetGripper(commands[INTAKE] >= 0);
           if (commands[LAUNCH] >= 256) {
             robot.Launch();

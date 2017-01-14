@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class RobotController : MonoBehaviour {
 	public Wheel[] leftWheels;
 	public Wheel[] rightWheels;
+    public Wheel[] centerWheel;
+
 	public float motorScaler;
     public float newSpeed = 1.0f;
     public float intakeScaler;
@@ -21,11 +23,11 @@ public class RobotController : MonoBehaviour {
     {
         if (transform.position.z > 35)
         {
-            newSpeed = 1.5f;
+            newSpeed = 15f;
         }
 
         else {
-            newSpeed = 1;
+            newSpeed = 10;
         }
         var current = Heading;
         var diff = Mathf.DeltaAngle(current, headingPrev);
@@ -44,8 +46,9 @@ public class RobotController : MonoBehaviour {
         }
     }
 	
-	public void SetMotors(float left, float right)
+	public void SetMotors(float left, float right, float center)
 	{
+        Debug.Log("Left: " + left + "Right: " + right + "Center: " + center);
 		foreach(var h in leftWheels)
 		{
 			h.RunJoint(motorScaler * left * newSpeed);
@@ -54,6 +57,10 @@ public class RobotController : MonoBehaviour {
 		{
 			h.RunJoint(motorScaler * right * newSpeed);
 		}
+        foreach(var h  in centerWheel)
+        {
+            h.RunJoint(motorScaler * center * newSpeed);
+        }
 	}
 
     public void SetIntake(float speed)
@@ -113,6 +120,16 @@ public class RobotController : MonoBehaviour {
       if (rightWheels.Length == 0)
         return 0;
       return rightWheels[0].Encoder;
+    }
+  }
+
+  public int CenterEncoder
+  {
+    get
+    {
+        if (centerWheel.Length == 0)
+            return 0;
+        return centerWheel[0].Encoder;
     }
   }
   
