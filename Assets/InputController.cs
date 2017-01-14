@@ -26,11 +26,13 @@ public class InputController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		float leftPower, rightPower;
+		float leftPower, rightPower, centerPower;
 		if (tankDrive)
 		{
+            Debug.Log("TANL");
 			leftPower = Input.GetAxis("P" + playerNumber + " Left");
 			rightPower = Input.GetAxis("P" + playerNumber + " Right");
+            centerPower = Input.GetAxis("P" + playerNumber + " Center");
 		}
 		else
 		{
@@ -38,9 +40,10 @@ public class InputController : MonoBehaviour
 			float steer =-1* Input.GetAxis("P" + playerNumber + " Horizontal");
 			leftPower = Mathf.Clamp(drive + steer, -1, 1);
 			rightPower = Mathf.Clamp(drive - steer, -1, 1);
+            centerPower = Input.GetAxis("P" + playerNumber + " Center");
 		}
 		
-		robot.SetMotors(leftPower, rightPower);
+		robot.SetMotors(leftPower, rightPower, centerPower);
 
         float intake = Input.GetAxis("P" + playerNumber + " intake");
             robot.SetIntake(intake);
