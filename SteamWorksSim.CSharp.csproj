@@ -95,6 +95,7 @@
     <Compile Include="Assets\RobotController.cs" />
     <Compile Include="Assets\Vision.cs" />
     <Compile Include="Assets\Wheel.cs" />
+    <Compile Include="Assets\incrementGear.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Alpha-Glossy_Mod.shader" />
