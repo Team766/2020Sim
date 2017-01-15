@@ -90,6 +90,7 @@
     <Compile Include="Assets\IntakeArm.cs" />
     <Compile Include="Assets\Launcher.cs" />
     <Compile Include="Assets\Network.cs" />
+    <Compile Include="Assets\ReleaseBalls.cs" />
     <Compile Include="Assets\RespawnBall.cs" />
     <Compile Include="Assets\RobotController.cs" />
     <Compile Include="Assets\Vision.cs" />
