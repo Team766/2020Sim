@@ -10,7 +10,8 @@ public class RobotController : MonoBehaviour {
     public float newSpeed = 1.0f;
     public float intakeScaler;
 
-    public GameObject[] balls;
+    public int numBalls;
+    public int MAX_BALLS = 50;
     public bool holdingGear;
 	
 	public Gripper gripper;
@@ -97,6 +98,21 @@ public class RobotController : MonoBehaviour {
     public void SetIntakeArm(float speed)
     {
             intakeArm.RunJoint(intakeScaler * speed);
+    }
+
+    public void addBalls(int num)
+    {
+        numBalls += num;
+        if (numBalls > MAX_BALLS)
+            numBalls = MAX_BALLS;
+    }
+
+    public void fillHopper(bool full)
+    {
+        if (full)
+            numBalls = MAX_BALLS;
+        else
+            numBalls = 0;
     }
 
     public float ShootPower

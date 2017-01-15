@@ -27,7 +27,7 @@ public class ReleaseBalls : MonoBehaviour {
     {
         if (empty || other == null)
             return;
-        if(other.transform.parent.tag == "Player")
+        if(other.transform.root.tag == "Player")
         {
             for (int i = 0; i < ballsPerHopper; i++)
             {

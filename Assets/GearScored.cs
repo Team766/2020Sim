@@ -15,7 +15,7 @@ public class GearScored : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other == null)
+        if (other == null || other.transform.parent == null)
             return;
 
         if(other.transform.parent.tag == "Intake")
