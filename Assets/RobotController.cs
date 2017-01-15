@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 
 public class RobotController : MonoBehaviour {
-	public Wheel[] leftWheels;
-	public Wheel[] rightWheels;
+    public Wheel[] leftWheels;
+    public Wheel[] rightWheels;
     public Wheel[] centerWheel;
 
-	public float motorScaler;
+    public float motorScaler;
     public float newSpeed = 1.0f;
     public float intakeScaler;
 
     public int numBalls;
     public int MAX_BALLS = 50;
     public bool holdingGear;
-	
-	public Gripper gripper;
+
+    public Gripper gripper;
     public IntakeArm intakeArm;
-	public Launcher launcher;
+    public Launcher launcher;
     public Launcher launcher2;
     public Dictionary<ActuatedDefense, int> actuatedDefenses = new Dictionary<ActuatedDefense, int>();
     public Intake intake;
 
     public GUIText scoreText;
     private int score;
+    private int ballScored;
+    private int highScored;
 
     private float headingPrev = 0.0f;
 
@@ -52,24 +54,24 @@ public class RobotController : MonoBehaviour {
             }
         }
     }
-	
-	public void SetMotors(float left, float right, float center)
-	{
+
+    public void SetMotors(float left, float right, float center)
+    {
         //Debug.Log("Left: " + left + "Right: " + right + "Center: " + center);
 
-		foreach(var h in leftWheels)
-		{
-			h.RunJoint(motorScaler * left * newSpeed);
-		}
-		foreach(var h in rightWheels)
-		{
-			h.RunJoint(motorScaler * right * newSpeed);
-		}
-        foreach(var h  in centerWheel)
+        foreach (var h in leftWheels)
+        {
+            h.RunJoint(motorScaler * left * newSpeed);
+        }
+        foreach (var h in rightWheels)
+        {
+            h.RunJoint(motorScaler * right * newSpeed);
+        }
+        foreach (var h in centerWheel)
         {
             h.RunJoint(motorScaler * center * newSpeed);
         }
-	}
+    }
 
     public void SetIntake(float speed)
     {
@@ -84,20 +86,20 @@ public class RobotController : MonoBehaviour {
 
     private void updateGUI()
     {
-        scoreText.text = "Gears: " + score;
+        scoreText.text = "Gears: " + score + "\nBalls: " + ballScored + "\nHigh Fuel: " + highScored;
     }
 
     public void SetGripper(bool state)
-	{
-		if (state)
-			gripper.MoveOut();
-		else
-			gripper.MoveIn();
-	}
+    {
+        if (state)
+            gripper.MoveOut();
+        else
+            gripper.MoveIn();
+    }
 
     public void SetIntakeArm(float speed)
     {
-            intakeArm.RunJoint(intakeScaler * speed);
+        intakeArm.RunJoint(intakeScaler * speed);
     }
 
     public void addBalls(int num)
@@ -116,98 +118,122 @@ public class RobotController : MonoBehaviour {
     }
 
     public float ShootPower
-	{
-		get
-		{
-			return launcher.ShootPower;
-		}
-		set
-		{
-			launcher.ShootPower = value;
-		}
-	}
+    {
+        get
+        {
+            return launcher.ShootPower;
+        }
+        set
+        {
+            launcher.ShootPower = value;
+        }
+    }
 
     public void setHoldingGear(bool holding)
     {
         holdingGear = holding;
     }
-	
-	public void Launch()
-	{
-		launcher.Launch();
-	}
+
+    public void Launch()
+    {
+        launcher.Launch();
+    }
 
     public void Launch2()
-	{
-		launcher2.Launch();
-	}
-  
-  public int LeftEncoder
-  {
-    get
     {
-      if (leftWheels.Length == 0)
-        return 0;
-      return leftWheels[0].Encoder;
+        launcher2.Launch();
     }
-  }
-  
-  public int RightEncoder
-  {
-    get
-    {
-      if (rightWheels.Length == 0)
-        return 0;
-      return rightWheels[0].Encoder;
-    }
-  }
 
-  public int CenterEncoder
-  {
-    get
+    public int LeftEncoder
     {
-        if (centerWheel.Length == 0)
-            return 0;
-        return centerWheel[0].Encoder;
+        get
+        {
+            if (leftWheels.Length == 0)
+                return 0;
+            return leftWheels[0].Encoder;
+        }
     }
-  }
-  
-  static float Angle360(Vector3 v1, Vector3 v2, Vector3 n)
-  {
-    //  Acute angle [0,180]
-    float angle = Vector3.Angle(v1,v2);
 
-    //  -Acute angle [180,-179]
-    float sign = Mathf.Sign(Vector3.Dot(n, Vector3.Cross(v1, v2)));
-    return angle * sign;
-  }
-  
-  public float Heading
-  {
-    get
+    public int RightEncoder
     {
-      return Angle360(Vector3.forward, transform.forward, Vector3.up);
+        get
+        {
+            if (rightWheels.Length == 0)
+                return 0;
+            return rightWheels[0].Encoder;
+        }
     }
-  }
 
-  public float Gyro {
-    get;
-    private set;
-  }
-  
-  public bool GripperState
-  {
-    get
+    public int CenterEncoder
     {
-      return gripper.state;
+        get
+        {
+            if (centerWheel.Length == 0)
+                return 0;
+            return centerWheel[0].Encoder;
+        }
     }
-  }
-  
-  public bool BallPresence
-  {
-    get
+
+    static float Angle360(Vector3 v1, Vector3 v2, Vector3 n)
     {
-      return gripper.payload.Get() != null;
+        //  Acute angle [0,180]
+        float angle = Vector3.Angle(v1, v2);
+
+        //  -Acute angle [180,-179]
+        float sign = Mathf.Sign(Vector3.Dot(n, Vector3.Cross(v1, v2)));
+        return angle * sign;
     }
-  }
+
+    public float Heading
+    {
+        get
+        {
+            return Angle360(Vector3.forward, transform.forward, Vector3.up);
+        }
+    }
+
+    public float Gyro {
+        get;
+        private set;
+    }
+
+    public bool GripperState
+    {
+        get
+        {
+            return gripper.state;
+        }
+    }
+
+    public bool BallPresence
+    {
+        get
+        {
+            return gripper.payload.Get() != null;
+        }
+    }
+
+    public int getNumBalls()
+    {
+        return numBalls;
+    }
+
+    public void addBallScored(int numScored)
+    {
+        ballScored += numScored;
+        updateGUI();
+    }
+
+    public void scoreAllBalls()
+    {
+        addBallScored(numBalls);
+        numBalls = 0;
+    }
+
+    public void addHighScored(int numScored)
+    {
+        highScored += numScored;
+        updateGUI();
+    }
 }
+
