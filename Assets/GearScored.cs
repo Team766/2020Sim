@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class GearScored : MonoBehaviour {
-
+   
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +12,20 @@ public class GearScored : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other == null)
+            return;
+
+        if(other.transform.parent.tag == "Intake")
+        {
+            RobotController robot = other.transform.root.GetComponent<RobotController>();
+            if (robot.holdingGear)
+            {
+                robot.incrementScore(1);
+                robot.setHoldingGear(false);
+            }
+        }
+    }
 }

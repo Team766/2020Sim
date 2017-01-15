@@ -9,6 +9,9 @@ public class RobotController : MonoBehaviour {
 	public float motorScaler;
     public float newSpeed = 1.0f;
     public float intakeScaler;
+
+    public GameObject[] balls;
+    public bool holdingGear;
 	
 	public Gripper gripper;
     public IntakeArm intakeArm;
@@ -16,6 +19,9 @@ public class RobotController : MonoBehaviour {
     public Launcher launcher2;
     public Dictionary<ActuatedDefense, int> actuatedDefenses = new Dictionary<ActuatedDefense, int>();
     public Intake intake;
+
+    public GUIText scoreText;
+    private int score;
 
     private float headingPrev = 0.0f;
 
@@ -48,7 +54,7 @@ public class RobotController : MonoBehaviour {
 	
 	public void SetMotors(float left, float right, float center)
 	{
-        Debug.Log("Left: " + left + "Right: " + right + "Center: " + center);
+        //Debug.Log("Left: " + left + "Right: " + right + "Center: " + center);
 
 		foreach(var h in leftWheels)
 		{
@@ -67,6 +73,17 @@ public class RobotController : MonoBehaviour {
     public void SetIntake(float speed)
     {
         intake.setSpeed(speed);
+    }
+
+    public void incrementScore(int add)
+    {
+        score += add;
+        updateGUI();
+    }
+
+    private void updateGUI()
+    {
+        scoreText.text = "Gears: " + score;
     }
 
     public void SetGripper(bool state)
@@ -93,6 +110,11 @@ public class RobotController : MonoBehaviour {
 			launcher.ShootPower = value;
 		}
 	}
+
+    public void setHoldingGear(bool holding)
+    {
+        holdingGear = holding;
+    }
 	
 	public void Launch()
 	{
