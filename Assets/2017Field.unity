@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641222, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1948,22 +1948,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 420684, guid: e8c37ea8a2640ad4d88b4d32bf4371bc, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 420684, guid: e8c37ea8a2640ad4d88b4d32bf4371bc, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 420684, guid: e8c37ea8a2640ad4d88b4d32bf4371bc, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 420684, guid: e8c37ea8a2640ad4d88b4d32bf4371bc, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 45
-      objectReference: {fileID: 0}
     - target: {fileID: 121108, guid: e8c37ea8a2640ad4d88b4d32bf4371bc, type: 2}
       propertyPath: m_Name
       value: Boiler Red
@@ -2569,7 +2553,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 455402, guid: bad56f642c025144ea00cd624e42be0f, type: 2}
       propertyPath: m_RootOrder
-      value: 23
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 186210, guid: bad56f642c025144ea00cd624e42be0f, type: 2}
       propertyPath: m_Name
@@ -3634,7 +3618,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 455402, guid: bad56f642c025144ea00cd624e42be0f, type: 2}
       propertyPath: m_RootOrder
-      value: 24
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 186210, guid: bad56f642c025144ea00cd624e42be0f, type: 2}
       propertyPath: m_Name
