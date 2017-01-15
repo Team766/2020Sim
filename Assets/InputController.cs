@@ -9,6 +9,8 @@ public class InputController : MonoBehaviour
 	public bool tankDrive;
 	
 	public Rect guiRect;
+
+    private bool buttonIsPressed = false;
 	
 	void OnGUI()
 	{
@@ -57,11 +59,19 @@ public class InputController : MonoBehaviour
 
         if (Input.GetButton("P" + playerNumber + " Actuate"))
 			robot.Actuate();
-		
-		//TODO: robot.ShootPower = Mathf.Clamp01(robot.ShootPower + Input.GetAxis ("P" + playerNumber + " Shoot Power") * powerChangeSpeed * Time.deltaTime);
-		
-		if (Input.GetButton("P" + playerNumber + " Launch"))
-			robot.Launch();
+
+        //TODO: robot.ShootPower = Mathf.Clamp01(robot.ShootPower + Input.GetAxis ("P" + playerNumber + " Shoot Power") * powerChangeSpeed * Time.deltaTime);
+
+        
+        if (Input.GetButton("P" + playerNumber + " Launch") && buttonIsPressed == false && robot.numBalls > 0)
+        {
+            
+            robot.Launch();
+            //-1 ball
+            robot.numBalls--;
+        }
+        buttonIsPressed = Input.GetButton("P" + playerNumber + " Launch");
+
         if (Input.GetButton("P" + playerNumber + " Launch2"))
             robot.Launch2();
     }
