@@ -7,7 +7,7 @@ public class ReleaseBalls : MonoBehaviour {
     public GameObject hopper2;
     public GameObject ball;
 
-    public Vector3 outputVel;
+    //public Vector3 outputVel;
 
     public bool empty;
     public int ballsPerHopper = 5;
@@ -29,11 +29,13 @@ public class ReleaseBalls : MonoBehaviour {
             return;
         if(other.transform.root.tag == "Player")
         {
-            for (int i = 0; i < ballsPerHopper; i++)
+            RobotController robot = other.transform.root.GetComponent<RobotController>();
+            /*for (int i = 0; i < ballsPerHopper; i++)
             {
                 GameObject.Instantiate(ball, hopper1.transform.position, new Quaternion()).GetComponent<Rigidbody>().velocity = outputVel;
                 GameObject.Instantiate(ball, hopper2.transform.position, new Quaternion()).GetComponent<Rigidbody>().velocity = outputVel;
-            }
+            }*/
+            robot.addBalls(50);
             empty = true;
         }
     }
