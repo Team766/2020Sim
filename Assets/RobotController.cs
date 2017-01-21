@@ -86,7 +86,7 @@ public class RobotController : MonoBehaviour {
 
     private void updateGUI()
     {
-        scoreText.text = "Holding Gear: " + holdingGear + "\nGears: " + score + "\nBalls Holding: " + numBalls + "\nBalls: " + ballScored + "\nHigh Fuel: " + highScored;
+        scoreText.text = "Holding Gear: " + holdingGear + "\nGears Scored: " + score + "\nBalls Holding: " + numBalls + "\nLow Goal Score: " + ballScored + "\nHigh Goal Score: " + highScored;
     }
 
     public void SetGripper(bool state)
@@ -116,6 +116,7 @@ public class RobotController : MonoBehaviour {
             numBalls = MAX_BALLS;
         else
             numBalls = 0;
+        updateGUI();
     }
 
     public float ShootPower
