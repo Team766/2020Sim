@@ -7,9 +7,9 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: Assets/Game.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Racetrack.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Original Robotics simulator.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Skatepark.unity
