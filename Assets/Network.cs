@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -96,12 +97,13 @@ public class Network : MonoBehaviour {
         Buffer.BlockCopy(receiveBytes, 0, commands, 0, receiveBytes.Length);
         
         if (commands.Length >= 14) {
-          if (commands[RESET_SIM] > 0) {
+          /*if (commands[RESET_SIM] > 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             Debug.Log("Reset");
-            Application.LoadLevel(Application.loadedLevel);
-          }
+            commands[RESET_SIM] = 0;
+          }*/
           
-          teleop.gameObject.SetActive(false);
+          teleop.enabled = false;
           robot.SetMotors(commands[LEFT_MOTOR] / 512.0f, commands[RIGHT_MOTOR] / 512.0f, commands[CENTER_MOTOR] / 512.0f);
           robot.SetGripper(commands[INTAKE] >= 0);
           if (commands[LAUNCH] >= 256) {
@@ -112,7 +114,7 @@ public class Network : MonoBehaviour {
       
       lastCommand = DateTime.Now;
     } else if (DateTime.Now - lastCommand > TimeSpan.FromSeconds(1)) {
-      teleop.gameObject.SetActive(true);
+      teleop.enabled = true;
     }
   }
 }
