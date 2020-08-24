@@ -3,14 +3,14 @@ using System.Collections;
 
 public class InputController : MonoBehaviour
 {
-	public int playerNumber;
+	public int playerNumber = 1;
 	public RobotController robot;
-	public float powerChangeSpeed;
+	public float powerChangeSpeed = 1.0f;
 	public bool tankDrive;
 	
 	public Rect guiRect;
 
-    private bool buttonIsPressed = false;
+    private bool launchIsPressed = false;
 	
 	void OnGUI()
 	{
@@ -38,7 +38,7 @@ public class InputController : MonoBehaviour
 		else
 		{
             float drive = Input.GetAxis("P" + playerNumber + " Vertical");
-			float steer =-1* Input.GetAxis("P" + playerNumber + " Horizontal");
+			float steer = Input.GetAxis("P" + playerNumber + " Horizontal");
 			leftPower = Mathf.Clamp(drive + steer, -1, 1);
 			rightPower = Mathf.Clamp(drive - steer, -1, 1);
             centerPower = Input.GetAxis("P" + playerNumber + " Center");
@@ -47,32 +47,27 @@ public class InputController : MonoBehaviour
 		robot.SetMotors(leftPower, rightPower, centerPower);
 
         float intake = Input.GetAxis("P" + playerNumber + " intake");
-            robot.SetIntake(intake);
+        robot.SetIntake(intake);
 
         float gripper = Input.GetAxis ("P" + playerNumber + " Gripper");
-		//if (gripper > 0)
-			//robot.SetGripper(true);
-		//else if (gripper < 0)
-			//robot.SetGripper(false);
+		if (gripper > 0)
+			robot.SetIntakeArm(true);
+		else if (gripper < 0)
+			robot.SetIntakeArm(false);
 
-        robot.SetIntakeArm(gripper);
-
-        if (Input.GetButton("P" + playerNumber + " Actuate"))
-			robot.Actuate();
+        //if (Input.GetButton("P" + playerNumber + " Actuate"))
+		//	robot.Actuate();
 
         //TODO: robot.ShootPower = Mathf.Clamp01(robot.ShootPower + Input.GetAxis ("P" + playerNumber + " Shoot Power") * powerChangeSpeed * Time.deltaTime);
 
-        
-        if (Input.GetButton("P" + playerNumber + " Launch") && buttonIsPressed == false && robot.numBalls > 0)
+        bool launchButton = Input.GetButton("P" + playerNumber + " Launch");
+        if (launchButton && launchIsPressed == false)
         {
-            
             robot.Launch();
-            //-1 ball
-            robot.numBalls--;
         }
-        buttonIsPressed = Input.GetButton("P" + playerNumber + " Launch");
+        launchIsPressed = launchButton;
 
-        if (Input.GetButton("P" + playerNumber + " Launch2"))
-            robot.Launch2();
+        //if (Input.GetButton("P" + playerNumber + " Launch2"))
+        //    robot.Launch2();
     }
 }

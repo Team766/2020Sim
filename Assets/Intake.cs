@@ -1,56 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Intake : MonoBehaviour
-{
+public class Intake : MonoBehaviour {
     public float speed;
 
-    public Rigidbody holding;
-    public HoldObject payload;
-    public Transform holdPosition;
+    public RobotController robotController;
     public IntakeArm intakeArm;
+    
+    HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
+	
+	public Rigidbody Get() {
+		Rigidbody holding = null;
+		float bestDist = float.MaxValue;
+		foreach (var c in contained) {
+			float dist = Vector3.Distance(c.position, this.transform.position);
+			if (dist < bestDist) {
+				holding = c;
+				bestDist = dist;
+			}
+		}
+		return holding;
+	}
 
-    Quaternion holdRotation = Quaternion.identity;
+	void OnTriggerEnter(Collider c) {
+		if (c.tag == "Ball") {
+			contained.Add(c.attachedRigidbody);
+		}
+	}
+	void OnTriggerExit(Collider c) {
+		contained.Remove(c.attachedRigidbody);
+	}
 
-    public void Drop()
-    {
-        payload.Drop(holding);
-
-        holding = null;
-    }
-
-    public void setSpeed(float s) {
-        speed = s;
-    }
-
-    public void Grab()
-    {
-            holding = payload.Get();
-
-            if (holding)
-                holdRotation = Quaternion.Inverse(payload.transform.rotation) * holding.transform.rotation;
-    }
-
-    public void KickOut()
-    {
-        if (holding)
-            holding.transform.position = payload.transform.position;
-        holding = null;
-    }
-
-    void Update()
-    {
-        //Debug.Log(intakeArm.Angle);
-        if (payload.Get() != null && speed > 0 && holding == null && intakeArm.Angle > -5) {
-            Grab();
-        }
-
-
-
-            if (holding)
-            {
-                holding.transform.position = holdPosition.transform.position;
-                holding.transform.rotation = holdPosition.transform.rotation * holdRotation;
+    void Update() {
+        if (speed > 0) {
+            var obj = Get();
+            if (obj) {
+                robotController.Store(obj);
             }
+        }
     }
 }
