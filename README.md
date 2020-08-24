@@ -1,7 +1,7 @@
-StrongholdSim
-===============
+InfiniteRechargeSim
+===================
 
-3D Sandbox Simulation for the 2016 <a href="http://www.firstinspires.org/robotics/frc">FIRST Robotics Competition</a> game, FIRST Stronghold.
+3D Sandbox Simulation for the 2020 <a href="http://www.firstinspires.org/robotics/frc">FIRST Robotics Competition</a> game, FIRST Infinite Recharge.
 
 <a href="https://github.com/rcahoon/FRC-VR-Connector">VR Connector</a> can be used to control the virtual robots from Java
 
