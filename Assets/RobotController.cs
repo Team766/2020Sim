@@ -5,54 +5,24 @@ public class RobotController : MonoBehaviour {
     public Wheel[] leftWheels;
     public Wheel[] rightWheels;
     public Wheel[] centerWheel;
+    
+    public HoldObject[] heldObjects;
 
     public float motorScaler;
-    public float newSpeed = 1.0f;
     public float intakeScaler;
 
-    public int numBalls;
-    public int MAX_BALLS = 50;
-    public bool holdingGear;
-
-    public Gripper gripper;
     public IntakeArm intakeArm;
     public Launcher launcher;
-    public Launcher launcher2;
-    public Dictionary<ActuatedDefense, int> actuatedDefenses = new Dictionary<ActuatedDefense, int>();
     public Intake intake;
-
-    public GUIText scoreText;
-    private int score;
-    private int ballScored;
-    private int highScored;
 
     private float headingPrev = 0.0f;
 
     void Update()
     {
-        if (transform.position.z > 35)
-        {
-            newSpeed = 1.5f;
-        }
-
-        else {
-            newSpeed = 1;
-        }
         var current = Heading;
         var diff = Mathf.DeltaAngle(current, headingPrev);
         Gyro += diff;
         headingPrev = current;
-    }
-
-    public void Actuate()
-    {
-        foreach (var d in actuatedDefenses)
-        {
-            if (d.Value > 0)
-            {
-                d.Key.Actuate(this);
-            }
-        }
     }
 
     public void SetMotors(float left, float right, float center)
@@ -61,62 +31,34 @@ public class RobotController : MonoBehaviour {
 
         foreach (var h in leftWheels)
         {
-            h.RunJoint(motorScaler * left * newSpeed);
+            h.RunJoint(motorScaler * left);
         }
         foreach (var h in rightWheels)
         {
-            h.RunJoint(motorScaler * right * newSpeed);
+            h.RunJoint(motorScaler * right);
         }
         foreach (var h in centerWheel)
         {
-            h.RunJoint(motorScaler * center * newSpeed);
+            h.RunJoint(motorScaler * center);
         }
+    }
+    
+    public bool Store(Rigidbody obj) {
+        for (int i = 0; i < heldObjects.Length; ++i) {
+            if (heldObjects[i].Grab(obj))
+                return true;
+        }
+        return false;
     }
 
     public void SetIntake(float speed)
     {
-        intake.setSpeed(speed);
+        intake.speed = speed;
     }
 
-    public void incrementScore(int add)
+    public void SetIntakeArm(bool state)
     {
-        score += add;
-        updateGUI();
-    }
-
-    private void updateGUI()
-    {
-        scoreText.text = "Holding Gear: " + holdingGear + "\nGears Scored: " + score + "\nBalls Holding: " + numBalls + "\nLow Goal Score: " + ballScored + "\nHigh Goal Score: " + highScored;
-    }
-
-    public void SetGripper(bool state)
-    {
-        if (state)
-            gripper.MoveOut();
-        else
-            gripper.MoveIn();
-    }
-
-    public void SetIntakeArm(float speed)
-    {
-        intakeArm.RunJoint(intakeScaler * speed);
-    }
-
-    public void addBalls(int num)
-    {
-        numBalls += num;
-        if (numBalls > MAX_BALLS)
-            numBalls = MAX_BALLS;
-        updateGUI();
-    }
-
-    public void fillHopper(bool full)
-    {
-        if (full)
-            numBalls = MAX_BALLS;
-        else
-            numBalls = 0;
-        updateGUI();
+        intakeArm.RunJoint(intakeScaler * (state ? 1.0f : -1.0f));
     }
 
     public float ShootPower
@@ -131,20 +73,15 @@ public class RobotController : MonoBehaviour {
         }
     }
 
-    public void setHoldingGear(bool holding)
-    {
-        holdingGear = holding;
-        updateGUI();
-    }
-
     public void Launch()
     {
-        launcher.Launch();
-    }
-
-    public void Launch2()
-    {
-        launcher2.Launch();
+        for (int i = heldObjects.Length - 1; i >= 0; --i) {
+            var obj = heldObjects[i].Drop();
+            if (obj) {
+                launcher.Launch(obj);
+                return;
+            }
+        }
     }
 
     public int LeftEncoder
@@ -200,43 +137,12 @@ public class RobotController : MonoBehaviour {
         private set;
     }
 
-    public bool GripperState
-    {
-        get
-        {
-            return gripper.state;
-        }
-    }
-
     public bool BallPresence
     {
         get
         {
-            return gripper.payload.Get() != null;
+            return heldObjects[0].holding != null;
         }
-    }
-
-    public int getNumBalls()
-    {
-        return numBalls;
-    }
-
-    public void addBallScored(int numScored)
-    {
-        ballScored += numScored;
-        updateGUI();
-    }
-
-    public void scoreAllBalls()
-    {
-        addBallScored(numBalls);
-        numBalls = 0;
-    }
-
-    public void addHighScored(int numScored)
-    {
-        highScored += numScored;
-        updateGUI();
     }
 }
 
