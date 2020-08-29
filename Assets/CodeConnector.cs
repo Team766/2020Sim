@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 
-public class Network : MonoBehaviour {
+public class CodeConnector : MonoBehaviour {
     public RobotController robot;
     public InputController teleop;
     private UdpClient udpClient;
