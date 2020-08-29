@@ -3,15 +3,18 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 
-public class GameGUI : MonoBehaviour {
+public class GameGUI : NetworkBehaviour {
     public Camera[] cameras;
     public Text messageText;
     public Text scoreText;
+    [SyncVar]
     public int redScore;
+    [SyncVar]
     public int blueScore;
     
-    LinkedList<string> messages = new LinkedList<string>();
+    protected SyncListString messages = new SyncListString();
     
     void Start() {
         SelectCamera(5);
@@ -22,14 +25,15 @@ public class GameGUI : MonoBehaviour {
         scoreText.text = "Red score: " + redScore + "  Blue score: " + blueScore;
     }
 
+    [Command(ignoreAuthority = true)]
     public void RestartScene() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        NetworkManager.singleton.ServerChangeScene(SceneManager.GetActiveScene().name);
     }
     
     public IEnumerator ShowMessage(string message) {
-        messages.AddFirst(message);
+        messages.Insert(0, message);
         yield return new WaitForSeconds(2.0f);
-        messages.RemoveLast();
+        messages.RemoveAt(messages.Count - 1);
     }
     
     public void SelectCamera(int cameraIndex) {
