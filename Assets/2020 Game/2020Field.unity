@@ -4037,7 +4037,7 @@ GameObject:
   - component: {fileID: 1466043473}
   - component: {fileID: 1466043472}
   m_Layer: 0
-  m_Name: Network
+  m_Name: CodeConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
