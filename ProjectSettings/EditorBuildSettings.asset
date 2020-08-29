@@ -5,11 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Game.unity
-  - enabled: 0
-    path: Assets/Racetrack.unity
-  - enabled: 0
-    path: Assets/Original Robotics simulator.unity
-  - enabled: 0
-    path: Assets/Skatepark.unity
+  - enabled: 1
+    path: Assets/2020 Game/2020Field.unity
+    guid: 58c30942ecb3e5b3183c835c6111ae8a
+  m_configObjects: {}
