@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 2408887283491539746}
   - component: {fileID: 2408887283491539748}
   - component: {fileID: 2408887283491539749}
+  - component: {fileID: 159878684437383195}
   m_Layer: 0
   m_Name: 2pt Goal
   m_TagString: Untagged
@@ -283,6 +284,22 @@ MonoBehaviour:
   isBlue: 1
   points: 2
   respawnPoint: {fileID: 2408887284636264903}
+--- !u!114 &159878684437383195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2408887283491539747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 1
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &2408887283633675330
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +311,7 @@ GameObject:
   - component: {fileID: 2408887283633675333}
   - component: {fileID: 2408887283633675335}
   - component: {fileID: 2408887283633675332}
+  - component: {fileID: 3923569420515204473}
   m_Layer: 0
   m_Name: 1pt Goal
   m_TagString: Untagged
@@ -344,6 +362,22 @@ MonoBehaviour:
   isBlue: 1
   points: 1
   respawnPoint: {fileID: 2408887284636264903}
+--- !u!114 &3923569420515204473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2408887283633675330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 1
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &2408887284117423360
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +389,7 @@ GameObject:
   - component: {fileID: 2408887284117423363}
   - component: {fileID: 2408887284117423365}
   - component: {fileID: 2408887284117423362}
+  - component: {fileID: 3269453050190750205}
   m_Layer: 0
   m_Name: 3pt Goal
   m_TagString: Untagged
@@ -405,6 +440,22 @@ MonoBehaviour:
   isBlue: 1
   points: 3
   respawnPoint: {fileID: 2408887284636264903}
+--- !u!114 &3269453050190750205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2408887284117423360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 1
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &2408887284407250229
 GameObject:
   m_ObjectHideFlags: 0
