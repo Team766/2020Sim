@@ -20,6 +20,11 @@ public class Goal : MonoBehaviour {
 	{
 	    StartCoroutine(gameGui.ShowMessage(
 	        (isBlue ? "Blue" : "Red") + " scored " + points + " points!"));
+	    
+	    if (isBlue)
+	        gameGui.blueScore += points;
+	    else
+	        gameGui.redScore += points;
 
         yield return new WaitForSeconds(0.5f);
 
