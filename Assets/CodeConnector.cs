@@ -13,6 +13,8 @@ public class CodeConnector : MonoBehaviour {
     private UdpClient udpClient;
     private DateTime lastFeedback, lastCommand;
     
+    private bool launched = false;
+    
     const int COMMANDS_PORT = 7661;
     const int FEEDBACK_PORT = 7662;
 
@@ -24,6 +26,7 @@ public class CodeConnector : MonoBehaviour {
     const int CENTER_MOTOR = 14;
 	const int INTAKE = 12;
 	const int LAUNCH = 13;
+	const int INTAKE_ARM = 15;
 
     // Feedback indexes
     const int TIMESTAMP = 5;
@@ -115,8 +118,14 @@ public class CodeConnector : MonoBehaviour {
                         teleop.enabled = false;
                         robot.SetMotors(commands[LEFT_MOTOR] / 512.0f, commands[RIGHT_MOTOR] / 512.0f, commands[CENTER_MOTOR] / 512.0f);
                         robot.SetIntake(commands[INTAKE] / 512.0f);
+                        robot.SetIntakeArm(commands[INTAKE_ARM] > 0);
                         if (commands[LAUNCH] >= 256) {
-                            robot.Launch();
+                            if (!launched) {
+                                robot.Launch();
+                            }
+                            launched = true;
+                        } else {
+                            launched = false;
                         }
                     }
                 }
