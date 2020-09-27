@@ -49,7 +49,8 @@ public class CodeConnector : MonoBehaviour {
     const int JoystickButtonStart = 40;
     const int ButtonsPerJoystick = 8;
   
-    void Awake() {
+    void Start() {
+        Debug.Log("Starting UDP Code Connector");
         udpClient = new UdpClient(COMMANDS_PORT);
         udpClient.Connect(IPAddress.Loopback, FEEDBACK_PORT);
         
