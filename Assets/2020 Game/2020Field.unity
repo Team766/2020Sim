@@ -4726,7 +4726,7 @@ HingeJoint:
   m_GameObject: {fileID: 1261176096}
   m_ConnectedBody: {fileID: 801970423}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0.17000002, z: 0.35000002}
   m_UseSpring: 0
@@ -4741,8 +4741,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -90
-    max: 0
+    min: 0
+    max: 90
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
