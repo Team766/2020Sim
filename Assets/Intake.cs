@@ -33,7 +33,7 @@ public class Intake : MonoBehaviour {
 	}
 
     void Update() {
-        if (speed > 0) {
+        if (speed > 0.5) {
             var obj = Get();
             if (obj) {
                 robotController.Store(obj);
