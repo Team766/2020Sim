@@ -9,7 +9,8 @@ using System.Text;
 
 public class CodeConnector : MonoBehaviour {
     public RobotController robot;
-    public InputController teleop;
+    public OperatorInterface oi;
+    public GameGUI gameGui;
     private UdpClient udpClient;
     private DateTime lastFeedback, lastCommand;
     
@@ -36,16 +37,17 @@ public class CodeConnector : MonoBehaviour {
     const int HEADING = 12;
     const int INTAKE_STATE = 13;
     const int BALL_PRESENCE = 14;
-    const int ROBOT_MODE = 3;
 
-    const int JoystickStart = 20;
-    const int AxisPerJoystick = 4;
+    const int ROBOT_MODE = 3;
+    const int DISABLED_MODE = 0;
+    const int AUTON_MODE = 1;
+    const int TELEOP_MODE = 2;
+
+    const int NumJoysticks = 4;
+    const int JoystickAxisStart = 20;
+    const int AxesPerJoystick = 4;
     const int JoystickButtonStart = 40;
     const int ButtonsPerJoystick = 8;
-    const int Teleop = 1;
-    const int Auton = 0;
-
-    const int Joystick2_Axis4 = 27;
   
     void Awake() {
         udpClient = new UdpClient(COMMANDS_PORT);
@@ -72,21 +74,30 @@ public class CodeConnector : MonoBehaviour {
     void Update() {
         if (DateTime.Now - lastFeedback > TimeSpan.FromMilliseconds(20)) {
             lastFeedback = DateTime.Now;
-            int[] values = new int[64];
-            long timestamp = (long)(DateTime.UtcNow - UnixEpoch).TotalMilliseconds;
-            values[TIMESTAMP] = (int)timestamp;
+            int[] values = new int[100];
+            values[TIMESTAMP] = (int)(Time.time * 1000);
             values[LEFT_ENCODER] = robot.LeftEncoder;
             values[RIGHT_ENCODER] = robot.RightEncoder;
             values[HEADING] = (int)robot.Gyro;
             values[BALL_PRESENCE] = robot.BallPresence ? 1 : 0;
-            values[ROBOT_MODE] = Time.timeSinceLevelLoad < 15? Auton : Teleop;
-            for (var j = 0; j < 2; ++j) {
-                for (var a = 0; a < AxisPerJoystick; ++a) {
-                    values[j * AxisPerJoystick + a + JoystickStart] = (int)(Input.GetAxis("j" + j + "a" + a) * 100);
+            switch (gameGui.RobotMode) {
+                case RobotMode.Disabled:
+                    values[ROBOT_MODE] = DISABLED_MODE;
+                    break;
+                case RobotMode.Auton:
+                    values[ROBOT_MODE] = AUTON_MODE;
+                    break;
+                case RobotMode.Teleop:
+                    values[ROBOT_MODE] = TELEOP_MODE;
+                    break;
+            }
+            for (var j = 0; j < NumJoysticks; ++j) {
+                for (var a = 0; a < AxesPerJoystick; ++a) {
+                    values[j * AxesPerJoystick + a + JoystickAxisStart] = (int)(oi.joysticks[j].axis[a] * 100);
                 }
                 for (var b = 0; b < ButtonsPerJoystick; b++)
                 {
-                    values[j * ButtonsPerJoystick + b + JoystickButtonStart] = (int)(Input.GetKey("joystick " + (j + 1) + " button " + b) ? 1 : 0);
+                    values[j * ButtonsPerJoystick + b + JoystickButtonStart] = oi.joysticks[j].button[b] ? 1 : 0;
                 }
             }
 
@@ -115,7 +126,6 @@ public class CodeConnector : MonoBehaviour {
                             commands[RESET_SIM] = 0;
                         }*/
 
-                        teleop.enabled = false;
                         robot.SetMotors(commands[LEFT_MOTOR] / 512.0f, commands[RIGHT_MOTOR] / 512.0f, commands[CENTER_MOTOR] / 512.0f);
                         robot.SetIntake(commands[INTAKE] / 512.0f);
                         robot.SetIntakeArm(commands[INTAKE_ARM] > 0);
@@ -133,9 +143,7 @@ public class CodeConnector : MonoBehaviour {
                 lastCommand = DateTime.Now;
             }
         }
-        
-        if (DateTime.Now - lastCommand > TimeSpan.FromSeconds(1)) {
-            teleop.enabled = true;
-        }
+
+        gameGui.haveRobotCode = DateTime.Now - lastCommand < TimeSpan.FromSeconds(1);
     }
 }

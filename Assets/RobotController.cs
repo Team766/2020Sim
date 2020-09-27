@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 
 public class RobotController : MonoBehaviour {
+    public GameGUI gameGui;
+
     public Wheel[] leftWheels;
     public Wheel[] rightWheels;
     public Wheel[] centerWheel;
@@ -17,15 +19,39 @@ public class RobotController : MonoBehaviour {
 
     private float headingPrev = 0.0f;
 
+    public bool IsDisabled {
+        get {
+            return gameGui.RobotMode == RobotMode.Disabled;
+        }
+    }
+
     void Update()
     {
         var current = Heading;
         var diff = Mathf.DeltaAngle(current, headingPrev);
         Gyro += diff;
         headingPrev = current;
+
+        if (IsDisabled) {
+            Disable();
+        }
+    }
+
+    public void Disable() {
+        _SetMotors(0, 0, 0);
+        _SetIntake(0);
+        // Leave IntakeArm "enabled" because it's modeling a pneumatic cylinder,
+        //     so it should retain it's last state.
     }
 
     public void SetMotors(float left, float right, float center)
+    {
+        if (IsDisabled) {
+            return;
+        }
+        _SetMotors(left, right, center);
+    }
+    private void _SetMotors(float left, float right, float center)
     {
         //Debug.Log("Left: " + left + "Right: " + right + "Center: " + center);
 
@@ -44,6 +70,9 @@ public class RobotController : MonoBehaviour {
     }
     
     public bool Store(Rigidbody obj) {
+        if (IsDisabled) {
+            return false;
+        }
         for (int i = 0; i < heldObjects.Length; ++i) {
             if (heldObjects[i].Grab(obj))
                 return true;
@@ -51,12 +80,25 @@ public class RobotController : MonoBehaviour {
         return false;
     }
 
-    public void SetIntake(float speed)
+    public void SetIntake(float speed) {
+        if (IsDisabled) {
+            return;
+        }
+        _SetIntake(speed);
+    }
+    private void _SetIntake(float speed)
     {
         intake.speed = speed;
     }
 
     public void SetIntakeArm(bool state)
+    {
+        if (IsDisabled) {
+            return;
+        }
+        _SetIntakeArm(state);
+    }
+    private void _SetIntakeArm(bool state)
     {
         intakeArm.RunJoint(intakeScaler * (state ? 1.0f : -1.0f));
     }
@@ -75,6 +117,9 @@ public class RobotController : MonoBehaviour {
 
     public void Launch()
     {
+        if (IsDisabled) {
+            return;
+        }
         for (int i = heldObjects.Length - 1; i >= 0; --i) {
             var obj = heldObjects[i].Drop();
             if (obj) {
