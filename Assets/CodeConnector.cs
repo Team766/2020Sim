@@ -8,11 +8,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 
 public class CodeConnector : MonoBehaviour {
+    const float EXCEPTION_LOG_PERIOD = 10f;
+
     public RobotController robot;
     public OperatorInterface oi;
     public GameGUI gameGui;
     private UdpClient udpClient;
     private DateTime lastFeedback, lastCommand;
+    private float lastConnectException = -1000;
     
     private bool launched = false;
     
@@ -104,7 +107,14 @@ public class CodeConnector : MonoBehaviour {
 
             byte[] sendBytes = new byte[values.Length * sizeof(int)];
             Buffer.BlockCopy(values, 0, sendBytes, 0, sendBytes.Length);
-            udpClient.Send(sendBytes, sendBytes.Length);
+            try {
+                udpClient.Send(sendBytes, sendBytes.Length);
+            } catch (SocketException ex) {
+                if (gameGui.haveRobotCode || (Time.realtimeSinceStartup - lastConnectException > EXCEPTION_LOG_PERIOD)) {
+                    lastConnectException = Time.realtimeSinceStartup;
+                    Debug.LogException(ex, this);
+                }
+            }
         }
 
         if (udpClient.Available > 0) {
@@ -113,7 +123,7 @@ public class CodeConnector : MonoBehaviour {
             try {
                 receiveBytes = udpClient.Receive(ref e);
             } catch (IOException ex) {
-                Debug.LogException(ex);
+                Debug.LogException(ex, this);
             }
             if (receiveBytes != null) {
                 if (receiveBytes.Length % sizeof(int) == 0) {
