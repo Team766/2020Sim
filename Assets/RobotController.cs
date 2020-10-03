@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Mirror;
 
-public class RobotController : MonoBehaviour {
+public class RobotController : NetworkBehaviour {
     public GameGUI gameGui;
+    public GameObject ballPrefab;
 
     public Wheel[] leftWheels;
     public Wheel[] rightWheels;
     public Wheel[] centerWheel;
     
     public HoldObject[] heldObjects;
+    [SyncVar]
+    public int holding = 0;
 
     public float motorScaler;
     public float intakeScaler;
@@ -34,6 +38,10 @@ public class RobotController : MonoBehaviour {
 
         if (IsDisabled) {
             Disable();
+        }
+
+        for (int i = 0; i < heldObjects.Length; ++i) {
+            heldObjects[i].SetState(holding > i);
         }
     }
 
@@ -73,11 +81,12 @@ public class RobotController : MonoBehaviour {
         if (IsDisabled) {
             return false;
         }
-        for (int i = 0; i < heldObjects.Length; ++i) {
-            if (heldObjects[i].Grab(obj))
-                return true;
+        if (holding >= heldObjects.Length) {
+            return false;
         }
-        return false;
+        ++holding;
+        NetworkServer.Destroy(obj.gameObject);
+        return true;
     }
 
     public void SetIntake(float speed) {
@@ -120,13 +129,13 @@ public class RobotController : MonoBehaviour {
         if (IsDisabled) {
             return;
         }
-        for (int i = heldObjects.Length - 1; i >= 0; --i) {
-            var obj = heldObjects[i].Drop();
-            if (obj) {
-                launcher.Launch(obj);
-                return;
-            }
+        if (holding == 0) {
+            return;
         }
+        --holding;
+        var obj = Instantiate(ballPrefab, this.transform.position, this.transform.rotation);
+        NetworkServer.Spawn(obj);
+        launcher.Launch(obj.GetComponent<Rigidbody>());
     }
 
     public int LeftEncoder
@@ -186,7 +195,7 @@ public class RobotController : MonoBehaviour {
     {
         get
         {
-            return heldObjects[0].holding != null;
+            return holding > 0;
         }
     }
 }

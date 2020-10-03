@@ -11,6 +11,9 @@ public class Intake : MonoBehaviour {
     HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
 	
 	public Rigidbody Get() {
+		// Discard objects that have been destroyed.
+		contained.RemoveWhere(rb => !rb);
+
 		Rigidbody holding = null;
 		float bestDist = float.MaxValue;
 		foreach (var c in contained) {
