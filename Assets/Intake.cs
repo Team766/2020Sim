@@ -7,6 +7,7 @@ public class Intake : MonoBehaviour {
 
     public RobotController robotController;
     public IntakeArm intakeArm;
+    public Transform roller;
     
     HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
 	
@@ -36,6 +37,8 @@ public class Intake : MonoBehaviour {
 	}
 
     void Update() {
+        roller.Rotate(0, 800 * speed * Time.deltaTime, 0);
+
         if (speed > 0.5) {
             var obj = Get();
             if (obj) {
