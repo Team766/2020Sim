@@ -40,6 +40,8 @@ public class CodeConnector : MonoBehaviour {
     const int HEADING = 12;
     const int INTAKE_STATE = 13;
     const int BALL_PRESENCE = 14;
+    const int HEADING_PRECISE = 15;
+    const int HEADING_RATE = 16;
 
     const int ROBOT_MODE = 3;
     const int DISABLED_MODE = 0;
@@ -82,7 +84,9 @@ public class CodeConnector : MonoBehaviour {
             values[TIMESTAMP] = (int)(Time.time * 1000);
             values[LEFT_ENCODER] = robot.LeftEncoder;
             values[RIGHT_ENCODER] = robot.RightEncoder;
-            values[HEADING] = (int)robot.Gyro;
+            values[HEADING] = (int)robot.GyroAngle;
+            values[HEADING_PRECISE] = (int)(robot.GyroAngle * 10);
+            values[HEADING_RATE] = (int)(robot.GyroRate * 100);
             values[BALL_PRESENCE] = robot.BallPresence ? 1 : 0;
             switch (gameGui.RobotMode) {
                 case RobotMode.Disabled:

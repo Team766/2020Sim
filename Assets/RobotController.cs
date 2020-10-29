@@ -29,13 +29,18 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         var current = Heading;
         var diff = Mathf.DeltaAngle(current, headingPrev);
-        Gyro += diff;
+        GyroAngle += diff;
         headingPrev = current;
 
+        GyroRate = Vector3.Dot(transform.up, GetComponent<Rigidbody>().angularVelocity) * Mathf.Rad2Deg;
+    }
+
+    void Update()
+    {
         if (IsDisabled) {
             Disable();
         }
@@ -186,7 +191,12 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    public float Gyro {
+    public float GyroAngle {
+        get;
+        private set;
+    }
+
+    public float GyroRate {
         get;
         private set;
     }
