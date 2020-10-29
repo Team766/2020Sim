@@ -84,9 +84,9 @@ public class GameGUI : NetworkBehaviour {
         if (isServer) {
             timeRemaining = Mathf.Ceil(
                 Mathf.Max(0.0f, robotModeStartTime + stateDuration - Time.time));
-            if (timeRemaining <= 0.0) {
+            /*if (timeRemaining <= 0.0) {
                 SetRobotMode(System.Guid.Empty, RobotMode.Disabled);
-            }
+            }*/
         }
         timeText.text = String.Format(
             "Time left: {0:D}:{1:D2}",
