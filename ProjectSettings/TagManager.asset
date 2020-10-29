@@ -8,6 +8,7 @@ TagManager:
   - Defense
   - Intake
   - Fuel
+  - Line
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - Robot
   - Wheels
-  - 
+  - Line
   - 
   - 
   - 
