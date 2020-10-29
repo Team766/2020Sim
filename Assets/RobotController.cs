@@ -21,6 +21,10 @@ public class RobotController : NetworkBehaviour {
     public Launcher launcher;
     public Intake intake;
 
+    public LineSensor lineSensor1;
+    public LineSensor lineSensor2;
+    public LineSensor lineSensor3;
+
     private float headingPrev = 0.0f;
 
     public bool IsDisabled {
