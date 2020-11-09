@@ -91,9 +91,15 @@ public class CodeConnector : MonoBehaviour {
             values[HEADING_PRECISE] = (int)(robot.GyroAngle * 10);
             values[HEADING_RATE] = (int)(robot.GyroRate * 100);
             values[BALL_PRESENCE] = robot.BallPresence ? 1 : 0;
-            values[LINE_SENSOR_1] = robot.lineSensor1.IsDetecting ? 1 : 0;
-            values[LINE_SENSOR_2] = robot.lineSensor2.IsDetecting ? 1 : 0;
-            values[LINE_SENSOR_3] = robot.lineSensor3.IsDetecting ? 1 : 0;
+            if (robot.lineSensor1 != null) {
+                values[LINE_SENSOR_1] = robot.lineSensor1.IsDetecting ? 1 : 0;
+            }
+            if (robot.lineSensor2 != null) {
+                values[LINE_SENSOR_2] = robot.lineSensor2.IsDetecting ? 1 : 0;
+            }
+            if (robot.lineSensor3 != null) {
+                values[LINE_SENSOR_3] = robot.lineSensor3.IsDetecting ? 1 : 0;
+            }
             switch (gameGui.RobotMode) {
                 case RobotMode.Disabled:
                     values[ROBOT_MODE] = DISABLED_MODE;

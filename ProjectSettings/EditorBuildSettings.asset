@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/2020 Game/2020Field.unity
     guid: 58c30942ecb3e5b3183c835c6111ae8a
+  - enabled: 1
+    path: Assets/BattleBots/BattleBotsGame.unity
+    guid: 3c247f3781ca792f69b6069069876df6
   m_configObjects: {}

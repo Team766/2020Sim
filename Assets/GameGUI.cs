@@ -16,7 +16,9 @@ public class GameGUI : NetworkBehaviour {
     const float AUTON_DURATION = 30.0f;
     const float TELEOP_DURATION = 135.0f;
 
+    public string[] sceneNames;
     public Camera[] cameras;
+    public int initialCamera;
     public Text messageText;
     public Text scoreText;
     public Text timeText;
@@ -53,7 +55,7 @@ public class GameGUI : NetworkBehaviour {
     }
 
     void Start() {
-        SelectCamera(5);
+        SelectCamera(initialCamera);
         // NOTE(ryan.cahoon, 2020-09-23): This seems to put the GUI in the right
         // place on WebGL. This shouldn't be necessary (and it works fine
         // without this on desktop), but it's cheap to do and there are more
@@ -93,9 +95,17 @@ public class GameGUI : NetworkBehaviour {
             (int)(timeRemaining / 60), (int)(timeRemaining % 60));
     }
 
+    [ClientCallback]
+    public void LoadScene(int dropdownIndex) {
+        if (dropdownIndex == 0) {
+            return;
+        }
+        CmdLoadScene(sceneNames[dropdownIndex - 1]);
+    }
+
     [Command(ignoreAuthority = true)]
-    public void RestartScene() {
-        NetworkManager.singleton.ServerChangeScene(SceneManager.GetActiveScene().name);
+    private void CmdLoadScene(string sceneName) {
+        NetworkManager.singleton.ServerChangeScene(sceneName);
     }
     
     [ClientCallback]

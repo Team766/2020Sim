@@ -45,6 +45,7 @@ public class RobotController : NetworkBehaviour {
 
     void Update()
     {
+        GetComponent<Rigidbody>().isKinematic = IsDisabled;
         if (IsDisabled) {
             Disable();
         }
@@ -106,7 +107,9 @@ public class RobotController : NetworkBehaviour {
     }
     private void _SetIntake(float speed)
     {
-        intake.speed = speed;
+        if (intake != null) {
+            intake.speed = speed;
+        }
     }
 
     public void SetIntakeArm(bool state)
@@ -118,23 +121,33 @@ public class RobotController : NetworkBehaviour {
     }
     private void _SetIntakeArm(bool state)
     {
-        intakeArm.RunJoint(intakeScaler * (state ? 1.0f : -1.0f));
+        if (intakeArm != null) {
+            intakeArm.RunJoint(intakeScaler * (state ? 1.0f : -1.0f));
+        }
     }
 
     public float ShootPower
     {
         get
         {
+            if (launcher == null) {
+                return 0;
+            }
             return launcher.ShootPower;
         }
         set
         {
-            launcher.ShootPower = value;
+            if (launcher != null) {
+                launcher.ShootPower = value;
+            }
         }
     }
 
     public void Launch()
     {
+        if (launcher == null) {
+            return;
+        }
         if (IsDisabled) {
             return;
         }
