@@ -50,6 +50,10 @@ public class RobotController : NetworkBehaviour {
             Disable();
         }
 
+        if (intakeArm) {
+            intakeArm.GetComponent<Rigidbody>().isKinematic = !isServer;
+        }
+
         for (int i = 0; i < heldObjects.Length; ++i) {
             heldObjects[i].SetState(holding > i);
         }
