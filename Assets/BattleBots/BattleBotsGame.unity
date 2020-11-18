@@ -1209,7 +1209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &463054735
 Transform:
   m_ObjectHideFlags: 0
@@ -4468,7 +4468,7 @@ PrefabInstance:
     - target: {fileID: 4541063486909424379, guid: a9502fe73cf514f0296d05af4c2fb75f,
         type: 3}
       propertyPath: m_Text
-      value: On-Robot Camera
+      value: Side 1 Camera
       objectReference: {fileID: 0}
     - target: {fileID: 4541063488329772674, guid: a9502fe73cf514f0296d05af4c2fb75f,
         type: 3}
@@ -4584,6 +4584,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cameras.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541063488329772701, guid: a9502fe73cf514f0296d05af4c2fb75f,
+        type: 3}
+      propertyPath: robotNames.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4541063488329772701, guid: a9502fe73cf514f0296d05af4c2fb75f,
         type: 3}

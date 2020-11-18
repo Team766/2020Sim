@@ -17,6 +17,7 @@ public class GameGUI : NetworkBehaviour {
     const float TELEOP_DURATION = 135.0f;
 
     public string[] sceneNames;
+    public string[] robotVariantNames;
     public Camera[] cameras;
     public int initialCamera;
     public Text messageText;
@@ -100,11 +101,14 @@ public class GameGUI : NetworkBehaviour {
         if (dropdownIndex == 0) {
             return;
         }
-        CmdLoadScene(sceneNames[dropdownIndex - 1]);
+        CmdLoadScene(sceneNames[dropdownIndex - 1],
+                     robotVariantNames[dropdownIndex - 1]);
     }
 
     [Command(ignoreAuthority = true)]
-    private void CmdLoadScene(string sceneName) {
+    private void CmdLoadScene(string sceneName, string robotVariantName) {
+        Debug.Log("Loading scene " + sceneName + " " + robotVariantName);
+        RobotController.robotVariant = robotVariantName;
         NetworkManager.singleton.ServerChangeScene(sceneName);
     }
     
