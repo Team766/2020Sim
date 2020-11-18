@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using Mirror;
 
 public class RobotController : NetworkBehaviour {
+    public static string robotVariant = "";
+    [SyncVar]
+    private string clientRobotVariant = null;
+    private string activeRobotVariant = null;
+
     public GameGUI gameGui;
     public GameObject ballPrefab;
 
@@ -38,6 +43,11 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
+    void Awake()
+    {
+        UpdateVariant();
+    }
+
     void FixedUpdate()
     {
         var current = Heading;
@@ -50,6 +60,8 @@ public class RobotController : NetworkBehaviour {
 
     void Update()
     {
+        UpdateVariant();
+
         GetComponent<Rigidbody>().isKinematic = IsDisabled;
         if (IsDisabled) {
             Disable();
@@ -67,6 +79,23 @@ public class RobotController : NetworkBehaviour {
 
         for (int i = 0; i < heldObjects.Length; ++i) {
             heldObjects[i].SetState(holding > i);
+        }
+    }
+
+    void UpdateVariant() {
+        if (isServer) {
+            clientRobotVariant = robotVariant;
+        } else if (clientRobotVariant != null) {
+            robotVariant = clientRobotVariant;
+        }
+        if (activeRobotVariant != robotVariant) {
+            Debug.Log("Activating robot variant: " + robotVariant);
+            var variantObj = transform.Find(robotVariant);
+            if (variantObj != null) {
+                Debug.Log("Found robot variant object");
+                variantObj.gameObject.SetActive(true);
+            }
+            activeRobotVariant = robotVariant;
         }
     }
 
