@@ -21,6 +21,11 @@ public class RobotController : NetworkBehaviour {
     public Launcher launcher;
     public Intake intake;
 
+    #region BusterSwordV1
+    public Wheel twacker;
+    public float twackerScaler;
+    #endregion
+
     public LineSensor lineSensor1;
     public LineSensor lineSensor2;
     public LineSensor lineSensor3;
@@ -53,6 +58,12 @@ public class RobotController : NetworkBehaviour {
         if (intakeArm) {
             intakeArm.GetComponent<Rigidbody>().isKinematic = !isServer;
         }
+
+        #region BusterSwordV1
+        if (twacker) {
+            twacker.GetComponent<Rigidbody>().isKinematic = !isServer;
+        }
+        #endregion
 
         for (int i = 0; i < heldObjects.Length; ++i) {
             heldObjects[i].SetState(holding > i);
@@ -114,6 +125,11 @@ public class RobotController : NetworkBehaviour {
         if (intake != null) {
             intake.speed = speed;
         }
+        #region BusterSwordV1
+        if (twacker != null) {
+            twacker.RunJoint(twackerScaler * speed);
+        }
+        #endregion
     }
 
     public void SetIntakeArm(bool state)
