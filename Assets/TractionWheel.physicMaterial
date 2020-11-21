@@ -7,8 +7,8 @@ PhysicMaterial:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TractionWheel
-  dynamicFriction: 1
-  staticFriction: 1.2
+  dynamicFriction: 4
+  staticFriction: 4
   bounciness: 0
-  frictionCombine: 0
+  frictionCombine: 2
   bounceCombine: 0
