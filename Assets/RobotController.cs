@@ -31,6 +31,10 @@ public class RobotController : NetworkBehaviour {
     public float twackerScaler;
     #endregion
 
+    #region PetPaloozaV1
+    public LinearActuator bopper;
+    #endregion
+
     public LineSensor lineSensor1;
     public LineSensor lineSensor2;
     public LineSensor lineSensor3;
@@ -74,6 +78,11 @@ public class RobotController : NetworkBehaviour {
         #region BusterSwordV1
         if (twacker) {
             twacker.GetComponent<Rigidbody>().isKinematic = !isServer;
+        }
+        #endregion
+        #region PetPaloozaV1
+        if (bopper) {
+            bopper.GetComponent<Rigidbody>().isKinematic = !isServer;
         }
         #endregion
 
@@ -173,6 +182,11 @@ public class RobotController : NetworkBehaviour {
         if (intakeArm != null) {
             intakeArm.RunJoint(intakeScaler * (state ? 1.0f : -1.0f));
         }
+        #region PetPaloozaV1
+        if (bopper != null) {
+            bopper.extended = state;
+        }
+        #endregion
     }
 
     public float ShootPower

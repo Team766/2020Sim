@@ -628,6 +628,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Battle Bots R1
       m_Image: {fileID: 0}
+    - m_Text: Battle Bots R2
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3042,10 +3044,12 @@ MonoBehaviour:
   - 2020Field
   - BattleBotsGame
   - BattleBotsGame
+  - BattleBotsGame
   robotVariantNames:
   - 
   - 
   - BusterSwordV1
+  - PetPaloozaV1
   cameras:
   - {fileID: 0}
   - {fileID: 0}
