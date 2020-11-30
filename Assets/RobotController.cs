@@ -35,6 +35,10 @@ public class RobotController : NetworkBehaviour {
     public LinearActuator bopper;
     #endregion
 
+    #region HammerV1
+    public Rigidbody hammer;
+    #endregion
+
     #region BillboardV1
     public Wheel billboard;
     public float billboardScale;
@@ -93,6 +97,11 @@ public class RobotController : NetworkBehaviour {
         #region PetPaloozaV1
         if (bopper) {
             bopper.GetComponent<Rigidbody>().isKinematic = !isServer;
+        }
+        #endregion
+        #region HammerV1
+        if (hammer) {
+            hammer.isKinematic = !isServer;
         }
         #endregion
         #region
