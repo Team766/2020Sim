@@ -35,6 +35,11 @@ public class RobotController : NetworkBehaviour {
     public LinearActuator bopper;
     #endregion
 
+    #region BillboardV1
+    public Wheel billboard;
+    public float billboardScale;
+    #endregion
+
     public LineSensor lineSensor1;
     public LineSensor lineSensor2;
     public LineSensor lineSensor3;
@@ -83,6 +88,11 @@ public class RobotController : NetworkBehaviour {
         #region PetPaloozaV1
         if (bopper) {
             bopper.GetComponent<Rigidbody>().isKinematic = !isServer;
+        }
+        #endregion
+        #region
+        if (billboard) {
+            billboard.GetComponent<Rigidbody>().isKinematic = !isServer;
         }
         #endregion
 
@@ -168,6 +178,11 @@ public class RobotController : NetworkBehaviour {
             twacker.RunJoint(twackerScaler * speed);
         }
         #endregion
+        #region BillboardV1
+        if (billboard != null) {
+            billboard.RunJoint(billboardScale * speed);
+        }
+        #endregion
     }
 
     public void SetIntakeArm(bool state)
@@ -227,9 +242,16 @@ public class RobotController : NetworkBehaviour {
     {
         get
         {
-            if (twacker) {
+            #region BusterSwordV1
+            if (twacker && twacker.Encoder != 0) {
                 return twacker.Encoder;
             }
+            #endregion
+            #region BillboardV1
+            if (billboard && billboard.Encoder != 0) {
+                return billboard.Encoder;
+            }
+            #endregion
             return 0;
         }
     }
