@@ -40,6 +40,11 @@ public class RobotController : NetworkBehaviour {
     public float billboardScale;
     #endregion
 
+    #region RBG_V1
+    public Wheel rbg;
+    public float rbgScale;
+    #endregion
+
     public LineSensor lineSensor1;
     public LineSensor lineSensor2;
     public LineSensor lineSensor3;
@@ -93,6 +98,11 @@ public class RobotController : NetworkBehaviour {
         #region
         if (billboard) {
             billboard.GetComponent<Rigidbody>().isKinematic = !isServer;
+        }
+        #endregion
+        #region RBG_V1
+        if (rbg) {
+            rbg.GetComponent<Rigidbody>().isKinematic = !isServer;
         }
         #endregion
 
@@ -183,6 +193,11 @@ public class RobotController : NetworkBehaviour {
             billboard.RunJoint(billboardScale * speed);
         }
         #endregion
+        #region RGB_V1
+        if (rbg != null) {
+            rbg.RunJoint(rbgScale * speed);
+        }
+        #endregion
     }
 
     public void SetIntakeArm(bool state)
@@ -250,6 +265,11 @@ public class RobotController : NetworkBehaviour {
             #region BillboardV1
             if (billboard && billboard.Encoder != 0) {
                 return billboard.Encoder;
+            }
+            #endregion
+            #region RBG_V1
+            if (rbg && rbg.Encoder != 0) {
+                return rbg.Encoder;
             }
             #endregion
             return 0;
