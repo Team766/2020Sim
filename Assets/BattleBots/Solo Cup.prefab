@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 6176502400147911471}
   - component: {fileID: 5926140384673830086}
   - component: {fileID: 5926140384673830089}
+  - component: {fileID: 6482066175976769817}
   m_Layer: 0
   m_Name: Solo Cup
   m_TagString: Untagged
@@ -121,13 +122,13 @@ Rigidbody:
   m_GameObject: {fileID: 6844495727655758229}
   serializedVersion: 2
   m_Mass: 0.1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 0.7
+  m_AngularDrag: 0.7
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &5926140384673830089
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -142,3 +143,17 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -4946331212600586933, guid: f880eb8346548be5eabbc1835676f276, type: 3}
+--- !u!136 &6482066175976769817
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6844495727655758229}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.035
+  m_Height: 0.115
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
