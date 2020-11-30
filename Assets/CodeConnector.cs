@@ -38,7 +38,7 @@ public class CodeConnector : MonoBehaviour {
     const int LEFT_ENCODER = 10;
     const int RIGHT_ENCODER = 11;
     const int HEADING = 12;
-    const int INTAKE_STATE = 13;
+    const int MECHANISM_ENCODER = 13;
     const int BALL_PRESENCE = 14;
     const int HEADING_PRECISE = 15;
     const int HEADING_RATE = 16;
@@ -87,6 +87,7 @@ public class CodeConnector : MonoBehaviour {
             values[TIMESTAMP] = (int)(Time.time * 1000);
             values[LEFT_ENCODER] = robot.LeftEncoder;
             values[RIGHT_ENCODER] = robot.RightEncoder;
+            values[MECHANISM_ENCODER] = robot.MechanismEncoder;
             values[HEADING] = (int)robot.GyroAngle;
             values[HEADING_PRECISE] = (int)(robot.GyroAngle * 10);
             values[HEADING_RATE] = (int)(robot.GyroRate * 100);

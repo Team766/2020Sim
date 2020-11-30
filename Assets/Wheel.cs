@@ -21,10 +21,11 @@ public class Wheel : MonoBehaviour
   private float GetAngle()
   {
     // return GetComponent<HingeJoint>().angle;
-    Vector3 offset = transform.localRotation * Vector3.forward;
     Vector3 normal = neutralRotation * GetComponent<HingeJoint>().axis;
+    Vector3 second = Vector3.Normalize(Vector3.one - normal);
+    Vector3 offset = transform.localRotation * second;
     offset = Vector3.ProjectOnPlane(offset, normal);
-    return Angle360(offset, Vector3.forward, normal);
+    return Angle360(offset, second, normal);
   }
 	
 	void Awake ()
