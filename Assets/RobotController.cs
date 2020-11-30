@@ -209,6 +209,17 @@ public class RobotController : NetworkBehaviour {
         launcher.Launch(obj.GetComponent<Rigidbody>());
     }
 
+    public int MechanismEncoder
+    {
+        get
+        {
+            if (twacker) {
+                return twacker.Encoder;
+            }
+            return 0;
+        }
+    }
+
     public int LeftEncoder
     {
         get

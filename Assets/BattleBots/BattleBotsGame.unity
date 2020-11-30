@@ -1104,8 +1104,8 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 0.15
-  m_ConnectedMassScale: 0.35
+  m_MassScale: 0.25
+  m_ConnectedMassScale: 0.04
 --- !u!114 &341901299
 MonoBehaviour:
   m_ObjectHideFlags: 0
