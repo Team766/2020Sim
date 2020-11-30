@@ -9,6 +9,7 @@ TagManager:
   - Intake
   - Fuel
   - Line
+  - Cup
   layers:
   - Default
   - TransparentFX
