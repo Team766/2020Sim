@@ -191,7 +191,7 @@ HingeJoint:
   m_UseMotor: 1
   m_Motor:
     targetVelocity: 0
-    force: 300
+    force: 15
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -1311,7 +1311,7 @@ HingeJoint:
   m_UseMotor: 1
   m_Motor:
     targetVelocity: 0
-    force: 300
+    force: 15
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -2050,6 +2050,14 @@ MonoBehaviour:
   intakeArm: {fileID: 1261176098}
   launcher: {fileID: 591597623}
   intake: {fileID: 1261176100}
+  twacker: {fileID: 0}
+  twackerScaler: 0
+  bopper: {fileID: 0}
+  hammer: {fileID: 0}
+  billboard: {fileID: 0}
+  billboardScale: 0
+  rbg: {fileID: 0}
+  rbgScale: 0
   lineSensor1: {fileID: 384546816}
   lineSensor2: {fileID: 1819376440}
   lineSensor3: {fileID: 315673775}
@@ -3536,7 +3544,7 @@ HingeJoint:
   m_UseMotor: 1
   m_Motor:
     targetVelocity: 0
-    force: 300
+    force: 15
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -4081,7 +4089,7 @@ HingeJoint:
   m_UseMotor: 1
   m_Motor:
     targetVelocity: 0
-    force: 300
+    force: 15
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -4855,7 +4863,7 @@ HingeJoint:
   m_UseMotor: 1
   m_Motor:
     targetVelocity: 0
-    force: 300
+    force: 15
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -5108,7 +5116,7 @@ HingeJoint:
   m_UseMotor: 1
   m_Motor:
     targetVelocity: 0
-    force: 300
+    force: 15
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
