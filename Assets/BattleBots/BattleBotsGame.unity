@@ -2359,6 +2359,7 @@ MonoBehaviour:
   billboardScale: 500
   rbg: {fileID: 9125828802904163132}
   rbgScale: 500
+  rbg2: {fileID: 2738601587380943267}
   lineSensor1: {fileID: 0}
   lineSensor2: {fileID: 0}
   lineSensor3: {fileID: 0}

@@ -35,10 +35,6 @@ public class RobotController : NetworkBehaviour {
     public LinearActuator bopper;
     #endregion
 
-    #region HammerV1
-    public Rigidbody hammer;
-    #endregion
-
     #region BillboardV1
     public Wheel billboard;
     public float billboardScale;
@@ -47,6 +43,7 @@ public class RobotController : NetworkBehaviour {
     #region RBG_V1
     public Wheel rbg;
     public float rbgScale;
+    public Rigidbody rbg2;
     #endregion
 
     public LineSensor lineSensor1;
@@ -90,28 +87,46 @@ public class RobotController : NetworkBehaviour {
         }
 
         #region BusterSwordV1
-        if (twacker) {
-            twacker.GetComponent<Rigidbody>().isKinematic = !isServer;
+        if (twacker && !isServer) {
+            Destroy(twacker);
+            Destroy(twacker.GetComponent<HingeJoint>());
+            //Destroy(twacker.GetComponent<Rigidbody>());
+            twacker.GetComponent<Rigidbody>().isKinematic = true;
         }
         #endregion
         #region PetPaloozaV1
-        if (bopper) {
-            bopper.GetComponent<Rigidbody>().isKinematic = !isServer;
+        if (bopper && !isServer) {
+            Destroy(bopper);
+            Destroy(bopper.GetComponent<ConfigurableJoint>());
+            //Destroy(bopper.GetComponent<Rigidbody>());
+            bopper.GetComponent<Rigidbody>().isKinematic = true;
         }
         #endregion
         #region HammerV1
-        if (hammer) {
-            hammer.isKinematic = !isServer;
+        if (intakeArm && !isServer) {
+            Destroy(intakeArm);
+            Destroy(intakeArm.GetComponent<HingeJoint>());
+            //Destroy(intakeArm.GetComponent<Rigidbody>());
+            intakeArm.GetComponent<Rigidbody>().isKinematic = true;
         }
         #endregion
         #region
-        if (billboard) {
-            billboard.GetComponent<Rigidbody>().isKinematic = !isServer;
+        if (billboard && !isServer) {
+            Destroy(billboard);
+            Destroy(billboard.GetComponent<HingeJoint>());
+            //Destroy(billboard.GetComponent<Rigidbody>());
+            billboard.GetComponent<Rigidbody>().isKinematic = true;
         }
         #endregion
         #region RBG_V1
-        if (rbg) {
-            rbg.GetComponent<Rigidbody>().isKinematic = !isServer;
+        if (rbg && !isServer) {
+            Destroy(rbg2.GetComponent<HingeJoint>());
+            //Destroy(rbg2);
+            rbg2.isKinematic = true;
+            Destroy(rbg);
+            Destroy(rbg.GetComponent<HingeJoint>());
+            //Destroy(rbg.GetComponent<Rigidbody>());
+            rbg.GetComponent<Rigidbody>().isKinematic = true;
         }
         #endregion
 
