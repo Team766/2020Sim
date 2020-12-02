@@ -142,6 +142,14 @@ public class RobotController : NetworkBehaviour {
             robotVariant = clientRobotVariant;
         }
         if (activeRobotVariant != robotVariant) {
+            if (activeRobotVariant != null) {
+                Debug.Log("Deactivating robot variant: " + activeRobotVariant);
+                var oldVariantObj = transform.Find(activeRobotVariant);
+                if (oldVariantObj != null) {
+                    Debug.Log("Found robot variant object");
+                    oldVariantObj.gameObject.SetActive(false);
+                }
+            }
             Debug.Log("Activating robot variant: " + robotVariant);
             var variantObj = transform.Find(robotVariant);
             if (variantObj != null) {
