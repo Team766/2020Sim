@@ -636,6 +636,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Battle Bots R5
       m_Image: {fileID: 0}
+    - m_Text: Battle Bots R6
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3054,6 +3056,7 @@ MonoBehaviour:
   - BattleBotsGame
   - BattleBotsGame
   - BattleBotsGame
+  - BattleBotsGame
   robotVariantNames:
   - 
   - 
@@ -3062,6 +3065,7 @@ MonoBehaviour:
   - HammerV1
   - BillboardV1
   - RBG_V1
+  - IkeaV1
   cameras:
   - {fileID: 0}
   - {fileID: 0}
