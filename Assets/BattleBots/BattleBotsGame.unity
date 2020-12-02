@@ -678,11 +678,6 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 5926140384673830086, guid: 33a69bb984e393ccab461c1699c186ba,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6176502400147911471, guid: 33a69bb984e393ccab461c1699c186ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -747,6 +742,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Cup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
+        type: 3}
+      propertyPath: sceneId
+      value: 2535715708
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a69bb984e393ccab461c1699c186ba, type: 3}
@@ -2354,7 +2354,6 @@ MonoBehaviour:
   twacker: {fileID: 341901299}
   twackerScaler: 1000
   bopper: {fileID: 1635227423}
-  hammer: {fileID: 870204336}
   billboard: {fileID: 919132149567420086}
   billboardScale: 500
   rbg: {fileID: 9125828802904163132}
@@ -2889,11 +2888,6 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 5926140384673830086, guid: 33a69bb984e393ccab461c1699c186ba,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6176502400147911471, guid: 33a69bb984e393ccab461c1699c186ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2958,6 +2952,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Cup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
+        type: 3}
+      propertyPath: sceneId
+      value: 2950194093
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a69bb984e393ccab461c1699c186ba, type: 3}
@@ -3783,11 +3782,6 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 5926140384673830086, guid: 33a69bb984e393ccab461c1699c186ba,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6176502400147911471, guid: 33a69bb984e393ccab461c1699c186ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3852,6 +3846,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Cup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
+        type: 3}
+      propertyPath: sceneId
+      value: 4064267672
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a69bb984e393ccab461c1699c186ba, type: 3}
@@ -3922,11 +3921,6 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 5926140384673830086, guid: 33a69bb984e393ccab461c1699c186ba,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6176502400147911471, guid: 33a69bb984e393ccab461c1699c186ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3991,6 +3985,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Cup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
+        type: 3}
+      propertyPath: sceneId
+      value: 2571757190
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a69bb984e393ccab461c1699c186ba, type: 3}
@@ -4193,11 +4192,6 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 5926140384673830086, guid: 33a69bb984e393ccab461c1699c186ba,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6176502400147911471, guid: 33a69bb984e393ccab461c1699c186ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4262,6 +4256,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Cup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
+        type: 3}
+      propertyPath: sceneId
+      value: 4146494664
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a69bb984e393ccab461c1699c186ba, type: 3}
@@ -5114,11 +5113,6 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 5926140384673830086, guid: 33a69bb984e393ccab461c1699c186ba,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6176502400147911471, guid: 33a69bb984e393ccab461c1699c186ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5183,6 +5177,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Cup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
+        type: 3}
+      propertyPath: sceneId
+      value: 3551774402
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a69bb984e393ccab461c1699c186ba, type: 3}
@@ -7402,10 +7401,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Solo Cup
       objectReference: {fileID: 0}
-    - target: {fileID: 6844495727655758229, guid: 33a69bb984e393ccab461c1699c186ba,
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
         type: 3}
-      propertyPath: m_TagString
-      value: Cup
+      propertyPath: sceneId
+      value: 2180206496
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852663554060256396, guid: 33a69bb984e393ccab461c1699c186ba,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 33a69bb984e393ccab461c1699c186ba
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a69bb984e393ccab461c1699c186ba, type: 3}
