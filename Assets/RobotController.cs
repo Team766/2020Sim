@@ -36,6 +36,11 @@ public class RobotController : NetworkBehaviour {
     public float ikeaScale;
     #endregion
 
+    #region NinjaV1
+    public Wheel ninja;
+    public float ninjaScale;
+    #endregion
+
     #region PetPaloozaV1
     public LinearActuator bopper;
     #endregion
@@ -105,6 +110,14 @@ public class RobotController : NetworkBehaviour {
             Destroy(ikea.GetComponent<HingeJoint>());
             //Destroy(ikea.GetComponent<Rigidbody>());
             ikea.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        #endregion
+        #region NinjaV1
+        if (ninja && !isServer) {
+            Destroy(ninja);
+            Destroy(ninja.GetComponent<HingeJoint>());
+            //Destroy(ninja.GetComponent<Rigidbody>());
+            ninja.GetComponent<Rigidbody>().isKinematic = true;
         }
         #endregion
         #region PetPaloozaV1
@@ -238,6 +251,11 @@ public class RobotController : NetworkBehaviour {
             ikea.RunJoint(ikeaScale * speed);
         }
         #endregion
+        #region NinjaV1
+        if (ninja != null) {
+            ninja.RunJoint(ninjaScale * speed);
+        }
+        #endregion
         #region BillboardV1
         if (billboard != null) {
             billboard.RunJoint(billboardScale * speed);
@@ -315,6 +333,11 @@ public class RobotController : NetworkBehaviour {
             #region IkeaV1
             if (ikea && ikea.Encoder != 0) {
                 return ikea.Encoder;
+            }
+            #endregion
+            #region NinjaV1
+            if (ninja && ninja.Encoder != 0) {
+                return ninja.Encoder;
             }
             #endregion
             #region BillboardV1
