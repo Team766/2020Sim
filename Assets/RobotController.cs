@@ -92,8 +92,25 @@ public class RobotController : NetworkBehaviour {
             Disable();
         }
 
-        if (intakeArm) {
-            intakeArm.GetComponent<Rigidbody>().isKinematic = !isServer;
+        if (!isServer) {
+            foreach (Wheel w in leftWheels) {
+                Destroy(w);
+                Destroy(w.GetComponent<HingeJoint>());
+                Destroy(w.GetComponent<Rigidbody>());
+                //w.GetComponent<Rigidbody>().isKinematic = true;
+            }
+            foreach (Wheel w in rightWheels) {
+                Destroy(w);
+                Destroy(w.GetComponent<HingeJoint>());
+                Destroy(w.GetComponent<Rigidbody>());
+                //w.GetComponent<Rigidbody>().isKinematic = true;
+            }
+            foreach (Wheel w in centerWheel) {
+                Destroy(w);
+                Destroy(w.GetComponent<HingeJoint>());
+                Destroy(w.GetComponent<Rigidbody>());
+                //w.GetComponent<Rigidbody>().isKinematic = true;
+            }
         }
 
         #region BusterSwordV1
