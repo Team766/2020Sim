@@ -94,22 +94,28 @@ public class RobotController : NetworkBehaviour {
 
         if (!isServer) {
             foreach (Wheel w in leftWheels) {
-                Destroy(w);
-                Destroy(w.GetComponent<HingeJoint>());
-                Destroy(w.GetComponent<Rigidbody>());
-                //w.GetComponent<Rigidbody>().isKinematic = true;
+                if (w) {
+                    Destroy(w);
+                    Destroy(w.GetComponent<HingeJoint>());
+                    Destroy(w.GetComponent<Rigidbody>());
+                    //w.GetComponent<Rigidbody>().isKinematic = true;
+                }
             }
             foreach (Wheel w in rightWheels) {
-                Destroy(w);
-                Destroy(w.GetComponent<HingeJoint>());
-                Destroy(w.GetComponent<Rigidbody>());
-                //w.GetComponent<Rigidbody>().isKinematic = true;
+                if (w) {
+                    Destroy(w);
+                    Destroy(w.GetComponent<HingeJoint>());
+                    Destroy(w.GetComponent<Rigidbody>());
+                    //w.GetComponent<Rigidbody>().isKinematic = true;
+                }
             }
             foreach (Wheel w in centerWheel) {
-                Destroy(w);
-                Destroy(w.GetComponent<HingeJoint>());
-                Destroy(w.GetComponent<Rigidbody>());
-                //w.GetComponent<Rigidbody>().isKinematic = true;
+                if (w) {
+                    Destroy(w);
+                    Destroy(w.GetComponent<HingeJoint>());
+                    Destroy(w.GetComponent<Rigidbody>());
+                    //w.GetComponent<Rigidbody>().isKinematic = true;
+                }
             }
         }
 
@@ -223,15 +229,24 @@ public class RobotController : NetworkBehaviour {
 
         foreach (var h in leftWheels)
         {
-            h.RunJoint(motorScaler * left);
+            if (h)
+            {
+                h.RunJoint(motorScaler * left);
+            }
         }
         foreach (var h in rightWheels)
         {
-            h.RunJoint(motorScaler * right);
+            if (h)
+            {
+                h.RunJoint(motorScaler * right);
+            }
         }
         foreach (var h in centerWheel)
         {
-            h.RunJoint(motorScaler * center);
+            if (h)
+            {
+                h.RunJoint(motorScaler * center);
+            }
         }
     }
     
