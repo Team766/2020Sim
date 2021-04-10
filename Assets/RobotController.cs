@@ -430,7 +430,7 @@ public class RobotController : NetworkBehaviour {
     {
         get
         {
-            return Angle360(Vector3.forward, transform.forward, Vector3.up);
+            return Angle360(Vector3.right, transform.forward, Vector3.up);
         }
     }
 

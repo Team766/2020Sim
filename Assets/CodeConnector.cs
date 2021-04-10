@@ -35,6 +35,8 @@ public class CodeConnector : MonoBehaviour {
     // Feedback indexes
     const int TIMESTAMP = 5;
 
+    const int ROBOT_X = 8;
+    const int ROBOT_Y = 9;
     const int LEFT_ENCODER = 10;
     const int RIGHT_ENCODER = 11;
     const int HEADING = 12;
@@ -85,6 +87,8 @@ public class CodeConnector : MonoBehaviour {
             lastFeedback = DateTime.Now;
             int[] values = new int[100];
             values[TIMESTAMP] = (int)(Time.time * 1000);
+            values[ROBOT_X] = (int)(robot.transform.position.x * 1000);
+            values[ROBOT_Y] = (int)(robot.transform.position.z * 1000);
             values[LEFT_ENCODER] = robot.LeftEncoder;
             values[RIGHT_ENCODER] = robot.RightEncoder;
             values[MECHANISM_ENCODER] = robot.MechanismEncoder;
