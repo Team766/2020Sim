@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/BattleBots/BattleBotsGame.unity
     guid: 3c247f3781ca792f69b6069069876df6
+  - enabled: 1
+    path: Assets/PiratesPlunder/PiraresPlunder.unity
+    guid: 3e5214e718c464b54b5bcc3df86b89ad
+  - enabled: 1
+    path: Assets/Testing/Checkerboard.unity
+    guid: 529dd62f650b64e4c88e66cb3f2c32de
   m_configObjects: {}
