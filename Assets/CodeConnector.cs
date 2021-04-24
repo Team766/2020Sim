@@ -82,8 +82,8 @@ public class CodeConnector : MonoBehaviour {
 
     private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
   
-    void Update() {
-        if (DateTime.Now - lastFeedback > TimeSpan.FromMilliseconds(20)) {
+    void FixedUpdate() {
+        if (DateTime.Now - lastFeedback > TimeSpan.FromMilliseconds(1)) {
             lastFeedback = DateTime.Now;
             int[] values = new int[100];
             values[TIMESTAMP] = (int)(Time.time * 1000);
