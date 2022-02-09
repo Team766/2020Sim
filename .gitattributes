@@ -1,28 +1,3 @@
-/Assets/2020[[:space:]]Game/Ball_COLOR.tga filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/Ball_NORM.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/Carpet_COLOR.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/CenterPiece_Corners_COLOR.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/DiamondPlate_BaseColor.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/DiamondPlate_Normal.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/DiamondPlate_OcclusionRoughnessMetallic.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/HangerMetal_NORMAL.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/2020[[:space:]]Game/Spinner_Wheel_COLOR.TGA filter=lfs diff=lfs merge=lfs -text
-/Assets/BattleBots/BillboardV1/Billboard[[:space:]]Stator.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/BattleBots/BusterSwordV1/motor_asm.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/BattleBots/BusterSwordV1/twacker.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/BattleBots/IkeaV1/IKEA[[:space:]]Stator.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/BattleBots/NinjaV1/Ninja[[:space:]]Stator.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/BattleBots/RBG_V1/RBG[[:space:]]Stator.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/Rookie[[:space:]]Chassis/Rookie[[:space:]]Chassis.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/Rookie[[:space:]]Chassis/TetrixOmni4.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/USPS[[:space:]]Game/PhalangesV1/bottom_gripper.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/USPS[[:space:]]Game/PhalangesV1/elevator_cart.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/USPS[[:space:]]Game/PhalangesV1/top_gripper.obj filter=lfs diff=lfs merge=lfs -text
-/Assets/2022[[:space:]]Game/FRC[[:space:]]2022[[:space:]]Field.fbx filter=lfs diff=lfs merge=lfs -text
-/Assets/2022[[:space:]]Game/TennisBall.fbx
-/Assets/2022[[:space:]]Robot/2022.RevA.1 Arms.fbx
-/Assets/2022[[:space:]]Robot/2022.RevA.1 Elevator.fbx
-/Assets/2022[[:space:]]Robot/2022.RevA.1[[:space:]]Stator.fbx filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
 *.obj filter=lfs diff=lfs merge=lfs -text
 *.tga filter=lfs diff=lfs merge=lfs -text
-*.fbx filter=lfs diff=lfs merge=lfs -text
