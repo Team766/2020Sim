@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using Mirror;
 
@@ -161,7 +161,14 @@ public class RobotController : NetworkBehaviour {
         #region HammerV1
         if (intakeArm && !isServer) {
             Destroy(intakeArm);
-            Destroy(intakeArm.GetComponent<HingeJoint>());
+            var intakeHinge = intakeArm.GetComponent<HingeJoint>();
+            if (intakeHinge) {
+                Destroy(intakeHinge);
+            }
+            var intakeCjoint = intakeArm.GetComponent<ConfigurableJoint>();
+            if (intakeCjoint) {
+                Destroy(intakeCjoint);
+            }
             Destroy(intakeArm.GetComponent<Rigidbody>());
             //intakeArm.GetComponent<Rigidbody>().isKinematic = true;
         }

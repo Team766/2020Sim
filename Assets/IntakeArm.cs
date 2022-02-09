@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
-[RequireComponent(typeof(HingeJoint))]
 public class IntakeArm : MonoBehaviour
 {
     private Vector3 neutralPosition;
     private Quaternion neutralRotation;
-    public float previousAngle;
+    private float previousAngle;
+    public float maxSpeed;
 
     static float Angle360(Vector3 v1, Vector3 v2, Vector3 n)
     {
@@ -18,11 +19,25 @@ public class IntakeArm : MonoBehaviour
         return angle * sign;
     }
 
+    private Vector3 GetAxis()
+    {
+        var hinge = GetComponent<HingeJoint>();
+        if (hinge)
+        {
+            return hinge.axis;
+        }
+        var cjoint = GetComponent<ConfigurableJoint>();
+        if (cjoint)
+        {
+            return cjoint.axis;
+        }
+        return Vector3.right;
+    }
+
     private float GetAngle()
     {
-        // return GetComponent<HingeJoint>().angle;
         Vector3 offset = transform.localRotation * Vector3.forward;
-        Vector3 normal = neutralRotation * GetComponent<HingeJoint>().axis;
+        Vector3 normal = neutralRotation * GetAxis();
         offset = Vector3.ProjectOnPlane(offset, normal);
         return Angle360(offset, Vector3.forward, normal);
     }
@@ -44,12 +59,6 @@ public class IntakeArm : MonoBehaviour
         previousAngle = angle;
     }
 
-    void Update()
-    {
-        //transform.localPosition = neutralPosition;
-        //transform.localEulerAngles = Vector3.Project(transform.localEulerAngles, neutralRotation * GetComponent<HingeJoint>().axis);
-    }
-
     public float Angle;
 
     public int Encoder
@@ -65,8 +74,30 @@ public class IntakeArm : MonoBehaviour
         float targetVel = speed;
 
         // set joint motor parameters
-        JointMotor myMotor = GetComponent<HingeJoint>().motor;
-        myMotor.targetVelocity = targetVel;
-        GetComponent<HingeJoint>().motor = myMotor;
+        var hinge = GetComponent<HingeJoint>();
+        if (hinge)
+        {
+            JointMotor myMotor = hinge.motor;
+            myMotor.targetVelocity = targetVel;
+            hinge.motor = myMotor;
+        }
+        var cjoint = GetComponent<ConfigurableJoint>();
+        if (cjoint)
+        {
+            if (maxSpeed == 0)
+            {
+                throw new Exception("maxSpeed must be non-zero");
+            }
+
+            float appliedForce = targetVel;
+            
+            JointDrive drive = GetComponent<ConfigurableJoint>().angularXDrive;
+            drive.positionSpring = 0;
+            drive.positionDamper = Mathf.Abs(appliedForce / maxSpeed);
+            drive.maximumForce = Mathf.Abs(appliedForce);
+            GetComponent<ConfigurableJoint>().angularXDrive = drive;
+            GetComponent<ConfigurableJoint>().targetAngularVelocity =
+                Mathf.Sign(appliedForce) * maxSpeed * Vector3.right;
+        }
     }
 }

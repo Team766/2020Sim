@@ -18,6 +18,11 @@
 /Assets/USPS[[:space:]]Game/PhalangesV1/bottom_gripper.obj filter=lfs diff=lfs merge=lfs -text
 /Assets/USPS[[:space:]]Game/PhalangesV1/elevator_cart.obj filter=lfs diff=lfs merge=lfs -text
 /Assets/USPS[[:space:]]Game/PhalangesV1/top_gripper.obj filter=lfs diff=lfs merge=lfs -text
+/Assets/2022[[:space:]]Game/FRC[[:space:]]2022[[:space:]]Field.fbx filter=lfs diff=lfs merge=lfs -text
+/Assets/2022[[:space:]]Game/TennisBall.fbx
+/Assets/2022[[:space:]]Robot/2022.RevA.1 Arms.fbx
+/Assets/2022[[:space:]]Robot/2022.RevA.1 Elevator.fbx
+/Assets/2022[[:space:]]Robot/2022.RevA.1[[:space:]]Stator.fbx filter=lfs diff=lfs merge=lfs -text
 *.obj filter=lfs diff=lfs merge=lfs -text
 *.tga filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text

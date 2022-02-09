@@ -6,7 +6,8 @@ public class Goal : MonoBehaviour {
     public GameGUI gameGui;
     public bool isBlue;
     public int points;
-	public Transform respawnPoint;
+	public Transform[] respawnPoints;
+	public float respawnRandomRange = 0.0f;
 	
 	void OnTriggerEnter(Collider c)
 	{
@@ -28,7 +29,13 @@ public class Goal : MonoBehaviour {
 
         yield return new WaitForSeconds(0.5f);
 
-		c.transform.position = respawnPoint.position;
+		var respawnPoint = respawnPoints[Random.Range(0, respawnPoints.Length)];
+		var pointOffset = new Vector3(
+			Random.Range(-respawnRandomRange, respawnRandomRange),
+			0,
+			Random.Range(-respawnRandomRange, respawnRandomRange));
+
+		c.transform.position = respawnPoint.position + pointOffset;
 		c.GetComponent<Rigidbody>().velocity = Vector3.zero;
 		c.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 	}

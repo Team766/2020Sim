@@ -622,6 +622,8 @@ MonoBehaviour:
     m_Options:
     - m_Text: Load Level
       m_Image: {fileID: 0}
+    - m_Text: FIRST 2022
+      m_Image: {fileID: 0}
     - m_Text: FIRST 2020
       m_Image: {fileID: 0}
     - m_Text: Checkerboard
@@ -3057,6 +3059,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   sceneNames:
+  - FRC 2022
   - 2020Field
   - Checkerboard
   - USPS Game

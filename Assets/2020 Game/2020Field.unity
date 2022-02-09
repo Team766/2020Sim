@@ -1425,6 +1425,16 @@ PrefabInstance:
       propertyPath: gameGui
       value: 
       objectReference: {fileID: 1957400912}
+    - target: {fileID: 2408887283491539749, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408887283491539749, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 588889439}
     - target: {fileID: 2408887283633675332, guid: e0708bec2cb6b301f974c7ccdbccd37f,
         type: 3}
       propertyPath: isBlue
@@ -1435,6 +1445,16 @@ PrefabInstance:
       propertyPath: gameGui
       value: 
       objectReference: {fileID: 1957400912}
+    - target: {fileID: 2408887283633675332, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408887283633675332, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 588889439}
     - target: {fileID: 2408887284117423362, guid: e0708bec2cb6b301f974c7ccdbccd37f,
         type: 3}
       propertyPath: isBlue
@@ -1445,6 +1465,16 @@ PrefabInstance:
       propertyPath: gameGui
       value: 
       objectReference: {fileID: 1957400912}
+    - target: {fileID: 2408887284117423362, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408887284117423362, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 588889439}
     - target: {fileID: 2802557582327009507, guid: e0708bec2cb6b301f974c7ccdbccd37f,
         type: 3}
       propertyPath: m_RootOrder
@@ -1534,6 +1564,12 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0708bec2cb6b301f974c7ccdbccd37f, type: 3}
+--- !u!4 &588889439 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2408887284636264903, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+    type: 3}
+  m_PrefabInstance: {fileID: 588889438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &591597621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2099,10 @@ MonoBehaviour:
   rbg: {fileID: 0}
   rbgScale: 0
   rbg2: {fileID: 0}
+  phalangesElevator: {fileID: 0}
+  phalangesElevatorScale: 0
+  phalangesGrippers: []
+  phalangesGripperScale: 0
   lineSensor1: {fileID: 384546816}
   lineSensor2: {fileID: 1819376440}
   lineSensor3: {fileID: 315673775}
@@ -5413,16 +5453,46 @@ PrefabInstance:
       propertyPath: gameGui
       value: 
       objectReference: {fileID: 1957400912}
+    - target: {fileID: 2408887283491539749, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408887283491539749, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2408887283430898562}
     - target: {fileID: 2408887283633675332, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: gameGui
+      value: 
+      objectReference: {fileID: 1957400912}
+    - target: {fileID: 2408887283633675332, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408887283633675332, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2408887283430898562}
+    - target: {fileID: 2408887284117423362, guid: e0708bec2cb6b301f974c7ccdbccd37f,
         type: 3}
       propertyPath: gameGui
       value: 
       objectReference: {fileID: 1957400912}
     - target: {fileID: 2408887284117423362, guid: e0708bec2cb6b301f974c7ccdbccd37f,
         type: 3}
-      propertyPath: gameGui
+      propertyPath: respawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408887284117423362, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+        type: 3}
+      propertyPath: respawnPoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1957400912}
+      objectReference: {fileID: 2408887283430898562}
     - target: {fileID: 2802557582327009507, guid: e0708bec2cb6b301f974c7ccdbccd37f,
         type: 3}
       propertyPath: m_RootOrder
@@ -5495,6 +5565,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0708bec2cb6b301f974c7ccdbccd37f, type: 3}
+--- !u!4 &2408887283430898562 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2408887284636264903, guid: e0708bec2cb6b301f974c7ccdbccd37f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2408887283430898561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &2587579764067255534
 MeshFilter:
   m_ObjectHideFlags: 0
