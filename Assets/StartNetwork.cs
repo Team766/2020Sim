@@ -12,9 +12,9 @@ public class StartNetwork : MonoBehaviour {
             if (Application.platform == RuntimePlatform.WebGLPlayer) {
                 var hostname = new Uri(Application.absoluteURL).Host;
                 var manager = GetComponent<NetworkManager>();
-                Debug.Log("Connecting to " + hostname);
-                manager.networkAddress = hostname;
-                manager.StartClient();
+                var websocketUri = new Uri($"ws://{hostname}:80/ws");
+                Debug.Log("Connecting to " + websocketUri);
+                manager.StartClient(websocketUri);
             }
         }
     }
