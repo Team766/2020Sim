@@ -10,6 +10,7 @@ TagManager:
   - Fuel
   - Line
   - Cup
+  - Crate
   layers:
   - Default
   - TransparentFX
@@ -22,9 +23,9 @@ TagManager:
   - Robot
   - Wheels
   - Line
-  - 
-  - 
-  - 
+  - Crates
+  - Balls
+  - CrateSides
   - 
   - 
   - 

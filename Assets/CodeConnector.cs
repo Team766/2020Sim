@@ -159,6 +159,7 @@ public class CodeConnector : MonoBehaviour {
                         }*/
 
                         robot.SetMotors(commands[LEFT_MOTOR] / 512.0f, commands[RIGHT_MOTOR] / 512.0f, commands[CENTER_MOTOR] / 512.0f);
+                        robot.SetAuxiliaryMotor(commands[CENTER_MOTOR] / 512.0f);
                         robot.SetIntake(commands[INTAKE] / 512.0f);
                         robot.SetIntakeArm(commands[INTAKE_ARM] > 0);
                         if (commands[LAUNCH] >= 256) {

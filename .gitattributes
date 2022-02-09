@@ -15,6 +15,9 @@
 /Assets/BattleBots/RBG_V1/RBG[[:space:]]Stator.obj filter=lfs diff=lfs merge=lfs -text
 /Assets/Rookie[[:space:]]Chassis/Rookie[[:space:]]Chassis.obj filter=lfs diff=lfs merge=lfs -text
 /Assets/Rookie[[:space:]]Chassis/TetrixOmni4.obj filter=lfs diff=lfs merge=lfs -text
+/Assets/USPS[[:space:]]Game/PhalangesV1/bottom_gripper.obj filter=lfs diff=lfs merge=lfs -text
+/Assets/USPS[[:space:]]Game/PhalangesV1/elevator_cart.obj filter=lfs diff=lfs merge=lfs -text
+/Assets/USPS[[:space:]]Game/PhalangesV1/top_gripper.obj filter=lfs diff=lfs merge=lfs -text
 *.obj filter=lfs diff=lfs merge=lfs -text
 *.tga filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text

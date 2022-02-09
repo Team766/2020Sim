@@ -46,6 +46,9 @@ public class InputController : MonoBehaviour
 		
 		robot.SetMotors(leftPower, rightPower, centerPower);
 
+		float auxiliary = Input.GetAxis("P" + playerNumber + " auxiliary");
+        robot.SetAuxiliaryMotor(auxiliary);
+
         float intake = Input.GetAxis("P" + playerNumber + " intake");
         robot.SetIntake(intake);
 

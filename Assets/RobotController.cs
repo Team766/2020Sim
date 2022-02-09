@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using Mirror;
 
@@ -54,6 +54,13 @@ public class RobotController : NetworkBehaviour {
     public Wheel rbg;
     public float rbgScale;
     public Rigidbody rbg2;
+    #endregion
+
+    #region PhalangesV1
+    public Elevator phalangesElevator;
+    public float phalangesElevatorScale;
+    public ElevatorKinematic[] phalangesGrippers = new ElevatorKinematic[0];
+    public float phalangesGripperScale;
     #endregion
 
     public LineSensor lineSensor1;
@@ -159,7 +166,7 @@ public class RobotController : NetworkBehaviour {
             //intakeArm.GetComponent<Rigidbody>().isKinematic = true;
         }
         #endregion
-        #region
+        #region BillboardV1
         if (billboard && !isServer) {
             Destroy(billboard);
             Destroy(billboard.GetComponent<HingeJoint>());
@@ -176,6 +183,22 @@ public class RobotController : NetworkBehaviour {
             Destroy(rbg.GetComponent<HingeJoint>());
             Destroy(rbg.GetComponent<Rigidbody>());
             //rbg.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        #endregion
+        #region PhalangesV1
+        if (phalangesElevator && !isServer) {
+            Destroy(phalangesElevator);
+            Destroy(phalangesElevator.GetComponent<ConfigurableJoint>());
+            Destroy(phalangesElevator.GetComponent<Rigidbody>());
+            //phalangesElevator.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        foreach (var g in phalangesGrippers) {
+            if (g && !isServer) {
+                Destroy(g);
+                /*Destroy(g.GetComponent<ConfigurableJoint>());
+                Destroy(g.GetComponent<Rigidbody>());*/
+                //g.GetComponent<Rigidbody>().isKinematic = true;
+            }
         }
         #endregion
 
@@ -212,6 +235,8 @@ public class RobotController : NetworkBehaviour {
     public void Disable() {
         _SetMotors(0, 0, 0);
         _SetIntake(0);
+        _SetAuxiliaryMotor(0);
+        
         // Leave IntakeArm "enabled" because it's modeling a pneumatic cylinder,
         //     so it should retain it's last state.
     }
@@ -262,6 +287,20 @@ public class RobotController : NetworkBehaviour {
         return true;
     }
 
+    public void SetAuxiliaryMotor(float speed) {
+        if (IsDisabled) {
+            return;
+        }
+        _SetAuxiliaryMotor(speed);
+    }
+    private void _SetAuxiliaryMotor(float speed) {
+        #region PhalangesV1
+        foreach (var g in phalangesGrippers) {
+            g.RunJoint(phalangesGripperScale * speed);
+        }
+        #endregion
+    }
+
     public void SetIntake(float speed) {
         if (IsDisabled) {
             return;
@@ -296,6 +335,11 @@ public class RobotController : NetworkBehaviour {
         #region RGB_V1
         if (rbg != null) {
             rbg.RunJoint(rbgScale * speed);
+        }
+        #endregion
+        #region PhalangesV1
+        if (phalangesElevator != null) {
+            phalangesElevator.RunJoint(phalangesElevatorScale * speed);
         }
         #endregion
     }
@@ -380,6 +424,11 @@ public class RobotController : NetworkBehaviour {
             #region RBG_V1
             if (rbg && rbg.Encoder != 0) {
                 return rbg.Encoder;
+            }
+            #endregion
+            #region PhalangesV1
+            if (phalangesElevator && phalangesElevator.Encoder != 0) {
+                return phalangesElevator.Encoder;
             }
             #endregion
             return 0;
