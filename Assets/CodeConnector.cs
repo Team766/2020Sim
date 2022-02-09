@@ -60,6 +60,9 @@ public class CodeConnector : MonoBehaviour {
     const int ButtonsPerJoystick = 8;
   
     void Start() {
+        if (Application.platform != RuntimePlatform.WebGLPlayer) {
+            Application.targetFrameRate = Mathf.RoundToInt(1f / Time.fixedDeltaTime);
+        }
         Debug.Log("Starting UDP Code Connector");
         udpClient = new UdpClient(COMMANDS_PORT);
         udpClient.Connect(IPAddress.Loopback, FEEDBACK_PORT);
