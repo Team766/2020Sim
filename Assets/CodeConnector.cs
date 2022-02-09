@@ -33,7 +33,8 @@ public class CodeConnector : MonoBehaviour {
 	const int INTAKE_ARM = 15;
 
     // Feedback indexes
-    const int TIMESTAMP = 5;
+    const int TIMESTAMP_LSW = 5;
+    const int TIMESTAMP_MSW = 4;
 
     const int ROBOT_X = 8;
     const int ROBOT_Y = 9;
@@ -89,7 +90,9 @@ public class CodeConnector : MonoBehaviour {
         if (DateTime.Now - lastFeedback > TimeSpan.FromMilliseconds(1)) {
             lastFeedback = DateTime.Now;
             int[] values = new int[100];
-            values[TIMESTAMP] = (int)(Time.time * 1000);
+            long timestamp = (long)(Time.time * 1000);
+            values[TIMESTAMP_LSW] = (int)timestamp;
+            values[TIMESTAMP_MSW] = (int)(timestamp >> 32);
             values[ROBOT_X] = (int)(robot.transform.position.x * 1000);
             values[ROBOT_Y] = (int)(robot.transform.position.z * 1000);
             values[LEFT_ENCODER] = robot.LeftEncoder;
