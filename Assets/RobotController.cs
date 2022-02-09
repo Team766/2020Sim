@@ -479,7 +479,7 @@ public class RobotController : NetworkBehaviour {
     {
         get
         {
-            return Angle360(Vector3.right, transform.forward, Vector3.up);
+            return transform.eulerAngles.y;
         }
     }
 
@@ -491,6 +491,20 @@ public class RobotController : NetworkBehaviour {
     public float GyroRate {
         get;
         private set;
+    }
+
+    public float GyroPitch {
+        get
+        {
+            return transform.eulerAngles.x;
+        }
+    }
+
+    public float GyroRoll {
+        get
+        {
+            return transform.eulerAngles.z;
+        }
     }
 
     public bool BallPresence

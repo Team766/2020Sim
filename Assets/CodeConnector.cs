@@ -59,6 +59,9 @@ public class CodeConnector : MonoBehaviour {
     const int AxesPerJoystick = 4;
     const int JoystickButtonStart = 40;
     const int ButtonsPerJoystick = 8;
+
+    const int GYRO_PITCH = 80;
+    const int GYRO_ROLL = 81;
   
     void Start() {
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
@@ -101,6 +104,8 @@ public class CodeConnector : MonoBehaviour {
             values[HEADING] = (int)robot.GyroAngle;
             values[HEADING_PRECISE] = (int)(robot.GyroAngle * 10);
             values[HEADING_RATE] = (int)(robot.GyroRate * 100);
+            values[GYRO_PITCH] = (int)(robot.GyroPitch * 10);
+            values[GYRO_ROLL] = (int)(robot.GyroRoll * 10);
             values[BALL_PRESENCE] = robot.BallPresence ? 1 : 0;
             if (robot.lineSensor1 != null) {
                 values[LINE_SENSOR_1] = robot.lineSensor1.IsDetecting ? 1 : 0;
