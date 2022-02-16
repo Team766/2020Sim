@@ -19,7 +19,7 @@ public class OperatorInterface : NetworkBehaviour {
     public Joystick[] joysticks =
         Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(_ => new Joystick()).ToArray();
 
-    [Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
     private void CmdSetJoysticks(Joystick[] joysticks) {
         this.joysticks = joysticks;
     }

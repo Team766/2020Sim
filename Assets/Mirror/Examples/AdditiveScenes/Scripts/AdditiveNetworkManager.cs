@@ -2,12 +2,18 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Mirror.Examples.Additive
+/*
+	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
+	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
+*/
+
+namespace Mirror.Examples.AdditiveScenes
 {
     [AddComponentMenu("")]
     public class AdditiveNetworkManager : NetworkManager
     {
-        static readonly ILogger logger = LogFactory.GetLogger(typeof(AdditiveNetworkManager));
+        [Tooltip("Trigger Zone Prefab")]
+        public GameObject Zone;
 
         [Scene]
         [Tooltip("Add all sub-scenes to this list")]
@@ -19,17 +25,9 @@ namespace Mirror.Examples.Additive
 
             // load all subscenes on the server only
             StartCoroutine(LoadSubScenes());
-        }
 
-        IEnumerator LoadSubScenes()
-        {
-            logger.Log("Loading Scenes");
-
-            foreach (string sceneName in subScenes)
-            {
-                yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                if (logger.LogEnabled()) logger.Log($"Loaded {sceneName}");
-            }
+            // Instantiate Zone Handler on server only
+            Instantiate(Zone);
         }
 
         public override void OnStopServer()
@@ -42,15 +40,26 @@ namespace Mirror.Examples.Additive
             StartCoroutine(UnloadScenes());
         }
 
+        IEnumerator LoadSubScenes()
+        {
+            Debug.Log("Loading Scenes");
+
+            foreach (string sceneName in subScenes)
+            {
+                yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                // Debug.Log($"Loaded {sceneName}");
+            }
+        }
+
         IEnumerator UnloadScenes()
         {
-            logger.Log("Unloading Subscenes");
+            Debug.Log("Unloading Subscenes");
 
             foreach (string sceneName in subScenes)
                 if (SceneManager.GetSceneByName(sceneName).IsValid() || SceneManager.GetSceneByPath(sceneName).IsValid())
                 {
                     yield return SceneManager.UnloadSceneAsync(sceneName);
-                    if (logger.LogEnabled()) logger.Log($"Unloaded {sceneName}");
+                    // Debug.Log($"Unloaded {sceneName}");
                 }
 
             yield return Resources.UnloadUnusedAssets();

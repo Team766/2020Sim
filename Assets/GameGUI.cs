@@ -40,7 +40,7 @@ public class GameGUI : NetworkBehaviour {
     [SyncVar]
     private System.Guid ownerId = System.Guid.Empty;
     
-    protected SyncListString messages = new SyncListString();
+    protected readonly SyncList<string> messages = new SyncList<string>();
     
     public RobotMode RobotMode {
         get {
@@ -105,7 +105,7 @@ public class GameGUI : NetworkBehaviour {
                      robotVariantNames[dropdownIndex - 1]);
     }
 
-    [Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
     private void CmdLoadScene(string sceneName, string robotVariantName) {
         Debug.Log("Loading scene " + sceneName + " " + robotVariantName);
         RobotController.robotVariant = robotVariantName;
@@ -122,7 +122,7 @@ public class GameGUI : NetworkBehaviour {
         }
     }
 
-    [Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
     private void CmdSetRobotMode(System.Guid newOwnerId, string mode) {
         SetRobotMode(newOwnerId, (RobotMode)Enum.Parse(typeof(RobotMode), mode, true));
     }
