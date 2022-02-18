@@ -7,7 +7,7 @@ using Mirror;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NetworkManager))]
 public class StartNetwork : MonoBehaviour {
-    void Start() {
+    void Update() {
         if (!NetworkClient.active) {
             if (Application.platform == RuntimePlatform.WebGLPlayer) {
                 var hostname = new Uri(Application.absoluteURL).Host;

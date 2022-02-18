@@ -57,14 +57,15 @@ public class GameGUI : NetworkBehaviour {
 
     void Start() {
         SelectCamera(initialCamera);
+    }
+
+    void Update() {
         // NOTE(ryan.cahoon, 2020-09-23): This seems to put the GUI in the right
         // place on WebGL. This shouldn't be necessary (and it works fine
         // without this on desktop), but it's cheap to do and there are more
         // important things to work on.
         GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-    }
     
-    void Update() {
         messageText.text = string.Join("\n", messages);
         scoreText.text = "Red score: " + redScore + "  Blue score: " + blueScore;
 
