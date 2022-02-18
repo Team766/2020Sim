@@ -178,9 +178,9 @@ namespace Mirror
         // Returns true if position, rotation AND scale are unchanged, within given sensitivity range.
         protected virtual bool CompareSnapshots(NTSnapshot currentSnapshot)
         {
-            positionChanged = Vector3.SqrMagnitude(lastSnapshot.position - currentSnapshot.position) > positionSensitivity * positionSensitivity;
-            rotationChanged = Quaternion.Angle(lastSnapshot.rotation, currentSnapshot.rotation) > rotationSensitivity;
-            scaleChanged = Vector3.SqrMagnitude(lastSnapshot.scale - currentSnapshot.scale) > scaleSensitivity * scaleSensitivity;
+            positionChanged = Vector3.SqrMagnitude(lastSnapshot.position - currentSnapshot.position) >= positionSensitivity * positionSensitivity;
+            rotationChanged = Quaternion.Angle(lastSnapshot.rotation, currentSnapshot.rotation) >= rotationSensitivity;
+            scaleChanged = Vector3.SqrMagnitude(lastSnapshot.scale - currentSnapshot.scale) >= scaleSensitivity * scaleSensitivity;
 
             return (!positionChanged && !rotationChanged && !scaleChanged);
         }

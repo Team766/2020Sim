@@ -100,6 +100,7 @@ public class RobotController : NetworkBehaviour {
         }
 
         if (!isServer) {
+            GetComponent<Rigidbody>().useGravity = false;
             foreach (Wheel w in leftWheels) {
                 if (w) {
                     Destroy(w);

@@ -1712,8 +1712,8 @@ MonoBehaviour:
   catchupMultiplier: 0.1
   onlySyncOnChange: 1
   bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
+  positionSensitivity: 0
+  rotationSensitivity: 0
   scaleSensitivity: 0.01
   showGizmos: 0
   showOverlay: 0
@@ -1753,10 +1753,10 @@ MonoBehaviour:
   clientAuthority: 0
   syncVelocity: 1
   clearVelocity: 0
-  velocitySensitivity: 0.1
+  velocitySensitivity: 0
   syncAngularVelocity: 1
   clearAngularVelocity: 0
-  angularVelocitySensitivity: 0.1
+  angularVelocitySensitivity: 0
 --- !u!114 &801970427
 MonoBehaviour:
   m_ObjectHideFlags: 0
