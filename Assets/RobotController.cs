@@ -211,7 +211,9 @@ public class RobotController : NetworkBehaviour {
         #endregion
 
         for (int i = 0; i < heldObjects.Length; ++i) {
-            heldObjects[i].SetState(holding > i);
+            if (heldObjects[i]) {
+                heldObjects[i].SetState(holding > i);
+            }
         }
     }
 
