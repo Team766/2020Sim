@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/2022 Game/FRC 2022.unity
     guid: 9e5fe9c672e8d43ffaa5cb17e6ec6911
+  - enabled: 1
+    path: Assets/2022 Game/FRC 2022 Ball Mechs.unity
+    guid: 69037e3841f4944d3b82d9903bcec97a
   m_configObjects: {}

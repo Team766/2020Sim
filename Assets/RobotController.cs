@@ -63,6 +63,12 @@ public class RobotController : NetworkBehaviour {
     public float phalangesGripperScale;
     #endregion
 
+    public Wheel auxWheel;
+    public float auxWheelScale;
+
+    public Wheel aux2Wheel;
+    public float aux2WheelScale;
+
     public LineSensor lineSensor1;
     public LineSensor lineSensor2;
     public LineSensor lineSensor3;
@@ -209,6 +215,18 @@ public class RobotController : NetworkBehaviour {
             }
         }
         #endregion
+        if (auxWheel && !isServer) {
+            Destroy(auxWheel);
+            Destroy(auxWheel.GetComponent<HingeJoint>());
+            Destroy(auxWheel.GetComponent<Rigidbody>());
+            //auxWheel.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        if (aux2Wheel && !isServer) {
+            Destroy(aux2Wheel);
+            Destroy(aux2Wheel.GetComponent<HingeJoint>());
+            Destroy(aux2Wheel.GetComponent<Rigidbody>());
+            //aux2Wheel.GetComponent<Rigidbody>().isKinematic = true;
+        }
 
         for (int i = 0; i < heldObjects.Length; ++i) {
             if (heldObjects[i]) {
@@ -246,6 +264,7 @@ public class RobotController : NetworkBehaviour {
         _SetMotors(0, 0, 0);
         _SetIntake(0);
         _SetAuxiliaryMotor(0);
+        _SetAuxiliary2Motor(0);
         
         // Leave IntakeArm "enabled" because it's modeling a pneumatic cylinder,
         //     so it should retain it's last state.
@@ -309,6 +328,21 @@ public class RobotController : NetworkBehaviour {
             g.RunJoint(phalangesGripperScale * speed);
         }
         #endregion
+        if (auxWheel != null) {
+            auxWheel.RunJoint(auxWheelScale * speed);
+        }
+    }
+
+    public void SetAuxiliary2Motor(float speed) {
+        if (IsDisabled) {
+            return;
+        }
+        _SetAuxiliary2Motor(speed);
+    }
+    private void _SetAuxiliary2Motor(float speed) {
+        if (aux2Wheel != null) {
+            aux2Wheel.RunJoint(aux2WheelScale * speed);
+        }
     }
 
     public void SetIntake(float speed) {

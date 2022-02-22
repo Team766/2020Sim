@@ -31,6 +31,7 @@ public class CodeConnector : MonoBehaviour {
 	const int INTAKE = 12;
 	const int LAUNCH = 13;
 	const int INTAKE_ARM = 15;
+    const int AUX2_MOTOR = 16;
 
     // Feedback indexes
     const int TIMESTAMP_LSW = 5;
@@ -171,6 +172,7 @@ public class CodeConnector : MonoBehaviour {
 
                         robot.SetMotors(commands[LEFT_MOTOR] / 512.0f, commands[RIGHT_MOTOR] / 512.0f, commands[CENTER_MOTOR] / 512.0f);
                         robot.SetAuxiliaryMotor(commands[CENTER_MOTOR] / 512.0f);
+                        robot.SetAuxiliary2Motor(commands[AUX2_MOTOR] / 512.0f);
                         robot.SetIntake(commands[INTAKE] / 512.0f);
                         robot.SetIntakeArm(commands[INTAKE_ARM] > 0);
                         if (commands[LAUNCH] >= 256) {

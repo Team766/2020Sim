@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LineSensor : MonoBehaviour {
+    public string detectedTag = "Line";
+
     public bool IsDetecting {
         get {
             return colliding.Count > 0;
@@ -12,7 +14,7 @@ public class LineSensor : MonoBehaviour {
     private HashSet<Collider> colliding = new HashSet<Collider>();
     
     void OnTriggerEnter(Collider c) {
-		if (c.tag == "Line") {
+		if (c.tag == detectedTag) {
 			colliding.Add(c);
 		}
 	}
