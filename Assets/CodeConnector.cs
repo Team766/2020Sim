@@ -17,6 +17,9 @@ public class CodeConnector : MonoBehaviour {
     private DateTime lastFeedback, lastCommand;
     private float lastConnectException = -1000;
     
+    private static int resetCounter = 0;
+    private static bool resetCallbackRegistered = false;
+
     private bool launched = false;
     
     const int COMMANDS_PORT = 7661;
@@ -36,6 +39,8 @@ public class CodeConnector : MonoBehaviour {
     // Feedback indexes
     const int TIMESTAMP_LSW = 5;
     const int TIMESTAMP_MSW = 4;
+
+    const int RESET_COUNTER = 6;
 
     const int ROBOT_X = 8;
     const int ROBOT_Y = 9;
@@ -68,6 +73,12 @@ public class CodeConnector : MonoBehaviour {
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
             Application.targetFrameRate = Mathf.RoundToInt(1f / Time.fixedDeltaTime);
         }
+
+        if (!resetCallbackRegistered) {
+            SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) => { ++resetCounter; };
+            resetCallbackRegistered = true;
+        }
+
         Debug.Log("Starting UDP Code Connector");
         udpClient = new UdpClient(COMMANDS_PORT);
         udpClient.Connect(IPAddress.Loopback, FEEDBACK_PORT);
@@ -97,6 +108,7 @@ public class CodeConnector : MonoBehaviour {
             long timestamp = (long)(Time.timeAsDouble * 1000);
             values[TIMESTAMP_LSW] = (int)timestamp;
             values[TIMESTAMP_MSW] = (int)(timestamp >> 32);
+            values[RESET_COUNTER] = resetCounter;
             values[ROBOT_X] = (int)(robot.transform.position.x * 1000);
             values[ROBOT_Y] = (int)(robot.transform.position.z * 1000);
             values[LEFT_ENCODER] = robot.LeftEncoder;
