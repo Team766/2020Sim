@@ -1152,7 +1152,13 @@ namespace Mirror
                 {
                     // Debug.Log($"SpawnObjects sceneId:{identity.sceneId:X} name:{identity.gameObject.name}");
                     identity.gameObject.SetActive(true);
+                }
+            }
 
+            // second pass: spawn all scene objects
+            foreach (NetworkIdentity identity in identities)
+            {
+                if (ValidateSceneObject(identity)) {
                     // fix https://github.com/vis2k/Mirror/issues/2778:
                     // -> SetActive(true) does NOT call Awake() if the parent
                     //    is inactive
@@ -1160,18 +1166,14 @@ namespace Mirror
                     //    because our second pass below spawns and works with it
                     // => detect this situation and manually call Awake for
                     //    proper initialization
+                    // NOTE(rcahoon, 2022-10-04): Moved to the second-pass loop, per https://github.com/vis2k/Mirror/issues/2991
                     if (!identity.gameObject.activeInHierarchy)
                         identity.Awake();
-                }
-            }
 
-            // second pass: spawn all scene objects
-            foreach (NetworkIdentity identity in identities)
-            {
-                if (ValidateSceneObject(identity))
                     // pass connection so that authority is not lost when server loads a scene
                     // https://github.com/vis2k/Mirror/pull/2987
                     Spawn(identity.gameObject, identity.connectionToClient);
+                }
             }
 
             return true;
