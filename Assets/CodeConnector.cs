@@ -94,7 +94,7 @@ public class CodeConnector : MonoBehaviour {
         if (DateTime.Now - lastFeedback > TimeSpan.FromMilliseconds(1)) {
             lastFeedback = DateTime.Now;
             int[] values = new int[100];
-            long timestamp = (long)(Time.time * 1000);
+            long timestamp = (long)(Time.timeAsDouble * 1000);
             values[TIMESTAMP_LSW] = (int)timestamp;
             values[TIMESTAMP_MSW] = (int)(timestamp >> 32);
             values[ROBOT_X] = (int)(robot.transform.position.x * 1000);

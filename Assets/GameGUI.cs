@@ -31,7 +31,7 @@ public class GameGUI : NetworkBehaviour {
     public int blueScore;
     [SyncVar]
     private RobotMode robotMode = RobotMode.Disabled;
-    private float robotModeStartTime = 0.0f;
+    private double robotModeStartTime = 0.0;
     [SyncVar]
     private float timeRemaining = 0.0f;
     [SyncVar]
@@ -87,7 +87,7 @@ public class GameGUI : NetworkBehaviour {
         }
         if (isServer) {
             timeRemaining = Mathf.Ceil(
-                Mathf.Max(0.0f, robotModeStartTime + stateDuration - Time.time));
+                (float)Math.Max(0.0, robotModeStartTime + stateDuration - Time.timeAsDouble));
             /*if (timeRemaining <= 0.0) {
                 SetRobotMode(System.Guid.Empty, RobotMode.Disabled);
             }*/
@@ -131,7 +131,7 @@ public class GameGUI : NetworkBehaviour {
     [Server]
     public void SetRobotMode(System.Guid newOwnerId, RobotMode mode) {
         robotMode = mode;
-        robotModeStartTime = Time.time;
+        robotModeStartTime = Time.timeAsDouble;
         ownerId = newOwnerId;
     }
 
