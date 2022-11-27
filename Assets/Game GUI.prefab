@@ -629,33 +629,11 @@ MonoBehaviour:
     m_Options:
     - m_Text: Load Level
       m_Image: {fileID: 0}
-    - m_Text: 2022 Climb
-      m_Image: {fileID: 0}
-    - m_Text: 2022 Balls
-      m_Image: {fileID: 0}
     - m_Text: FIRST 2020
       m_Image: {fileID: 0}
     - m_Text: Checkerboard
       m_Image: {fileID: 0}
     - m_Text: USPS Game
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots R1
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots R2
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots R3
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots R4
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots R5
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots R6
-      m_Image: {fileID: 0}
-    - m_Text: Battle Bots R7
-      m_Image: {fileID: 0}
-    - m_Text: PiratesPlunder
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3100,32 +3078,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   sceneNames:
-  - FRC 2022
-  - FRC 2022 Ball Mechs
   - 2020Field
   - Checkerboard
   - USPS Game
-  - BattleBotsGame
-  - BattleBotsGame
-  - BattleBotsGame
-  - BattleBotsGame
-  - BattleBotsGame
-  - BattleBotsGame
-  - BattleBotsGame
-  - BattleBotsGame
-  - PiraresPlunder
   robotVariantNames:
   - 
   - 
-  - 
-  - 
-  - BusterSwordV1
-  - PetPaloozaV1
-  - HammerV1
-  - BillboardV1
-  - RBG_V1
-  - IkeaV1
-  - NinjaV1
   - 
   cameras:
   - {fileID: 0}
