@@ -3100,6 +3100,7 @@ MonoBehaviour:
   timeText: {fileID: 4541063486920778320}
   codeStateText: {fileID: 4541063488817505202}
   robotModeDropdown: {fileID: 4541063487776501307}
+  cameraDropdown: {fileID: 4541063488504066306}
   redScore: 0
   blueScore: 0
   haveRobotCode: 0

@@ -16,6 +16,8 @@ public class GameGUI : NetworkBehaviour {
     const float AUTON_DURATION = 30.0f;
     const float TELEOP_DURATION = 135.0f;
 
+    const string SELECTED_CAMERA_PREF_KEY = "selectedCamera";
+
     public string[] sceneNames;
     public string[] robotVariantNames;
     public Camera[] cameras;
@@ -25,6 +27,7 @@ public class GameGUI : NetworkBehaviour {
     public Text timeText;
     public Text codeStateText;
     public Dropdown robotModeDropdown;
+    public Dropdown cameraDropdown;
     [SyncVar]
     public int redScore;
     [SyncVar]
@@ -56,7 +59,11 @@ public class GameGUI : NetworkBehaviour {
     }
 
     void Start() {
-        SelectCamera(initialCamera);
+        int cameraIndex = PlayerPrefs.GetInt(SELECTED_CAMERA_PREF_KEY, initialCamera);
+        if (cameraIndex >= cameras.Length || !cameras[cameraIndex]) {
+            cameraIndex = initialCamera;
+        }
+        SelectCamera(cameraIndex);
     }
 
     void Update() {
@@ -146,5 +153,7 @@ public class GameGUI : NetworkBehaviour {
             c.enabled = false;
         }
         cameras[cameraIndex].enabled = true;
+        cameraDropdown.value = cameraIndex;
+        PlayerPrefs.SetInt(SELECTED_CAMERA_PREF_KEY, cameraIndex);
     }
 }
