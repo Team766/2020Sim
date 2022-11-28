@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ConfigurableJoint))]
-public class Elevator : MonoBehaviour
+public sealed class Elevator : StandardRobotJoint
 {
     public float forwardForceScale = 10;
     public float reverseForceScale = 10;
     public float maxSpeed = 10;
-    public float encoderScale;
     
     public bool isStuck;
 
@@ -23,19 +22,7 @@ public class Elevator : MonoBehaviour
     public float minPosition = -0.5f;
     public float maxPosition = 0.5f;
 
-    public int Encoder
-    {
-        get
-        {
-            return (int)(
-                encoderScale *
-                Vector3.Dot(transform.localPosition - neutralPosition,
-                            GetComponent<ConfigurableJoint>().axis)
-            );
-        }
-    }
-
-    void Awake ()
+    void Awake()
 	{
 		neutralPosition = transform.localPosition;
         isStuck = false;
@@ -54,10 +41,10 @@ public class Elevator : MonoBehaviour
         return 0;
     }
 
-    public void RunJoint (float speed)
+    public override void RunJoint(float command)
     {
         float appliedForce;
-        if (Mathf.Abs(speed) < stickSpeed) {
+        if (Mathf.Abs(command) < stickSpeed) {
             if (!isStuck) {
                 GetComponent<ConfigurableJoint>().xMotion = ConfigurableJointMotion.Locked;
                 GetComponent<ConfigurableJoint>().connectedAnchor = transform.localPosition;
@@ -66,10 +53,10 @@ public class Elevator : MonoBehaviour
             isStuck = true;
         } else {
             isStuck = false;
-            if (speed >= 0) {
-                appliedForce = forwardForceScale * speed;
+            if (command >= 0) {
+                appliedForce = forwardForceScale * command;
             } else {
-                appliedForce = reverseForceScale * speed;
+                appliedForce = reverseForceScale * command;
             }
             GetComponent<ConfigurableJoint>().xMotion = ConfigurableJointMotion.Limited;
             setJointLimit();
@@ -94,5 +81,16 @@ public class Elevator : MonoBehaviour
         // direction of `axis`, hence the extra negative sign.
         GetComponent<ConfigurableJoint>().targetVelocity =
             -Sign(appliedForce) * maxSpeed * Vector3.right;
+    }
+
+    public override void Disable() {
+        RunJoint(0.0f);
+    }
+
+    public override void Destroy() {
+        Destroy(this);
+        Destroy(GetComponent<ConfigurableJoint>());
+        Destroy(GetComponent<Rigidbody>());
+        //GetComponent<Rigidbody>().isKinematic = true;
     }
 }

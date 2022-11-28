@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Intake : MonoBehaviour {
+public class Intake : StandardRobotJoint {
     public float speed;
 
-    public RobotController robotController;
+    public BallStorage ballStorage;
     public IntakeArm intakeArm;
     public Transform roller;
     
@@ -42,8 +42,21 @@ public class Intake : MonoBehaviour {
         if (speed > 0.5) {
             var obj = Get();
             if (obj) {
-                robotController.Store(obj);
+                ballStorage.StoreBall(obj);
             }
         }
+    }
+
+	public override void RunJoint(float command)
+    {
+        speed = command;
+    }
+
+    public override void Disable() {
+        RunJoint(0.0f);
+    }
+
+    public override void Destroy() {
+        Destroy(this);
     }
 }

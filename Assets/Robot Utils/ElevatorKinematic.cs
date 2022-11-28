@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElevatorKinematic : MonoBehaviour
+public sealed class ElevatorKinematic : StandardRobotJoint
 {
     public float forceScale;
-    public float encoderScale;
     public bool oneSided;
     public Vector3 appliedForce;
 
@@ -22,21 +21,13 @@ public class ElevatorKinematic : MonoBehaviour
 
     public TwoGripper gripper;
 
-    public int Encoder
-    {
-        get
-        {
-            return (int)(encoderScale * position);
-        }
-    }
-
-    void Awake ()
+    void Awake()
 	{
 		neutralPosition = transform.localPosition;
         isStuck = false;
 	}
 
-    public void RunJoint (float speed)
+    public override void RunJoint(float speed)
     {
         float force = forceScale * speed;
         if (Mathf.Abs(force) < stickForce) {
@@ -60,5 +51,13 @@ public class ElevatorKinematic : MonoBehaviour
             position = limit;
         }
         transform.localPosition = neutralPosition + axis * position;
+    }
+
+    public override void Disable() {
+        RunJoint(0.0f);
+    }
+
+    public override void Destroy() {
+        Destroy(this);
     }
 }

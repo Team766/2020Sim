@@ -150,9 +150,13 @@ public class GameGUI : NetworkBehaviour {
     
     public void SelectCamera(int cameraIndex) {
         foreach (var c in cameras) {
-            c.enabled = false;
+            if (c) {
+                c.enabled = false;
+            }
         }
-        cameras[cameraIndex].enabled = true;
+        if (cameras[cameraIndex]) {
+            cameras[cameraIndex].enabled = true;
+        }
         cameraDropdown.value = cameraIndex;
         PlayerPrefs.SetInt(SELECTED_CAMERA_PREF_KEY, cameraIndex);
     }

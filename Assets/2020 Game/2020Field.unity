@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 55892918}
   - component: {fileID: 55892917}
   - component: {fileID: 55892916}
+  - component: {fileID: 55892922}
   m_Layer: 0
   m_Name: wheel
   m_TagString: Untagged
@@ -171,8 +172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousAngle: 0
-  Angle: 0
+  commandIndex: 10
+  motorScaler: 2000
+  maxSpeed: 0
 --- !u!59 &55892917
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -288,6 +290,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55892914}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &55892922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55892914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a23e80869e944dfb9a7bfc98fde394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedbackIndex: 10
+  Angle: 0
 --- !u!4 &116044528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7306295525961945074, guid: ae3c067ae8cdc3a188cd2fc9e5c1f40c,
@@ -834,6 +850,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce1bc2c95af2ba3088ed4b8cd649776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feedbackIndex: 19
+  detectedTag: Line
 --- !u!1 &361236516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1021,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce1bc2c95af2ba3088ed4b8cd649776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feedbackIndex: 17
+  detectedTag: Line
 --- !u!20 &407349417 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 563402057, guid: e0708bec2cb6b301f974c7ccdbccd37f,
@@ -1285,6 +1305,7 @@ GameObject:
   - component: {fileID: 581404719}
   - component: {fileID: 581404718}
   - component: {fileID: 581404717}
+  - component: {fileID: 581404723}
   m_Layer: 0
   m_Name: wheel
   m_TagString: Untagged
@@ -1318,8 +1339,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousAngle: 0
-  Angle: 0
+  commandIndex: 11
+  motorScaler: 2000
+  maxSpeed: 0
 --- !u!59 &581404718
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -1435,6 +1457,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581404715}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &581404723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581404715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a23e80869e944dfb9a7bfc98fde394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedbackIndex: 11
+  Angle: 0
 --- !u!1001 &588889438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1645,6 +1681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857e3bfdaa74aa14aa002a656015d507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandIndex: 13
+  ballStorage: {fileID: 801970430}
   ShootPower: 0.6
   maxForce: 2.5
 --- !u!1 &598198600
@@ -2081,6 +2119,10 @@ GameObject:
   - component: {fileID: 801970426}
   - component: {fileID: 801970427}
   - component: {fileID: 801970428}
+  - component: {fileID: 801970430}
+  - component: {fileID: 801970429}
+  - component: {fileID: 801970432}
+  - component: {fileID: 801970431}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -2103,48 +2145,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   gameGui: {fileID: 1957400912}
-  ballPrefab: {fileID: 4915976631291430839, guid: ae3c067ae8cdc3a188cd2fc9e5c1f40c,
-    type: 3}
-  leftWheels:
-  - {fileID: 55892916}
-  - {fileID: 2143239231}
-  - {fileID: 1321242182}
-  rightWheels:
-  - {fileID: 581404717}
-  - {fileID: 1700568754}
-  - {fileID: 2077767588}
-  centerWheel: []
-  heldObjects:
-  - {fileID: 1042753758}
-  - {fileID: 361236518}
-  - {fileID: 598198602}
-  - {fileID: 1167539231}
-  - {fileID: 623553299}
-  holding: 3
-  motorScaler: 2000
-  intakeScaler: 1000
-  intakeArm: {fileID: 1261176098}
-  launcher: {fileID: 591597623}
-  intake: {fileID: 1261176100}
-  twacker: {fileID: 0}
-  twackerScaler: 0
-  ikea: {fileID: 0}
-  ikeaScale: 0
-  ninja: {fileID: 0}
-  ninjaScale: 0
-  bopper: {fileID: 0}
-  billboard: {fileID: 0}
-  billboardScale: 0
-  rbg: {fileID: 0}
-  rbgScale: 0
-  rbg2: {fileID: 0}
-  phalangesElevator: {fileID: 0}
-  phalangesElevatorScale: 0
-  phalangesGrippers: []
-  phalangesGripperScale: 0
-  lineSensor1: {fileID: 384546816}
-  lineSensor2: {fileID: 1819376440}
-  lineSensor3: {fileID: 315673775}
 --- !u!4 &801970422
 Transform:
   m_ObjectHideFlags: 0
@@ -2339,6 +2339,66 @@ MonoBehaviour:
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   target: {fileID: 1027562377}
+--- !u!114 &801970429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801970420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed98ed76411d4469978ab15b7eaef58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedbackIndex: 14
+--- !u!114 &801970430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801970420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9352331e0ca414f7ba61cc27557b3c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  ballPrefab: {fileID: 4915976631291430839, guid: ae3c067ae8cdc3a188cd2fc9e5c1f40c,
+    type: 3}
+  heldObjects:
+  - {fileID: 1042753758}
+  - {fileID: 361236518}
+  - {fileID: 598198602}
+  - {fileID: 1167539231}
+  - {fileID: 623553299}
+  holding: 3
+--- !u!114 &801970431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801970420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b3551653234a13bb94b8aa6d505a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &801970432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801970420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e13182ff0443c4eebba5b53e90154247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &978940633
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,8 +3418,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b6458860ae6fb47b1c0d48e0d82e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandIndex: 15
+  motorScaler: 1000
   maxSpeed: 0
-  Angle: 0
 --- !u!59 &1261176099
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -3408,8 +3469,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf40a10d8b05eb4fb210efc72fcfea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandIndex: 12
   speed: 0
-  robotController: {fileID: 801970421}
+  ballStorage: {fileID: 801970430}
   intakeArm: {fileID: 1261176098}
   roller: {fileID: 1027562377}
 --- !u!54 &1261176101
@@ -3684,8 +3746,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousAngle: 0
-  Angle: 0
+  commandIndex: 10
+  motorScaler: 2000
+  maxSpeed: 0
 --- !u!59 &1321242183
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -4237,8 +4300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousAngle: 0
-  Angle: 0
+  commandIndex: 11
+  motorScaler: 2000
+  maxSpeed: 0
 --- !u!59 &1700568755
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -4579,6 +4643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce1bc2c95af2ba3088ed4b8cd649776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feedbackIndex: 18
+  detectedTag: Line
 --- !u!1 &1837079961
 GameObject:
   m_ObjectHideFlags: 0
@@ -4681,7 +4747,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1876133577}
-  - component: {fileID: 1876133576}
   - component: {fileID: 1876133578}
   - component: {fileID: 1876133579}
   m_Layer: 0
@@ -4691,28 +4756,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1876133576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876133575}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cb605e403fa17347a576dd7a77b8682, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerNumber: 1
-  robot: {fileID: 801970421}
-  powerChangeSpeed: 0
-  tankDrive: 0
-  guiRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
 --- !u!4 &1876133577
 Transform:
   m_ObjectHideFlags: 0
@@ -5016,8 +5059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousAngle: 0
-  Angle: 0
+  commandIndex: 11
+  motorScaler: 2000
+  maxSpeed: 0
 --- !u!59 &2077767589
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -5274,8 +5318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousAngle: 0
-  Angle: 0
+  commandIndex: 10
+  motorScaler: 2000
+  maxSpeed: 0
 --- !u!59 &2143239232
 HingeJoint:
   m_ObjectHideFlags: 0
