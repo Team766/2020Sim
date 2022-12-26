@@ -6,8 +6,8 @@ using Mirror;
 
 public class Joystick {
     public const int NUM_JOYSTICKS = 4;
-    public const int NUM_AXES = 4;
-    public const int NUM_BUTTONS = 8;
+    public const int NUM_AXES = 12;
+    public const int NUM_BUTTONS = 20;
 
     public double[] axis = new double[NUM_AXES];
     public bool[] button = new bool[NUM_BUTTONS];
@@ -19,6 +19,15 @@ public class OperatorInterface : NetworkBehaviour {
     public Joystick[] joysticks =
         Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(_ => new Joystick()).ToArray();
 
+    private readonly string[][] axisNames =
+        Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(j =>
+            Enumerable.Range(0, Joystick.NUM_AXES).Select(a => "j" + j + "a" + a).ToArray()).ToArray();
+    private readonly KeyCode[][] buttonCodes =
+        Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(j =>
+            Enumerable.Range(0, Joystick.NUM_BUTTONS)
+                .Select(b => (KeyCode)System.Enum.Parse(typeof(KeyCode), "Joystick" + (j + 1) + "Button" + b))
+                .ToArray()).ToArray();
+
     [Command(requiresAuthority = false)]
     private void CmdSetJoysticks(Joystick[] joysticks) {
         this.joysticks = joysticks;
@@ -29,10 +38,10 @@ public class OperatorInterface : NetworkBehaviour {
         if (gameGui.IsOwner) {
             for (var j = 0; j < Joystick.NUM_JOYSTICKS; ++j) {
                 for (var a = 0; a < Joystick.NUM_AXES; ++a) {
-                    joysticks[j].axis[a] = Input.GetAxis("j" + j + "a" + a);
+                    joysticks[j].axis[a] = Input.GetAxis(axisNames[j][a]);
                 }
                 for (var b = 0; b < Joystick.NUM_BUTTONS; b++) {
-                    joysticks[j].button[b] = Input.GetKey("joystick " + (j + 1) + " button " + b);
+                    joysticks[j].button[b] = Input.GetKey(buttonCodes[j][b]);
                 }
             }
             joysticks[0].button[0] |= Input.GetKey(KeyCode.LeftControl);

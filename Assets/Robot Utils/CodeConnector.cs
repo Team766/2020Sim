@@ -29,6 +29,8 @@ public class CodeConnector : MonoBehaviour {
     const int RESET_SIM = 0;
 
     // Feedback indexes
+    const int MAX_FEEDBACKS = 120;
+
     const int TIMESTAMP_LSW = 5;
     const int TIMESTAMP_MSW = 4;
 
@@ -40,10 +42,14 @@ public class CodeConnector : MonoBehaviour {
     const int TELEOP_MODE = 2;
 
     const int NumJoysticks = 4;
-    const int JoystickAxisStart = 20;
-    const int AxesPerJoystick = 4;
-    const int JoystickButtonStart = 40;
-    const int ButtonsPerJoystick = 8;
+    const int BaseAxisStart = 20;
+    const int BaseAxesPerJoystick = 4;
+    const int AdditionalAxisStart = 100;
+    const int AdditionalAxesPerJoystick = 4;
+    const int LegacyButtonsStart = 40;
+    const int LegacyButtonsPerJoystick = 8;
+    const int DenseButtonsStart = 72;
+    const int DenseButtonsPerJoystick = 20;
 
     public static Dictionary<int, string> BaseFeedbackValueIndices {
         get {
@@ -56,13 +62,16 @@ public class CodeConnector : MonoBehaviour {
             feedbackIndices[RESET_COUNTER] = "Reset Counter";
             feedbackIndices[ROBOT_MODE] = "Robot Mode";
             for (var j = 0; j < NumJoysticks; ++j) {
-                for (var a = 0; a < AxesPerJoystick; ++a) {
-                    feedbackIndices.Add(j * AxesPerJoystick + a + JoystickAxisStart, "Joystick");
+                for (var a = 0; a < BaseAxesPerJoystick; ++a) {
+                    feedbackIndices.Add(j * BaseAxesPerJoystick + a + BaseAxisStart, "Joystick");
                 }
-                for (var b = 0; b < ButtonsPerJoystick; b++)
-                {
-                    feedbackIndices.Add(j * ButtonsPerJoystick + b + JoystickButtonStart, "Joystick");
+                for (var a = 0; a < AdditionalAxesPerJoystick; ++a) {
+                    feedbackIndices.Add(j * AdditionalAxesPerJoystick + a + AdditionalAxisStart, "Joystick");
                 }
+                for (var b = 0; b < LegacyButtonsPerJoystick; b++) {
+                    feedbackIndices.Add(j * LegacyButtonsPerJoystick + b + LegacyButtonsStart, "Joystick");
+                }
+                feedbackIndices.Add(j + DenseButtonsStart, "Joystick");
             }
             return feedbackIndices;
         }
@@ -103,7 +112,7 @@ public class CodeConnector : MonoBehaviour {
     void FixedUpdate() {
         if (DateTime.Now - lastFeedback > TimeSpan.FromMilliseconds(1)) {
             lastFeedback = DateTime.Now;
-            int[] values = new int[100];
+            int[] values = new int[MAX_FEEDBACKS];
 
             robot.RunSensors(values);
 
@@ -124,13 +133,20 @@ public class CodeConnector : MonoBehaviour {
                     break;
             }
             for (var j = 0; j < NumJoysticks; ++j) {
-                for (var a = 0; a < AxesPerJoystick; ++a) {
-                    values[j * AxesPerJoystick + a + JoystickAxisStart] = (int)(oi.joysticks[j].axis[a] * 100);
+                for (var a = 0; a < BaseAxesPerJoystick; ++a) {
+                    values[j * BaseAxesPerJoystick + a + BaseAxisStart] = (int)(oi.joysticks[j].axis[a] * 100);
                 }
-                for (var b = 0; b < ButtonsPerJoystick; b++)
-                {
-                    values[j * ButtonsPerJoystick + b + JoystickButtonStart] = oi.joysticks[j].button[b] ? 1 : 0;
+                for (var a = 0; a < AdditionalAxesPerJoystick; ++a) {
+                    values[j * AdditionalAxesPerJoystick + a + AdditionalAxisStart] = (int)(oi.joysticks[j].axis[a + BaseAxesPerJoystick] * 100);
                 }
+                for (var b = 0; b < LegacyButtonsPerJoystick; b++) {
+                    values[j * LegacyButtonsPerJoystick + b + LegacyButtonsStart] = oi.joysticks[j].button[b] ? 1 : 0;
+                }
+                int denseButtonState = 0;
+                for (var b = 0; b < DenseButtonsPerJoystick; b++) {
+                    denseButtonState |= (oi.joysticks[j].button[b] ? 1 : 0) << b;
+                }
+                values[j + DenseButtonsStart] = denseButtonState;
             }
 
             byte[] sendBytes = new byte[values.Length * sizeof(int)];
