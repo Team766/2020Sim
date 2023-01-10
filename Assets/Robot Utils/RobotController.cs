@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Mirror;
 
-[RequireComponent(typeof(Rigidbody))]
 public class RobotController : NetworkBehaviour {
     public static string robotVariant = "";
     [SyncVar]
@@ -37,13 +36,27 @@ public class RobotController : NetworkBehaviour {
     {
         UpdateVariant();
 
-        GetComponent<Rigidbody>().isKinematic = IsDisabled;
+        var rigidbody = GetComponent<Rigidbody>();
+        var articBody = GetComponent<ArticulationBody>();
+
+        if (rigidbody) {
+            rigidbody.isKinematic = IsDisabled;
+        }
+        if (articBody) {
+            articBody.immovable = IsDisabled;
+        }
         if (IsDisabled) {
             Disable();
         }
 
         if (!isServer) {
-            GetComponent<Rigidbody>().useGravity = false;
+            if (rigidbody) {
+                rigidbody.useGravity = false;
+            }
+            if (articBody) {
+                articBody.useGravity = false;
+                articBody.enabled = false;
+            }
             foreach (RobotJoint j in Joints) {
                 if (j) {
                     j.Destroy();
@@ -122,33 +135,6 @@ public class RobotController : NetworkBehaviour {
             if (j) {
                 j.Disable();
             }
-        }
-    }
-
-    private const float minimumVelocityAllowed = 0.03f;
-    private const float minimumAngularVelocityAllowed = 0.02f;
- 
-    private Vector3 lastPosition;
-    private Quaternion lastRotation;
- 
-    void OnEnable() {
-        var rigidbody = GetComponent<Rigidbody>();
-        lastPosition = rigidbody.position;
-        lastRotation = rigidbody.rotation;
-    }
- 
-    void FixedUpdate() {
-        // This is a hack to stop the robot from "sliding" when not moving.
-        var rigidbody = GetComponent<Rigidbody>();
-        if (rigidbody.velocity.magnitude < minimumVelocityAllowed) {
-            rigidbody.position = lastPosition;
-        } else {
-            lastPosition = rigidbody.position;
-        }
-        if (rigidbody.angularVelocity.magnitude < minimumAngularVelocityAllowed) {
-            rigidbody.rotation = lastRotation;
-        } else {
-            lastRotation = rigidbody.rotation;
         }
     }
 }

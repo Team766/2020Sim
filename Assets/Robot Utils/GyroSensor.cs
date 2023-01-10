@@ -17,7 +17,11 @@ public sealed class GyroSensor : RobotSensor {
         GyroAngle += diff;
         headingPrev = current;
 
-        GyroRate = Vector3.Dot(transform.up, GetComponent<Rigidbody>().angularVelocity) * Mathf.Rad2Deg;
+        var articBody = GetComponent<ArticulationBody>();
+        Vector3 angularVelocity = articBody ?
+            articBody.angularVelocity :
+            GetComponent<Rigidbody>().angularVelocity;
+        GyroRate = Vector3.Dot(transform.up, angularVelocity) * Mathf.Rad2Deg;
     }
 
     public sealed override IEnumerable<int> FeedbackValueIndices {

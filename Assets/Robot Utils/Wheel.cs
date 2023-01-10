@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody))]
 public class Wheel : StandardRobotJoint
 {
     public float motorScaler;
@@ -10,6 +9,7 @@ public class Wheel : StandardRobotJoint
     private Quaternion neutralRotation;
     private Quaternion neutralRotationInv;
     public float maxSpeed;
+    public float minForce;
 
     void Awake()
     {
@@ -28,11 +28,13 @@ public class Wheel : StandardRobotJoint
 
     void FixedUpdate()
     {
-        transform.localPosition = neutralPosition;
-        transform.localRotation = neutralRotation * ProjectRotation(neutralRotationInv * transform.localRotation, GetAxis());
         var rb = GetComponent<Rigidbody>();
-        rb.position = transform.position;
-        rb.rotation = transform.rotation;
+        if (rb) {
+            transform.localPosition = neutralPosition;
+            transform.localRotation = neutralRotation * ProjectRotation(neutralRotationInv * transform.localRotation, GetAxis());
+            rb.position = transform.position;
+            rb.rotation = transform.rotation;
+        }
     }
 
     private Vector3 GetAxis()
@@ -47,17 +49,22 @@ public class Wheel : StandardRobotJoint
         {
             return cjoint.axis;
         }
+        var articBody = GetComponent<ConfigurableJoint>();
+        if (articBody)
+        {
+            // TODO: return articBody.anchorRotation * Vector3.right;
+        }
         return Vector3.right; // X axis
     }
 
     public override void RunJoint(float command)
     {
-        float targetVel = command * motorScaler;
-
         // set joint motor parameters
         var hinge = GetComponent<HingeJoint>();
         if (hinge)
         {
+            float targetVel = command * motorScaler;
+
             JointMotor myMotor = hinge.motor;
             myMotor.targetVelocity = targetVel;
             hinge.motor = myMotor;
@@ -70,15 +77,32 @@ public class Wheel : StandardRobotJoint
                 throw new Exception("maxSpeed must be non-zero");
             }
 
-            float appliedForce = targetVel;
+            float appliedForce = command * motorScaler;;
 
-            JointDrive drive = GetComponent<ConfigurableJoint>().angularXDrive;
+            JointDrive drive = cjoint.angularXDrive;
             drive.positionSpring = 0;
             drive.positionDamper = Mathf.Abs(appliedForce / maxSpeed);
             drive.maximumForce = Mathf.Abs(appliedForce);
-            GetComponent<ConfigurableJoint>().angularXDrive = drive;
-            GetComponent<ConfigurableJoint>().targetAngularVelocity =
-                    Mathf.Sign(appliedForce) * maxSpeed * Vector3.right;
+            cjoint.angularXDrive = drive;
+            cjoint.targetAngularVelocity = Mathf.Sign(appliedForce) * maxSpeed * Vector3.right;
+        }
+        var articBody = GetComponent<ArticulationBody>();
+        if (articBody)
+        {
+            if (maxSpeed == 0)
+            {
+                throw new Exception("maxSpeed must be non-zero");
+            }
+
+            float targetVel = command * maxSpeed;
+            float appliedForce = command * motorScaler;;
+
+            ArticulationDrive drive = articBody.xDrive;
+            drive.stiffness = 0;
+            drive.damping = Mathf.Abs(maxSpeed / maxSpeed);
+            drive.forceLimit = Mathf.Max(minForce, Mathf.Abs(appliedForce));
+            drive.targetVelocity = targetVel;
+            articBody.xDrive = drive;
         }
     }
 
@@ -96,7 +120,14 @@ public class Wheel : StandardRobotJoint
         if (cjoint) {
             Destroy(cjoint);
         }
-        Destroy(GetComponent<Rigidbody>());
-        //GetComponent<Rigidbody>().isKinematic = true;
+        var rigidbody = GetComponent<Rigidbody>();
+        if (rigidbody) {
+            Destroy(rigidbody);
+            //rigidbody.isKinematic = true;
+        }
+        var articBody = GetComponent<ArticulationBody>();
+        if (articBody) {
+            Destroy(articBody);
+        }
     }
 }

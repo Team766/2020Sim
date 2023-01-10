@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/USPS Game/USPS Game.unity
     guid: aeb8c2a5f254e4f30b473b1a05266e40
+  - enabled: 1
+    path: Assets/2023 Game/2023 Game.unity
+    guid: ef3f92f4b0ff44e1ab4fac363e347355
   m_configObjects: {}

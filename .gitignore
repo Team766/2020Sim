@@ -2,6 +2,7 @@ Library/
 Temp/
 /Library
 /Logs
+UserSettings/
 
 .DS_Store
 

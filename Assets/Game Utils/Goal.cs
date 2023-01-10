@@ -23,9 +23,9 @@ public class Goal : MonoBehaviour {
 	        (isBlue ? "Blue" : "Red") + " scored " + points + " points!"));
 	    
 	    if (isBlue)
-	        gameGui.blueScore += points;
+	        gameGui.addBlueScore(points);
 	    else
-	        gameGui.redScore += points;
+	        gameGui.addRedScore(points);
 
         yield return new WaitForSeconds(0.5f);
 

@@ -28,10 +28,12 @@ public class GameGUI : NetworkBehaviour {
     public Text codeStateText;
     public Dropdown robotModeDropdown;
     public Dropdown cameraDropdown;
+    [SerializeField]
     [SyncVar]
-    public int redScore;
+    private int redScore;
+    [SerializeField]
     [SyncVar]
-    public int blueScore;
+    private int blueScore;
     [SyncVar]
     private RobotMode robotMode = RobotMode.Disabled;
     private double robotModeStartTime = 0.0;
@@ -102,6 +104,18 @@ public class GameGUI : NetworkBehaviour {
         timeText.text = String.Format(
             "Time left: {0:D}:{1:D2}",
             (int)(timeRemaining / 60), (int)(timeRemaining % 60));
+    }
+
+    public void addRedScore(int delta) {
+        if (isServer) {
+            redScore += delta;
+        }
+    }
+
+    public void addBlueScore(int delta) {
+        if (isServer) {
+            blueScore += delta;
+        }
     }
 
     [ClientCallback]
