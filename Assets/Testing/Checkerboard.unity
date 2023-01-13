@@ -475,7 +475,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.35
@@ -598,6 +598,7 @@ MonoBehaviour:
   commandIndex: 91
   motorScaler: 1000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &408873006
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -810,6 +811,7 @@ MonoBehaviour:
   commandIndex: 85
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &486066462
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -962,6 +964,7 @@ MonoBehaviour:
   commandIndex: 15
   motorScaler: 2000
   maxSpeed: 5
+  minForce: 0
 --- !u!153 &490255735
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -1331,6 +1334,7 @@ MonoBehaviour:
   commandIndex: 90
   motorScaler: 1000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &552806129
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -1541,6 +1545,7 @@ MonoBehaviour:
   commandIndex: 84
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &646471345
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -2090,6 +2095,7 @@ MonoBehaviour:
   commandIndex: 86
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &1031992335
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -2220,7 +2226,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.35
@@ -4312,6 +4318,7 @@ MonoBehaviour:
   commandIndex: 89
   motorScaler: 1000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &1718040214
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -4413,6 +4420,7 @@ MonoBehaviour:
   commandIndex: 87
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &1718868349
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -4742,7 +4750,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.35
@@ -4865,6 +4873,7 @@ MonoBehaviour:
   commandIndex: 88
   motorScaler: 1000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &1840659731
 HingeJoint:
   m_ObjectHideFlags: 0

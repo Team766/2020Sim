@@ -175,6 +175,7 @@ MonoBehaviour:
   commandIndex: 10
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &55892917
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -543,7 +544,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.35
@@ -1342,6 +1343,7 @@ MonoBehaviour:
   commandIndex: 11
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &581404718
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -2731,7 +2733,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.35
@@ -3421,6 +3423,7 @@ MonoBehaviour:
   commandIndex: 15
   motorScaler: 1000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &1261176099
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -3749,6 +3752,7 @@ MonoBehaviour:
   commandIndex: 10
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &1321242183
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -4303,6 +4307,7 @@ MonoBehaviour:
   commandIndex: 11
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &1700568755
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -4680,7 +4685,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.35
@@ -5062,6 +5067,7 @@ MonoBehaviour:
   commandIndex: 11
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &2077767589
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -5321,6 +5327,7 @@ MonoBehaviour:
   commandIndex: 10
   motorScaler: 2000
   maxSpeed: 0
+  minForce: 0
 --- !u!59 &2143239232
 HingeJoint:
   m_ObjectHideFlags: 0
