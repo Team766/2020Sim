@@ -29,7 +29,7 @@ public class CodeConnector : MonoBehaviour {
     const int RESET_SIM = 0;
 
     // Feedback indexes
-    const int MAX_FEEDBACKS = 120;
+    const int MAX_FEEDBACKS = 200;
 
     const int TIMESTAMP_LSW = 5;
     const int TIMESTAMP_MSW = 4;
