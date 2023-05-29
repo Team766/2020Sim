@@ -6,7 +6,7 @@ public class Intake : StandardRobotJoint {
     public float speed;
 
     public BallStorage ballStorage;
-    public IntakeArm intakeArm;
+    public Storage2023 storage2023;
     public Transform roller;
     
     HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
@@ -42,7 +42,12 @@ public class Intake : StandardRobotJoint {
         if (speed > 0.5) {
             var obj = Get();
             if (obj) {
-                ballStorage.StoreBall(obj);
+                if (ballStorage) {
+                    ballStorage.StoreBall(obj);
+                }
+                if (storage2023) {
+                    storage2023.StoreBall(obj);
+                }
             }
         }
     }
