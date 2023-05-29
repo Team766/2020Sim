@@ -6,4 +6,9 @@ UserSettings/
 
 .DS_Store
 
+*.csproj
+*.sln
+.vsconfig
+
 /build/
+/obj/
