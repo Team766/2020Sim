@@ -124,13 +124,6 @@ namespace Mirror.SimpleWeb
 
         public override void ClientConnect(string hostname)
         {
-            // connecting or connected
-            if (ClientConnected())
-            {
-                Debug.LogError("Already Connected");
-                return;
-            }
-
             UriBuilder builder = new UriBuilder
             {
                 Scheme = GetClientScheme(),
@@ -138,6 +131,17 @@ namespace Mirror.SimpleWeb
                 Port = port
             };
 
+            ClientConnect(builder.Uri);
+        }
+
+        public override void ClientConnect(Uri uri)
+        {
+            // connecting or connected
+            if (ClientConnected())
+            {
+                Debug.LogError("Already Connected");
+                return;
+            }
 
             client = SimpleWebClient.Create(maxMessageSize, clientMaxMessagesPerTick, TcpConfig);
             if (client == null) { return; }
@@ -157,7 +161,7 @@ namespace Mirror.SimpleWeb
                 ClientDisconnect();
             };
 
-            client.Connect(builder.Uri);
+            client.Connect(uri);
         }
 
         public override void ClientDisconnect()

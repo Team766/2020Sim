@@ -9,6 +9,7 @@ UserSettings/
 *.csproj
 *.sln
 .vsconfig
+.vs/
 
 /build/
 /obj/
