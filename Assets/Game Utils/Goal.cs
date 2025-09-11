@@ -36,7 +36,7 @@ public class Goal : MonoBehaviour {
 			Random.Range(-respawnRandomRange, respawnRandomRange));
 
 		c.transform.position = respawnPoint.position + pointOffset;
-		c.GetComponent<Rigidbody>().velocity = Vector3.zero;
+		c.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
 		c.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 	}
 }

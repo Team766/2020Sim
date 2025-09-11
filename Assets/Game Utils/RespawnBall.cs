@@ -13,7 +13,7 @@ public class RespawnBall : MonoBehaviour {
                 respawnPoint.y = bounds.max.y;
                 respawnPoint.z = respawnPoint.z > 0 ? bounds.max.z : bounds.min.z;
                 ballXf.position = respawnPoint;
-                ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                ball.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
                 ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             }
         }
