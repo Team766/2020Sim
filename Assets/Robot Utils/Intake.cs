@@ -7,7 +7,7 @@ public class Intake : StandardRobotJoint {
 
     public BallStorage ballStorage;
     public Storage2023 storage2023;
-    public Transform roller;
+    public Transform[] rollers;
     
     HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
 	
@@ -37,7 +37,9 @@ public class Intake : StandardRobotJoint {
 	}
 
     void Update() {
-        roller.Rotate(0, 800 * speed * Time.deltaTime, 0);
+        foreach (var roller in rollers) {
+            roller.Rotate(0, 800 * speed * Time.deltaTime, 0);
+        }
 
         if (speed > 0.5) {
             var obj = Get();

@@ -19,6 +19,7 @@ public sealed class Launcher : StandardRobotJoint
         }
 
         projectile.transform.position = this.transform.position;
+		projectile.transform.rotation = this.transform.rotation;
 		projectile.AddForce(this.transform.forward * Mathf.Clamp01(ShootPower) * maxForce, ForceMode.Impulse);
     }
 

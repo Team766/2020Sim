@@ -10,6 +10,7 @@ public class Wheel : StandardRobotJoint
     private Quaternion neutralRotationInv;
     public float maxSpeed;
     public float minForce;
+    public float currentCommand;
 
     void Awake()
     {
@@ -95,7 +96,9 @@ public class Wheel : StandardRobotJoint
             }
 
             float targetVel = command * maxSpeed;
-            float appliedForce = command * motorScaler;;
+            float appliedForce = command * motorScaler;
+
+            currentCommand = appliedForce;
 
             ArticulationDrive drive = articBody.xDrive;
             drive.stiffness = 0;

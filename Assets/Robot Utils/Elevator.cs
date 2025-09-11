@@ -22,9 +22,15 @@ public sealed class Elevator : StandardRobotJoint
     public float minPosition = -0.5f;
     public float maxPosition = 0.5f;
 
+    private Vector3 positionRelativeToConnectedBody()
+    {
+        ConfigurableJoint joint = GetComponent<ConfigurableJoint>();
+        return ((Component)joint.connectedBody ?? joint.connectedArticulationBody).transform.InverseTransformPoint(transform.position);
+    }
+
     void Awake()
 	{
-		neutralPosition = transform.localPosition;
+        neutralPosition = positionRelativeToConnectedBody();
         isStuck = false;
 	}
 
@@ -47,20 +53,23 @@ public sealed class Elevator : StandardRobotJoint
         if (Mathf.Abs(command) < stickSpeed) {
             if (!isStuck) {
                 GetComponent<ConfigurableJoint>().xMotion = ConfigurableJointMotion.Locked;
-                GetComponent<ConfigurableJoint>().connectedAnchor = transform.localPosition;
+                GetComponent<ConfigurableJoint>().connectedAnchor = positionRelativeToConnectedBody();
             }
             appliedForce = 0.0f;
             isStuck = true;
         } else {
-            isStuck = false;
             if (command >= 0) {
                 appliedForce = forwardForceScale * command;
             } else {
                 appliedForce = reverseForceScale * command;
             }
-            GetComponent<ConfigurableJoint>().xMotion = ConfigurableJointMotion.Limited;
-            setJointLimit();
-            GetComponent<ConfigurableJoint>().connectedAnchor = neutralPosition + GetComponent<ConfigurableJoint>().axis * (maxPosition + minPosition) / 2;
+            if (isStuck)
+            {
+                GetComponent<ConfigurableJoint>().xMotion = ConfigurableJointMotion.Limited;
+                setJointLimit();
+                GetComponent<ConfigurableJoint>().connectedAnchor = neutralPosition + GetComponent<ConfigurableJoint>().axis * (maxPosition + minPosition) / 2;
+            }
+            isStuck = false;
         }
 
         // Avoid NaNs in the following calculations.
