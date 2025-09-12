@@ -41,7 +41,7 @@ public class Intake : StandardRobotJoint {
             roller.Rotate(0, 800 * speed * Time.deltaTime, 0);
         }
 
-        if (speed > 0.5) {
+        if (speed > 0.2) {
             var obj = Get();
             if (obj) {
                 if (ballStorage) {
@@ -50,6 +50,7 @@ public class Intake : StandardRobotJoint {
                 if (storage2023) {
                     storage2023.StoreBall(obj);
                 }
+                contained.Remove(obj);
             }
         }
     }

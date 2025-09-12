@@ -232,6 +232,7 @@ namespace Mirror.SimpleWeb
             if (!ServerActive())
             {
                 Debug.LogError("SimpleWebServer Not Active");
+                return;
             }
 
             server.Stop();

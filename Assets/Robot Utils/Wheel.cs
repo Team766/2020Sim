@@ -60,50 +60,43 @@ public class Wheel : StandardRobotJoint
 
     public override void RunJoint(float command)
     {
+        if (maxSpeed == 0)
+        {
+            Debug.LogError("maxSpeed must be non-zero");
+            maxSpeed = Math.Abs(motorScaler);
+        }
+
+        float targetVel = command * maxSpeed * Mathf.Sign(motorScaler);
+        float appliedForce = Mathf.Max(minForce, Mathf.Abs(command * motorScaler));
+
+        currentCommand = appliedForce * Mathf.Sign(targetVel);
+
         // set joint motor parameters
         var hinge = GetComponent<HingeJoint>();
         if (hinge)
         {
-            float targetVel = command * motorScaler;
-
             JointMotor myMotor = hinge.motor;
             myMotor.targetVelocity = targetVel;
+            myMotor.force = appliedForce;
             hinge.motor = myMotor;
         }
         var cjoint = GetComponent<ConfigurableJoint>();
         if (cjoint)
         {
-            if (maxSpeed == 0)
-            {
-                throw new Exception("maxSpeed must be non-zero");
-            }
-
-            float appliedForce = command * motorScaler;;
-
             JointDrive drive = cjoint.angularXDrive;
             drive.positionSpring = 0;
-            drive.positionDamper = Mathf.Abs(appliedForce / maxSpeed);
-            drive.maximumForce = Mathf.Abs(appliedForce);
+            drive.positionDamper = 1.0f;
+            drive.maximumForce = appliedForce;
             cjoint.angularXDrive = drive;
-            cjoint.targetAngularVelocity = Mathf.Sign(appliedForce) * maxSpeed * Vector3.right;
+            cjoint.targetAngularVelocity = targetVel * Vector3.right;
         }
         var articBody = GetComponent<ArticulationBody>();
         if (articBody)
         {
-            if (maxSpeed == 0)
-            {
-                throw new Exception("maxSpeed must be non-zero");
-            }
-
-            float targetVel = command * maxSpeed;
-            float appliedForce = command * motorScaler;
-
-            currentCommand = appliedForce;
-
             ArticulationDrive drive = articBody.xDrive;
             drive.stiffness = 0;
-            drive.damping = Mathf.Abs(maxSpeed / maxSpeed);
-            drive.forceLimit = Mathf.Max(minForce, Mathf.Abs(appliedForce));
+            drive.damping = 1.0f;
+            drive.forceLimit = appliedForce;
             drive.targetVelocity = targetVel;
             articBody.xDrive = drive;
         }

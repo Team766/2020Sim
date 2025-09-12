@@ -12,6 +12,7 @@ public enum RobotMode : int {
     Teleop = 2,
 }
 
+[RequireComponent(typeof(AudioSource))]
 public class GameGUI : NetworkBehaviour {
     const float AUTON_DURATION = 30.0f;
     const float TELEOP_DURATION = 135.0f;
@@ -22,7 +23,6 @@ public class GameGUI : NetworkBehaviour {
     public string[] robotVariantNames;
     public Camera[] cameras;
     public int initialCamera;
-    public Text messageText;
     public Text scoreText;
     public Text timeText;
     public Text codeStateText;
@@ -44,8 +44,6 @@ public class GameGUI : NetworkBehaviour {
     private System.Guid thisId = System.Guid.NewGuid();
     [SyncVar]
     private System.Guid ownerId = System.Guid.Empty;
-    
-    protected readonly SyncList<string> messages = new SyncList<string>();
     
     public RobotMode RobotMode {
         get {
@@ -74,8 +72,7 @@ public class GameGUI : NetworkBehaviour {
         // without this on desktop), but it's cheap to do and there are more
         // important things to work on.
         GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-    
-        messageText.text = string.Join("\n", messages);
+
         scoreText.text = "Red score: " + redScore + "  Blue score: " + blueScore;
 
         robotModeDropdown.value = (int)robotMode;
@@ -156,10 +153,8 @@ public class GameGUI : NetworkBehaviour {
         ownerId = newOwnerId;
     }
 
-    public IEnumerator ShowMessage(string message) {
-        messages.Insert(0, message);
-        yield return new WaitForSeconds(2.0f);
-        messages.RemoveAt(messages.Count - 1);
+    public void PlaySound(AudioClip audioClip) {
+        GetComponent<AudioSource>().PlayOneShot(audioClip);
     }
     
     public void SelectCamera(int cameraIndex) {

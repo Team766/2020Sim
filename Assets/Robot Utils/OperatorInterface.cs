@@ -9,7 +9,7 @@ public class Joystick {
     public const int NUM_AXES = 12;
     public const int NUM_BUTTONS = 20;
 
-    public double[] axis = new double[NUM_AXES];
+    public float[] axis = new float[NUM_AXES];
     public bool[] button = new bool[NUM_BUTTONS];
 }
 
@@ -47,9 +47,11 @@ public class OperatorInterface : NetworkBehaviour {
             joysticks[0].button[0] |= Input.GetKey(KeyCode.LeftControl);
             joysticks[0].button[1] |= Input.GetKey(KeyCode.LeftShift);
             joysticks[0].button[2] |= Input.GetKey(KeyCode.LeftAlt);
+            joysticks[0].button[3] |= Input.GetKey(KeyCode.Space);
             joysticks[1].button[0] |= Input.GetKey(KeyCode.RightControl);
             joysticks[1].button[1] |= Input.GetKey(KeyCode.RightShift);
             joysticks[1].button[2] |= Input.GetKey(KeyCode.RightAlt);
+            joysticks[1].button[3] |= Input.GetKey(KeyCode.Return);
             joysticks[2].button[0] |= Input.GetKey(KeyCode.Alpha1);
             joysticks[2].button[1] |= Input.GetKey(KeyCode.Alpha2);
             joysticks[2].button[2] |= Input.GetKey(KeyCode.Alpha3);
