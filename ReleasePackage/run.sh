@@ -3,7 +3,7 @@
 set -euo pipefail
 
 project_base="$1"
-jar_file="$2"
+jar_file="${2-}"
 
 pip --quiet install aiohttp
 

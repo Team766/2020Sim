@@ -7,6 +7,7 @@ import os.path
 import signal
 import subprocess
 import sys
+from contextlib import ExitStack
 
 FILES_DIR = os.path.dirname(__file__)
 
@@ -35,7 +36,7 @@ class TerminatingPopen(subprocess.Popen):
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("project_base")
-    parser.add_argument("jar_file")
+    parser.add_argument("jar_file", nargs="?")
     args = parser.parse_args(argv)
 
     print("\nView simulation at http://localhost:8000\n")
@@ -53,15 +54,19 @@ def main(argv=None):
             stderr=subprocess.STDOUT,
             preexec_fn=set_parent_exit_signal,
         ) as http_server,
-        TerminatingPopen(
-            ["java", "-cp", args.jar_file, "com.team766.hal.simulator.RobotMain", "-vr_connector"],
-            cwd=args.project_base,
-            preexec_fn=set_parent_exit_signal,
-        ) as robot_code,
+        ExitStack() as stack,
     ):
+        if args.jar_file:
+            robot_code = stack.enter_context(
+                TerminatingPopen(
+                    ["java", "-cp", args.jar_file, "com.team766.hal.simulator.RobotMain", "-vr_connector"],
+                    cwd=args.project_base,
+                    preexec_fn=set_parent_exit_signal,
+                )
+            )
+            robot_code.wait()
         game_server.wait()
         http_server.wait()
-        robot_code.wait()
 
 if __name__ == "__main__":
     try:
