@@ -14,7 +14,7 @@ public class Joystick {
 }
 
 public class OperatorInterface : NetworkBehaviour {
-    public GameGUI gameGui;
+    private GameGUI gameGui;
 
     public Joystick[] joysticks =
         Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(_ => new Joystick()).ToArray();
@@ -27,6 +27,10 @@ public class OperatorInterface : NetworkBehaviour {
             Enumerable.Range(0, Joystick.NUM_BUTTONS)
                 .Select(b => (KeyCode)System.Enum.Parse(typeof(KeyCode), "Joystick" + (j + 1) + "Button" + b))
                 .ToArray()).ToArray();
+
+    private void Awake() {
+        gameGui = FindAnyObjectByType<GameGUI>();
+    }
 
     [Command(requiresAuthority = false)]
     private void CmdSetJoysticks(Joystick[] joysticks) {

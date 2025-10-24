@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RampBalanceScore : MonoBehaviour
 {
-    public GameGUI gameGui;
+    private GameGUI gameGui;
     public Quaternion balancedOrientation;
     public float maxAngleForPoints;
     public int numPointsWhenBalanced;
@@ -21,6 +21,11 @@ public class RampBalanceScore : MonoBehaviour
 
     private bool wasPreviouslyScored = false;
     private int robotCollisionCount = 0;
+
+    private void Awake()
+    {
+        gameGui = FindAnyObjectByType<GameGUI>();
+    }
 
     void Update()
     {

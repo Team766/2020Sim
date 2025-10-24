@@ -1,7 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Mirror;
 
 [RequireComponent(typeof(BallStorage))]
 public sealed class BallStorageSensor : StandardRobotSensor {

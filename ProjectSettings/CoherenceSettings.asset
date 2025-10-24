@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 53
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b58ca8e478745dfab801a85671962e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Coherence.Editor::Coherence.Editor.ProjectSettings
+  showHubModuleQuickHelp: 1
+  portalToken: 
+  worldUDPPort: 32001
+  worldWebPort: 32002
+  roomsUDPPort: 42001
+  roomsWebPort: 42002
+  sendFrequency: 20
+  recvFrequency: 60
+  localRoomsCleanupTimeSeconds: 120
+  localWorldHostAuthority: 0
+  rsConsoleLogLevel: 2
+  rsLogToFile: 0
+  rsLogFilePath: Logs/rs_logs.txt
+  rsFileLogLevel: 1
+  reportAnalytics: 1
+  RSBundlingEnabled: 0
+  keepConnectionAlive: 0
+  activeSchemas: []
+  organization:
+    id: d33a8keff8gu3qb0nv8g
+    name: rcahoon
+    slug: rcahoon
+    projects:
+    - id: d33a8keff8gu3qb0nv90
+      portal_token: 9ba4a002e7e945489fffe40c9cea1c93
+      runtime_key: 0d76c4a27758450e929c5bd60ce0993b
+      name: Default Project
+    - id: d33a8s6ff8gu3qb0nvk0
+      portal_token: dab5c2486d3b4ca6a12e0fe9db85c140
+      runtime_key: 0492d52a390d4c66a3a2d40c23a0fa7d
+      name: M-A-trix
+  multipleProjects: []

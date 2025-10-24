@@ -4,13 +4,18 @@ using Mirror;
 
 public class Goal : MonoBehaviour {
 
-    public GameGUI gameGui;
+    private GameGUI gameGui;
     public bool isBlue;
     public int points;
 	public Transform[] respawnPoints;
 	public float respawnRandomRange = 0.0f;
 	public AudioClip sound;
-	
+
+	private void Awake()
+	{
+		gameGui = FindAnyObjectByType<GameGUI>();
+	}
+
 	void OnTriggerEnter(Collider c)
 	{
 		if (c.tag == "Ball")

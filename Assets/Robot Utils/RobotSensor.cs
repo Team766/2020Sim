@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ public abstract class RobotSensor : MonoBehaviour {
     }
 
     void OnValidate() {
-        GetComponentInParent<RobotController>().ValidateSensorIndices(this);
+        GetComponentInParent<RobotController>(true).ValidateSensorIndices(this);
     }
 }
 

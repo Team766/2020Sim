@@ -13,7 +13,7 @@ public class CodeConnector : MonoBehaviour {
 
     public RobotController robot;
     public OperatorInterface oi;
-    public GameGUI gameGui;
+    private GameGUI gameGui;
     private UdpClient udpClient;
     private DateTime lastFeedback, lastCommand;
     private float lastConnectException = -1000;
@@ -78,6 +78,8 @@ public class CodeConnector : MonoBehaviour {
     }
 
     void Start() {
+        gameGui = FindAnyObjectByType<GameGUI>();
+
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
             Application.targetFrameRate = Mathf.RoundToInt(1f / Time.fixedDeltaTime);
         }

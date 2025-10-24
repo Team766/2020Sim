@@ -8,7 +8,7 @@ public class RobotController : NetworkBehaviour {
     private string clientRobotVariant = null;
     private string activeRobotVariant = null;
 
-    public GameGUI gameGui;
+    private GameGUI gameGui;
 
     RobotJoint[] Joints {
         get {
@@ -29,6 +29,7 @@ public class RobotController : NetworkBehaviour {
 
     void Awake()
     {
+        gameGui = FindAnyObjectByType<GameGUI>();
         UpdateVariant();
     }
 

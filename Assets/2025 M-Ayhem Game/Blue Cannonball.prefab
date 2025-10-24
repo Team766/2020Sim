@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 117121725747826489, guid: c865ca334c7504582b74c7f34f9efe3d,
+        type: 3}
+      propertyPath: bakedScriptType
+      value: Coherence.Generated.CoherenceSync_7304d3ec37e2d4c06851177c45cddcac,
+        Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 117121725747826489, guid: c865ca334c7504582b74c7f34f9efe3d,
+        type: 3}
+      propertyPath: coherenceSyncConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 11d122c878c974f0dbef0d9850aec507,
+        type: 2}
     - target: {fileID: 1450619516874024888, guid: c865ca334c7504582b74c7f34f9efe3d,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
