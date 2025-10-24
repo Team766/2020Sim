@@ -1,0 +1,129 @@
+enum RobotMode [bits "2", range-min "0", range-max "2"] 
+  Disabled 0
+  Auton 1
+  Teleop 2
+
+component _7304d3ec37e2d4c06851177c45cddcac_4038695098842026948 [id "18"]
+  linearVelocity Vector3 [compression "None"]
+
+component _a5ebc758ff4a94b588cd3a07ed28ce38_139550269326081348 [id "19"]
+  authPublicKey String [bits "6"]
+
+component _a5ebc758ff4a94b588cd3a07ed28ce38_509211006191760177 [id "20"]
+  rotation Quaternion [bits "32", sim-frames "true"]
+
+component _a5ebc758ff4a94b588cd3a07ed28ce38_5409314221323879608 [id "21"]
+  holding Int [bits "32", range-min "-2147483648", range-max "2147483647"]
+
+component _a5ebc758ff4a94b588cd3a07ed28ce38_5842616716948011198 [id "22"]
+  hasRobotCode Bool [bits "1"]
+
+component _a5ebc758ff4a94b588cd3a07ed28ce38_7955188810710112181 [id "23"]
+  rotation Quaternion [bits "32", sim-frames "true"]
+
+component _a9502fe73cf514f0296d05af4c2fb75f_4541063488329772701 [id "24"]
+  redScore Int [bits "32", range-min "-2147483648", range-max "2147483647"]
+  blueScore Int [bits "32", range-min "-2147483648", range-max "2147483647"]
+  robotMode RobotMode 
+  timeRemaining Float [range-min "-9223372036854775808", range-max "9223372036854775807", compression "None"]
+
+component _ae3c067ae8cdc3a188cd2fc9e5c1f40c_15434348239100244971 [id "25"]
+  linearVelocity Vector3 [compression "None"]
+
+component _c865ca334c7504582b74c7f34f9efe3d_3701823384564508663 [id "26"]
+  linearVelocity Vector3 [compression "None"]
+
+component _dc51daba6bd26400abb19c32e4b4b945_2336683391229707251 [id "27"]
+  hasRobotCode Bool [bits "1"]
+
+component _dc51daba6bd26400abb19c32e4b4b945_3856456226331623987 [id "28"]
+  authPublicKey String [bits "6"]
+
+component _dc51daba6bd26400abb19c32e4b4b945_7239968138705979096 [id "29"]
+  holding Int [bits "32", range-min "-2147483648", range-max "2147483647"]
+
+command _a5ebc758ff4a94b588cd3a07ed28ce38_02db61c1968e44fc901f2b45ab369899 [id "6", routing "All"]
+  privateKeyChallenge String 
+
+command _a9502fe73cf514f0296d05af4c2fb75f_0956f6f92f2040518555e67a100622eb [id "7", routing "All"]
+  mode RobotMode 
+
+command _dc51daba6bd26400abb19c32e4b4b945_52c78f213d994e45b20ae0de53e3020b [id "8", routing "All"]
+  privateKeyChallenge String 
+
+input _a5ebc758ff4a94b588cd3a07ed28ce38 [id "0"]
+
+input _dc51daba6bd26400abb19c32e4b4b945 [id "1"]
+  j0a0 Float [compression "None"]
+  j0a1 Float [compression "None"]
+  j0a2 Float [compression "None"]
+  j0a3 Float [compression "None"]
+  j0a4 Float [compression "None"]
+  j0a5 Float [compression "None"]
+  j1a0 Float [compression "None"]
+  j1a1 Float [compression "None"]
+  j1a2 Float [compression "None"]
+  j1a3 Float [compression "None"]
+  j1a4 Float [compression "None"]
+  j1a5 Float [compression "None"]
+  j2a0 Float [compression "None"]
+  j2a1 Float [compression "None"]
+  j2a2 Float [compression "None"]
+  j2a3 Float [compression "None"]
+  j2a4 Float [compression "None"]
+  j2a5 Float [compression "None"]
+  j3a0 Float [compression "None"]
+  j3a1 Float [compression "None"]
+  j3a2 Float [compression "None"]
+  j3a3 Float [compression "None"]
+  j3a4 Float [compression "None"]
+  j3a5 Float [compression "None"]
+  j0b0 Bool
+  j0b1 Bool
+  j0b2 Bool
+  j0b3 Bool
+  j0b4 Bool
+  j0b5 Bool
+  j0b6 Bool
+  j0b7 Bool
+  j0b8 Bool
+  j0b9 Bool
+  j0b10 Bool
+  j0b11 Bool
+  j1b0 Bool
+  j1b1 Bool
+  j1b2 Bool
+  j1b3 Bool
+  j1b4 Bool
+  j1b5 Bool
+  j1b6 Bool
+  j1b7 Bool
+  j1b8 Bool
+  j1b9 Bool
+  j1b10 Bool
+  j1b11 Bool
+  j2b0 Bool
+  j2b1 Bool
+  j2b2 Bool
+  j2b3 Bool
+  j2b4 Bool
+  j2b5 Bool
+  j2b6 Bool
+  j2b7 Bool
+  j2b8 Bool
+  j2b9 Bool
+  j2b10 Bool
+  j2b11 Bool
+  j3b0 Bool
+  j3b1 Bool
+  j3b2 Bool
+  j3b3 Bool
+  j3b4 Bool
+  j3b5 Bool
+  j3b6 Bool
+  j3b7 Bool
+  j3b8 Bool
+  j3b9 Bool
+  j3b10 Bool
+  j3b11 Bool
+

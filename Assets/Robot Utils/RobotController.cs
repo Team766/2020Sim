@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Mirror;
+using Coherence;
+using Coherence.Toolkit;
 
-public class RobotController : NetworkBehaviour {
-    public static string robotVariant = "";
-    [SyncVar]
-    private string clientRobotVariant = null;
-    private string activeRobotVariant = null;
+public class RobotController : MonoBehaviour {
+    public readonly string AuthPublicKey = ApplicationArguments.GetArgument("robotPublicKey");
+    public readonly string AuthPrivateKey = ApplicationArguments.GetArgument("robotPrivateKey");
 
+    [Sync]
+    public string authPublicKey;
     private GameGUI gameGui;
 
     RobotJoint[] Joints {
@@ -21,22 +22,46 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    public bool IsDisabled {
+    public RobotMode RobotMode {
         get {
-            return gameGui.RobotMode == RobotMode.Disabled;
+            return gameGui.robotMode;
         }
     }
 
-    void Awake()
-    {
-        gameGui = FindAnyObjectByType<GameGUI>();
-        UpdateVariant();
+    public bool IsDisabled {
+        get {
+            return RobotMode == RobotMode.Disabled;
+        }
     }
 
-    void Update()
-    {
-        UpdateVariant();
+    void Awake() {
+        gameGui = FindAnyObjectByType<GameGUI>();
+    }
 
+    private void Start() {
+        if (!string.IsNullOrWhiteSpace(AuthPublicKey)) {
+            if (GetComponent<CoherenceSync>().HasStateAuthority) {
+                Debug.Log("Robot Has Authority");
+                authPublicKey = AuthPublicKey;
+            }
+            else if (authPublicKey == AuthPublicKey) {
+                Debug.Log("SendCommand CmdSetInputClient");
+                GetComponent<CoherenceSync>().SendCommand<RobotController>(
+                    nameof(CmdSetInputClient),
+                    MessageTarget.StateAuthorityOnly,
+                    AuthPrivateKey);
+            }
+        }
+    }
+
+    [Command(UseMeta = true)]
+    public void CmdSetInputClient(string privateKeyChallenge) {
+        GetComponent<CoherenceSync>().TransferAuthority(
+            CoherenceSync.CurrentCommandMeta.Sender,
+            Coherence.AuthorityType.Input);
+    }
+
+    void Update() {
         var rigidbody = GetComponent<Rigidbody>();
         var articBody = GetComponent<ArticulationBody>();
 
@@ -50,7 +75,7 @@ public class RobotController : NetworkBehaviour {
             Disable();
         }
 
-        if (!isServer) {
+        if (!GetComponent<CoherenceSync>().HasStateAuthority) {
             if (rigidbody) {
                 rigidbody.useGravity = false;
             }
@@ -63,31 +88,6 @@ public class RobotController : NetworkBehaviour {
                     j.Destroy();
                 }
             }
-        }
-    }
-
-    void UpdateVariant() {
-        if (isServer) {
-            clientRobotVariant = robotVariant;
-        } else if (clientRobotVariant != null) {
-            robotVariant = clientRobotVariant;
-        }
-        if (activeRobotVariant != robotVariant) {
-            if (activeRobotVariant != null) {
-                Debug.Log("Deactivating robot variant: " + activeRobotVariant);
-                var oldVariantObj = transform.Find(activeRobotVariant);
-                if (oldVariantObj != null) {
-                    Debug.Log("Found robot variant object");
-                    oldVariantObj.gameObject.SetActive(false);
-                }
-            }
-            Debug.Log("Activating robot variant: " + robotVariant);
-            var variantObj = transform.Find(robotVariant);
-            if (variantObj != null) {
-                Debug.Log("Found robot variant object");
-                variantObj.gameObject.SetActive(true);
-            }
-            activeRobotVariant = robotVariant;
         }
     }
 

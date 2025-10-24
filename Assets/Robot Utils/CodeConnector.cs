@@ -7,16 +7,21 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
+using Coherence.Toolkit;
 
+[RequireComponent(typeof(RobotController))]
+[RequireComponent(typeof(OperatorInterface))]
 public class CodeConnector : MonoBehaviour {
     const float EXCEPTION_LOG_PERIOD = 10f;
 
-    public RobotController robot;
-    public OperatorInterface oi;
-    private GameGUI gameGui;
+    private RobotController robot;
+    private OperatorInterface oi;
     private UdpClient udpClient;
     private DateTime lastFeedback, lastCommand;
     private float lastConnectException = -1000;
+
+    [Sync]
+    public bool hasRobotCode = false;
 
     // resetCounter is initialized to a value that (should) be different each time the simulator is started.
     private static int resetCounter = (int)((DateTime.UtcNow - DateTime.MinValue).TotalSeconds % (Int32.MaxValue / 2));
@@ -78,7 +83,8 @@ public class CodeConnector : MonoBehaviour {
     }
 
     void Start() {
-        gameGui = FindAnyObjectByType<GameGUI>();
+        robot = GetComponent<RobotController>();
+        oi = GetComponent<OperatorInterface>();
 
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
             Application.targetFrameRate = Mathf.RoundToInt(1f / Time.fixedDeltaTime);
@@ -126,7 +132,7 @@ public class CodeConnector : MonoBehaviour {
                 values[TIMESTAMP_MSW] = (int)(timestamp >> 32);
                 values[RESET_COUNTER] = resetCounter;
 
-                switch (gameGui.RobotMode) {
+                switch (robot.RobotMode) {
                     case RobotMode.Disabled:
                         values[ROBOT_MODE] = DISABLED_MODE;
                         break;
@@ -159,7 +165,7 @@ public class CodeConnector : MonoBehaviour {
                 try {
                     udpClient.Send(sendBytes, sendBytes.Length);
                 } catch (SocketException ex) {
-                    if (gameGui.haveRobotCode || (Time.realtimeSinceStartup - lastConnectException > EXCEPTION_LOG_PERIOD)) {
+                    if (hasRobotCode || (Time.realtimeSinceStartup - lastConnectException > EXCEPTION_LOG_PERIOD)) {
                         lastConnectException = Time.realtimeSinceStartup;
                         Debug.LogException(ex, this);
                     }
@@ -195,9 +201,9 @@ public class CodeConnector : MonoBehaviour {
             }
         }
 
-        gameGui.haveRobotCode = DateTime.Now - lastCommand < TimeSpan.FromSeconds(1);
+        hasRobotCode = DateTime.Now - lastCommand < TimeSpan.FromSeconds(1);
 
-        if (!gameGui.haveRobotCode) {
+        if (!hasRobotCode) {
             robot.RunJoints(GetFallbackCommands());
         }
     }

@@ -2,9 +2,11 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using Mirror;
+using Coherence;
+using Coherence.Toolkit;
 
 public enum RobotMode : int {
     Disabled = 0,
@@ -13,14 +15,13 @@ public enum RobotMode : int {
 }
 
 [RequireComponent(typeof(AudioSource))]
-public class GameGUI : NetworkBehaviour {
+public class GameGUI : MonoBehaviour {
     const float AUTON_DURATION = 30.0f;
     const float TELEOP_DURATION = 135.0f;
 
     const string SELECTED_CAMERA_PREF_KEY = "selectedCamera";
 
     public string[] sceneNames;
-    public string[] robotVariantNames;
     public Camera[] cameras;
     public int initialCamera;
     public Text scoreText;
@@ -28,35 +29,15 @@ public class GameGUI : NetworkBehaviour {
     public Text codeStateText;
     public Dropdown robotModeDropdown;
     public Dropdown cameraDropdown;
-    [SerializeField]
-    [SyncVar]
-    private int redScore;
-    [SerializeField]
-    [SyncVar]
-    private int blueScore;
-    [SyncVar]
-    private RobotMode robotMode = RobotMode.Disabled;
+    [Sync]
+    public int redScore;
+    [Sync]
+    public int blueScore;
+    [Sync]
+    public RobotMode robotMode = RobotMode.Disabled;
     private double robotModeStartTime = 0.0;
-    [SyncVar]
-    private float timeRemaining = 0.0f;
-    [SyncVar]
-    public bool haveRobotCode = false;
-    private System.Guid thisId = System.Guid.NewGuid();
-    [SyncVar]
-    private System.Guid ownerId = System.Guid.Empty;
-    
-    public RobotMode RobotMode {
-        get {
-            return robotMode;
-        }
-    }
-
-    public bool IsOwner {
-        get {
-            // TODO: Use Mirror's authority mechanism instead
-            return ownerId == thisId;
-        }
-    }
+    [Sync]
+    public float timeRemaining = 0.0f;
 
     void Start() {
         int cameraIndex = PlayerPrefs.GetInt(SELECTED_CAMERA_PREF_KEY, initialCamera);
@@ -64,6 +45,15 @@ public class GameGUI : NetworkBehaviour {
             cameraIndex = initialCamera;
         }
         SelectCamera(cameraIndex);
+    }
+
+    RobotController findOurRobot() {
+        foreach (var robot in FindObjectsByType<RobotController>(FindObjectsSortMode.None)) {
+            if (robot.GetComponent<CoherenceSync>().HasInputAuthority) {
+                return robot;
+            }
+        }
+        return null;
     }
 
     void Update() {
@@ -75,9 +65,15 @@ public class GameGUI : NetworkBehaviour {
 
         scoreText.text = "Red score: " + redScore + "  Blue score: " + blueScore;
 
-        robotModeDropdown.value = (int)robotMode;
+        var robot = findOurRobot();
+        if (robot) {
+            codeStateText.enabled = true;
+            codeStateText.text = robot.GetComponent<CodeConnector>().hasRobotCode ? "Code running" : "No robot code";
+        } else {
+            codeStateText.enabled = false;
+        }
 
-        codeStateText.text = haveRobotCode ? "Code running" : "No robot code";
+        robotModeDropdown.value = (int)robotMode;
 
         float stateDuration = 0.0f;
         switch (robotMode) {
@@ -91,7 +87,7 @@ public class GameGUI : NetworkBehaviour {
                 stateDuration = TELEOP_DURATION;
                 break;
         }
-        if (isServer) {
+        if (GetComponent<CoherenceSync>().HasStateAuthority) {
             timeRemaining = Mathf.Ceil(
                 (float)Math.Max(0.0, robotModeStartTime + stateDuration - Time.timeAsDouble));
             /*if (timeRemaining <= 0.0) {
@@ -104,53 +100,63 @@ public class GameGUI : NetworkBehaviour {
     }
 
     public void addRedScore(int delta) {
-        if (isServer) {
+        if (GetComponent<CoherenceSync>().HasStateAuthority) {
             redScore += delta;
         }
     }
 
     public void addBlueScore(int delta) {
-        if (isServer) {
+        if (GetComponent<CoherenceSync>().HasStateAuthority) {
             blueScore += delta;
         }
     }
 
-    [ClientCallback]
     public void LoadScene(int dropdownIndex) {
-        if (dropdownIndex == 0) {
+        if (dropdownIndex == 0)
+        {
             return;
         }
-        CmdLoadScene(sceneNames[dropdownIndex - 1],
-                     robotVariantNames[dropdownIndex - 1]);
+        string sceneName = sceneNames[dropdownIndex - 1];
+        IEnumerator DoLoadScene() {
+            Debug.Log("Loading scene " + sceneName);
+
+            var authoritativeObjects = new List<CoherenceSync>();
+            foreach (var sync in FindObjectsByType<CoherenceSync>(FindObjectsSortMode.None))
+            {
+                // Check if the current client has state authority over this entity
+                if (sync.HasStateAuthority)
+                {
+                    sync.AbandonAuthority();
+                    authoritativeObjects.Add(sync);
+                }
+            }
+
+            yield return new WaitUntil(
+                () => authoritativeObjects.TrueForAll(sync => !sync.HasStateAuthority));
+
+            SceneManager.LoadScene(sceneName);
+        }
+        StartCoroutine(DoLoadScene());
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdLoadScene(string sceneName, string robotVariantName) {
-        Debug.Log("Loading scene " + sceneName + " " + robotVariantName);
-        RobotController.robotVariant = robotVariantName;
-        NetworkManager.singleton.ServerChangeScene(sceneName);
-    }
-    
-    [ClientCallback]
+
     public void RequestRobotMode(int mode) {
         if (!Enum.IsDefined(typeof(RobotMode), mode)) {
             throw new ArgumentOutOfRangeException();
         }
         if (robotMode != (RobotMode)mode) {
-            CmdSetRobotMode(thisId, ((RobotMode)mode).ToString());
+            GetComponent<CoherenceSync>().SendCommand<GameGUI>(
+                nameof(CmdSetRobotMode),
+                MessageTarget.StateAuthorityOnly,
+                (RobotMode)mode);
         }
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdSetRobotMode(System.Guid newOwnerId, string mode) {
-        SetRobotMode(newOwnerId, (RobotMode)Enum.Parse(typeof(RobotMode), mode, true));
-    }
-
-    [Server]
-    public void SetRobotMode(System.Guid newOwnerId, RobotMode mode) {
+    [Command]
+    public void CmdSetRobotMode(RobotMode mode)
+    {
         robotMode = mode;
         robotModeStartTime = Time.timeAsDouble;
-        ownerId = newOwnerId;
     }
 
     public void PlaySound(AudioClip audioClip) {

@@ -1,24 +1,29 @@
 using UnityEngine;
-using Mirror;
+//using Coherence;
+//using Coherence.Toolkit;
 
-public class BallSpawner : NetworkBehaviour
+//[RequireComponent(typeof(CoherenceSync))]
+public class BallSpawner : MonoBehaviour
 {
     public GameObject ballPrefab;
     public Vector3 spawnImpulse;
 
-    [Command(requiresAuthority = false)]
+    //[Command]
     public void cmdSpawnBall()
     {
-        SpawnBall();
-    }
+        //    var sync = GetComponent<CoherenceSync>();
+        //    sync.SendCommand<BallSpawner>(
+        //        nameof(SpawnBall),
+        //        MessageTarget.StateAuthorityOnly);
+        //}
 
-    [Server]
-    Rigidbody SpawnBall()
-    {
+        //// Server-only
+        //private Rigidbody SpawnBall()
+        //{
+
         var obj = Instantiate(ballPrefab, this.transform.position, this.transform.rotation);
-        NetworkServer.Spawn(obj);
         var rigidbody = obj.GetComponent<Rigidbody>();
         rigidbody.AddForce(this.transform.TransformVector(spawnImpulse), ForceMode.Impulse);
-        return rigidbody;
+        //return rigidbody;
     }
 }

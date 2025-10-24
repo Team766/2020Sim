@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 579f4a509fd2f994fa391c0c78ea3f11, type: 3}
+  m_Name: Rookie Shooter Robot
+  m_EditorClassIdentifier: Coherence.Toolkit::Coherence.Toolkit.CoherenceSyncConfig
+  id: dc51daba6bd26400abb19c32e4b4b945
+  selfId: 14ac6c1419a1a4af18d2ac322a2455e6
+  editorTarget: {fileID: 5249266618142775028, guid: dc51daba6bd26400abb19c32e4b4b945,
+    type: 3}
+  includeInSchema: 1
+  objectProvider:
+    rid: 3112184732694872124
+  objectInstantiator:
+    rid: 3112184732694872125
+  references:
+    version: 2
+    RefIds:
+    - rid: 3112184732694872124
+      type: {class: DirectReferenceProvider, ns: Coherence.Toolkit, asm: Coherence.Toolkit}
+      data:
+        prefab: {fileID: 5249266618142775028, guid: dc51daba6bd26400abb19c32e4b4b945,
+          type: 3}
+    - rid: 3112184732694872125
+      type: {class: DefaultInstantiator, ns: Coherence.Toolkit, asm: Coherence.Toolkit}
+      data: 

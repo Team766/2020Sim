@@ -1646,7 +1646,7 @@ MonoBehaviour:
   OnRigidbody3DRotationUpdate:
     m_PersistentCalls:
       m_Calls: []
-  coherenceSyncConfig: {fileID: 11400000, guid: 32365d88cdad54a71bf29b409260e817,
+  coherenceSyncConfig: {fileID: 11400000, guid: ebbd4654100f349c9a07150584ce3e6b,
     type: 2}
   archetype:
     lodLevels:

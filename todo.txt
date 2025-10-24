@@ -1,0 +1,27 @@
+simulate shooter wheel spin-up
+
+ball storage should be a queue not a stack
+
+check other scenes for regressions
+
+
+use findfirstobjectbytype to get gamegui
+
+
+----
+
+
+create some sort of script for instantiating the code for a new robot from a template
+ - omit ExampleMechanism
+ - include DoNothing
+ - import static RulePersistence.* in OI.java
+
+make unit tests run more quickly
+
+resolve "setCurrentLimit() is currently unsupported by LocalMotorController" spam in MR logs
+
+
+onMechanismIdle
+
+
+change run_sim.py to call `./gradlew simulateJava` directly

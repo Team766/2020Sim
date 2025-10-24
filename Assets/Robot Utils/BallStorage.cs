@@ -1,13 +1,11 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Mirror;
+using Coherence.Toolkit;
 
-public class BallStorage : NetworkBehaviour {
+public class BallStorage : MonoBehaviour {
 	public GameObject ballPrefab;
 
     public HoldObject[] heldObjects;
-    [SyncVar]
+    [Sync]
     public int holding = 0;
 
     void Update()
@@ -17,7 +15,6 @@ public class BallStorage : NetworkBehaviour {
             if (!heldObjects[i].held)
             {
                 var obj = Instantiate(ballPrefab, this.transform.position, this.transform.rotation);
-                NetworkServer.Spawn(obj);
                 var rb = obj.GetComponent<Rigidbody>();
 
                 rb.isKinematic = true;

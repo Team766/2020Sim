@@ -18,7 +18,7 @@ PrefabInstance:
         type: 3}
       propertyPath: coherenceSyncConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 11d122c878c974f0dbef0d9850aec507,
+      objectReference: {fileID: 11400000, guid: a132194a4c9a54a64af6f5b6d040f2ac,
         type: 2}
     - target: {fileID: 1450619516874024888, guid: c865ca334c7504582b74c7f34f9efe3d,
         type: 3}

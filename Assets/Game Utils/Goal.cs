@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Mirror;
 
 public class Goal : MonoBehaviour {
 
@@ -56,7 +55,7 @@ public class Goal : MonoBehaviour {
 		}
 		else
         {
-			NetworkServer.Destroy(c.gameObject);
+			Destroy(c.gameObject);
 		}
 	}
 }

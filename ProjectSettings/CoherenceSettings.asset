@@ -27,7 +27,7 @@ MonoBehaviour:
   rsLogFilePath: Logs/rs_logs.txt
   rsFileLogLevel: 1
   reportAnalytics: 1
-  RSBundlingEnabled: 0
+  RSBundlingEnabled: 1
   keepConnectionAlive: 0
   activeSchemas: []
   organization:

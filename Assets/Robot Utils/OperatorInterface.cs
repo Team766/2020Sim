@@ -2,69 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Mirror;
+using Coherence.Toolkit;
 
+[System.Serializable]
 public class Joystick {
     public const int NUM_JOYSTICKS = 4;
     public const int NUM_AXES = 12;
-    public const int NUM_BUTTONS = 20;
+    public const int NUM_BUTTONS = 12;
 
     public float[] axis = new float[NUM_AXES];
     public bool[] button = new bool[NUM_BUTTONS];
 }
 
-public class OperatorInterface : NetworkBehaviour {
-    private GameGUI gameGui;
-
+public class OperatorInterface : MonoBehaviour {
     public Joystick[] joysticks =
         Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(_ => new Joystick()).ToArray();
 
     private readonly string[][] axisNames =
         Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(j =>
             Enumerable.Range(0, Joystick.NUM_AXES).Select(a => "j" + j + "a" + a).ToArray()).ToArray();
-    private readonly KeyCode[][] buttonCodes =
+    private readonly string[][] buttonCodes =
         Enumerable.Range(0, Joystick.NUM_JOYSTICKS).Select(j =>
-            Enumerable.Range(0, Joystick.NUM_BUTTONS)
-                .Select(b => (KeyCode)System.Enum.Parse(typeof(KeyCode), "Joystick" + (j + 1) + "Button" + b))
-                .ToArray()).ToArray();
+            Enumerable.Range(0, Joystick.NUM_BUTTONS).Select(b => "j" + j + "b" + b).ToArray()).ToArray();
 
-    private void Awake() {
-        gameGui = FindAnyObjectByType<GameGUI>();
-    }
-
-    [Command(requiresAuthority = false)]
-    private void CmdSetJoysticks(Joystick[] joysticks) {
-        this.joysticks = joysticks;
-    }
-
-    [ClientCallback]
     void Update () {
-        if (gameGui.IsOwner) {
+        var sync = GetComponent<CoherenceSync>();
+        if (sync.HasInputAuthority && sync.HasStateAuthority) {
             for (var j = 0; j < Joystick.NUM_JOYSTICKS; ++j) {
                 for (var a = 0; a < Joystick.NUM_AXES; ++a) {
                     joysticks[j].axis[a] = Input.GetAxis(axisNames[j][a]);
                 }
                 for (var b = 0; b < Joystick.NUM_BUTTONS; b++) {
-                    joysticks[j].button[b] = Input.GetKey(buttonCodes[j][b]);
+                    joysticks[j].button[b] = Input.GetButton(buttonCodes[j][b]);
                 }
             }
-            joysticks[0].button[0] |= Input.GetKey(KeyCode.LeftControl);
-            joysticks[0].button[1] |= Input.GetKey(KeyCode.LeftShift);
-            joysticks[0].button[2] |= Input.GetKey(KeyCode.LeftAlt);
-            joysticks[0].button[3] |= Input.GetKey(KeyCode.Space);
-            joysticks[1].button[0] |= Input.GetKey(KeyCode.RightControl);
-            joysticks[1].button[1] |= Input.GetKey(KeyCode.RightShift);
-            joysticks[1].button[2] |= Input.GetKey(KeyCode.RightAlt);
-            joysticks[1].button[3] |= Input.GetKey(KeyCode.Return);
-            joysticks[2].button[0] |= Input.GetKey(KeyCode.Alpha1);
-            joysticks[2].button[1] |= Input.GetKey(KeyCode.Alpha2);
-            joysticks[2].button[2] |= Input.GetKey(KeyCode.Alpha3);
-            joysticks[2].button[3] |= Input.GetKey(KeyCode.Alpha4);
-            joysticks[2].button[4] |= Input.GetKey(KeyCode.Alpha5);
-            joysticks[2].button[5] |= Input.GetKey(KeyCode.Alpha6);
-            joysticks[2].button[6] |= Input.GetKey(KeyCode.Alpha7);
-            joysticks[2].button[7] |= Input.GetKey(KeyCode.Alpha8);
-            CmdSetJoysticks(joysticks);
+        } else if (sync.Input && sync.HasStateAuthority) {
+            for (var j = 0; j < Joystick.NUM_JOYSTICKS; ++j) {
+                for (var a = 0; a < Joystick.NUM_AXES; ++a) {
+                    joysticks[j].axis[a] = sync.Input.GetAxis(axisNames[j][a]);
+                }
+                for (var b = 0; b < Joystick.NUM_BUTTONS; b++) {
+                    joysticks[j].button[b] = sync.Input.GetButton(buttonCodes[j][b]);
+                }
+            }
+        } else if (sync.Input && sync.HasInputAuthority) {
+            for (var j = 0; j < Joystick.NUM_JOYSTICKS; ++j) {
+                for (var a = 0; a < Joystick.NUM_AXES; ++a) {
+                    var name = axisNames[j][a];
+                    var value = Input.GetAxis(name);
+                    sync.Input.SetAxis(name, value);
+                }
+                for (var b = 0; b < Joystick.NUM_BUTTONS; b++) {
+                    var name = buttonCodes[j][b];
+                    var value = Input.GetButton(name);
+                    sync.Input.SetButton(name, value);
+                }
+            }
         }
     }
 }
