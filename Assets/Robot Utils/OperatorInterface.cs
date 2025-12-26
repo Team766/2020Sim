@@ -45,10 +45,16 @@ public class OperatorInterface : NetworkBehaviour {
                 }
             }
             joysticks[0].button[0] |= Input.GetKey(KeyCode.LeftControl);
+            // User report: Left control + W (for j0a1) results in closing the
+            // browser window on WebGL builds. So we provide an alternative.
+            joysticks[0].button[0] |= Input.GetKey(KeyCode.Tab);
             joysticks[0].button[1] |= Input.GetKey(KeyCode.LeftShift);
             joysticks[0].button[2] |= Input.GetKey(KeyCode.LeftAlt);
             joysticks[0].button[3] |= Input.GetKey(KeyCode.Space);
             joysticks[1].button[0] |= Input.GetKey(KeyCode.RightControl);
+            // User report: Right control + W (for j0a1) results in closing the
+            // browser window on WebGL builds. So we provide an alternative.
+            joysticks[1].button[0] |= Input.GetKey(KeyCode.Slash) || Input.GetKey(KeyCode.Question);
             joysticks[1].button[1] |= Input.GetKey(KeyCode.RightShift);
             joysticks[1].button[2] |= Input.GetKey(KeyCode.RightAlt);
             joysticks[1].button[3] |= Input.GetKey(KeyCode.Return);
