@@ -22,6 +22,8 @@ public sealed class LinearEncoder : StandardRobotSensor
         }
     }
 
+    public override CodeDeviceType DeviceType => CodeDeviceType.ENCODER_SENSOR;
+
     void Awake()
 	{
 		neutralPosition = transform.localPosition;

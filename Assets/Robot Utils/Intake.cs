@@ -2,15 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Intake : StandardRobotJoint {
-    public float speed;
+[RequireComponent(typeof(RollerSet))]
+public class Intake : MonoBehaviour {
+    public List<BallStorage> ballStorage;
 
-    public BallStorage ballStorage;
-    public Storage2023 storage2023;
-    public Transform[] rollers;
-    
-    HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
-	
+	public float intakeThreshold = 0.2f;
+
+	public float flowRatePeriod = 0.2f;
+	public float startupTime = 0.0f;
+
+	public List<string> compatiblePieceTypes;
+
+    private HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
+
+	private float nextBallTime;
+
 	public Rigidbody Get() {
 		// Discard objects that have been destroyed.
 		contained.RemoveWhere(rb => !rb);
@@ -28,7 +34,10 @@ public class Intake : StandardRobotJoint {
 	}
 
 	void OnTriggerEnter(Collider c) {
-		if (c.tag == "Ball") {
+		if (c.CompareTag("Ball") &&
+            (compatiblePieceTypes.Count == 0 ||
+             compatiblePieceTypes.Contains(c.GetComponent<BallProperties>()?.gamePieceType)))
+        {
 			contained.Add(c.attachedRigidbody);
 		}
 	}
@@ -36,35 +45,23 @@ public class Intake : StandardRobotJoint {
 		contained.Remove(c.attachedRigidbody);
 	}
 
-    void Update() {
-        foreach (var roller in rollers) {
-            roller.Rotate(0, 800 * speed * Time.deltaTime, 0);
-        }
+    void FixedUpdate() {
+        if (GetComponent<RollerSet>().command / intakeThreshold >= 1.0f) {
+			if (Time.fixedTime >= nextBallTime) {
+				var obj = Get();
+				if (obj) {
+					foreach (var store in ballStorage) {
+						if (store.StoreBall(obj)) {
+							contained.Remove(obj);
+							break;
+						}
+					}
 
-        if (speed > 0.2) {
-            var obj = Get();
-            if (obj) {
-                if (ballStorage) {
-                    ballStorage.StoreBall(obj);
-                }
-                if (storage2023) {
-                    storage2023.StoreBall(obj);
-                }
-                contained.Remove(obj);
-            }
-        }
-    }
-
-	public override void RunJoint(float command)
-    {
-        speed = command;
-    }
-
-    public override void Disable() {
-        RunJoint(0.0f);
-    }
-
-    public override void Destroy() {
-        Destroy(this);
+					nextBallTime = Time.fixedTime + flowRatePeriod;
+				}
+			}
+        } else {
+			nextBallTime = Time.fixedTime + startupTime;
+		}
     }
 }

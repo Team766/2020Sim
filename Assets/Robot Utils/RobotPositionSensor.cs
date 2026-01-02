@@ -1,17 +1,12 @@
 using System.Collections.Generic;
 
 public sealed class RobotPositionSensor : RobotSensor {
-    const int ROBOT_X = 8;
-    const int ROBOT_Y = 9;
+    public override CodeDeviceType DeviceType => CodeDeviceType.ROBOT_POSITION_SENSOR;
 
-    public sealed override IEnumerable<int> FeedbackValueIndices {
-        get {
-            return new[] { ROBOT_X, ROBOT_Y };
-        }
-    }
-
-    public override void RunSensor(int[] feedbackValues) {
-        feedbackValues[ROBOT_X] = (int)(transform.position.x * 1000);
-        feedbackValues[ROBOT_Y] = (int)(transform.position.z * 1000);
+    public override void RunSensor(CodeBufferBuilder feedbackValues) {
+        feedbackValues.DeviceData<int>(DeviceId, DeviceType, new[] {
+            (int)(transform.position.x * 1000),
+            (int)(transform.position.z * 1000),
+        });
     }
 }

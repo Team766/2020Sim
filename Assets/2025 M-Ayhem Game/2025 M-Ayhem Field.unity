@@ -492,6 +492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4efdae507695a422c877e83aa710b628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallSpawner
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   ballPrefab: {fileID: 1507823000501942454, guid: 7304d3ec37e2d4c06851177c45cddcac,
@@ -510,9 +512,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
   sceneId: 1897379992
+  _assetId: 0
   serverOnly: 0
-  visible: 0
-  m_AssetId: 
+  visibility: 0
   hasSpawned: 0
 --- !u!1 &142172095
 GameObject:
@@ -1228,9 +1230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 258174588}
-  - component: {fileID: 258174590}
   - component: {fileID: 258174591}
-  - component: {fileID: 258174589}
   m_Layer: 8
   m_Name: Held ball
   m_TagString: Untagged
@@ -1253,62 +1253,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1240595886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &258174589
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258174587}
-  m_Mesh: {fileID: 289301614986012343, guid: 57c92da67efc54e4395f80ddb466d089, type: 3}
---- !u!23 &258174590
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258174587}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 9f3bf7afbb32f41f7a7e0b6bba2942f4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &258174591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1321,6 +1265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f02d01d231972247939c42ff1b55907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HoldObject
+  syncMethod: 0
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   held: {fileID: 0}
 --- !u!1 &281435306
 GameObject:
@@ -1634,12 +1582,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75fb0dc7441e4ed2b5a31bd1e63953e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Launcher2024
-  commandIndex: 16
+  DeviceId: 38
   ballStorage: {fileID: 1240595887}
   maxForce: 1
+  maxDegreesPerSecond: 3000
   intake: {fileID: 1659630461}
   rollers: []
-  speed: 0
+  command: 0
 --- !u!1 &446216162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,7 +1655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996f95f9163a3024bb3b5d3eb7db8080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Goal
-  gameGui: {fileID: 1957400912}
   isBlue: 0
   points: 10
   respawnPoints: []
@@ -1965,7 +1913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandIndex: 10
+  DeviceId: 33
   motorScaler: -75
   maxSpeed: 4500
   minForce: 8
@@ -2709,7 +2657,6 @@ GameObject:
   - component: {fileID: 646471350}
   - component: {fileID: 646471347}
   - component: {fileID: 646471344}
-  - component: {fileID: 646471348}
   - component: {fileID: 646471345}
   m_Layer: 9
   m_Name: FL wheel
@@ -2730,7 +2677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandIndex: 10
+  DeviceId: 32
   motorScaler: -75
   maxSpeed: 4500
   minForce: 8
@@ -2824,20 +2771,6 @@ CapsuleCollider:
   m_Height: 0.04
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &646471348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646471343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a23e80869e944dfb9a7bfc98fde394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  feedbackIndex: 10
-  Angle: 0
 --- !u!4 &646471350
 Transform:
   m_ObjectHideFlags: 0
@@ -4732,7 +4665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ca25d1e71214af0b8c55902866d71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CommonScoringArea
-  gameGui: {fileID: 1957400912}
   points: 2
   sound: {fileID: 8300000, guid: 73095a53804f34274850f45e98b1949d, type: 3}
 --- !u!1001 &879678365
@@ -5404,9 +5336,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 983640683}
-  - component: {fileID: 983640682}
   - component: {fileID: 983640680}
-  - component: {fileID: 983640681}
   m_Layer: 8
   m_Name: Held ball
   m_TagString: Untagged
@@ -5426,63 +5356,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f02d01d231972247939c42ff1b55907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HoldObject
+  syncMethod: 0
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   held: {fileID: 0}
---- !u!33 &983640681
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983640679}
-  m_Mesh: {fileID: 289301614986012343, guid: 57c92da67efc54e4395f80ddb466d089, type: 3}
---- !u!23 &983640682
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983640679}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 9f3bf7afbb32f41f7a7e0b6bba2942f4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &983640683
 Transform:
   m_ObjectHideFlags: 0
@@ -5725,7 +5603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandIndex: 11
+  DeviceId: 34
   motorScaler: 75
   maxSpeed: 4500
   minForce: 8
@@ -5831,7 +5709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a23e80869e944dfb9a7bfc98fde394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  feedbackIndex: 11
+  DeviceId: 11
   Angle: 0
 --- !u!4 &1031992340
 Transform:
@@ -6191,7 +6069,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PassiveIntake
   ballStorage: {fileID: 1240595887}
-  storage2023: {fileID: 0}
 --- !u!65 &1084643602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6279,7 +6156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996f95f9163a3024bb3b5d3eb7db8080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Goal
-  gameGui: {fileID: 1957400912}
   isBlue: 1
   points: 10
   respawnPoints: []
@@ -6910,7 +6786,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1240595886}
-  - component: {fileID: 1240595888}
   - component: {fileID: 1240595887}
   m_Layer: 8
   m_Name: Storage
@@ -6948,6 +6823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9352331e0ca414f7ba61cc27557b3c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallStorage
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   ballPrefab: {fileID: 2287558188988386437, guid: c865ca334c7504582b74c7f34f9efe3d,
@@ -6956,23 +6833,6 @@ MonoBehaviour:
   - {fileID: 258174591}
   - {fileID: 983640680}
   holding: 1
---- !u!114 &1240595888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240595885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
-  sceneId: 2275587829
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1245608974
 GameObject:
   m_ObjectHideFlags: 0
@@ -7404,21 +7264,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0110f245bfcfc7d459681f7bd9ebc590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  port: 7778
   maxMessageSize: 16384
-  handshakeMaxSize: 3000
-  noDelay: 1
+  maxHandshakeSize: 3000
+  serverMaxMsgsPerTick: 10000
+  clientMaxMsgsPerTick: 1000
   sendTimeout: 5000
   receiveTimeout: 20000
-  serverMaxMessagesPerTick: 10000
-  clientMaxMessagesPerTick: 1000
+  noDelay: 1
+  sslEnabled: 0
+  sslProtocols: 3072
+  sslCertJson: ./cert.json
+  port: 7778
   batchSend: 1
   waitBeforeSend: 0
   clientUseWss: 0
-  sslEnabled: 0
-  sslCertJson: ./cert.json
-  sslProtocols: 3072
-  _logLevels: 0
+  clientWebsocketSettings:
+    ClientPortOption: 0
+    CustomClientPort: 7777
+  minimumLogLevel: 3
 --- !u!114 &1286051702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7433,20 +7296,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   runInBackground: 1
-  autoStartServerBuild: 1
-  serverTickRate: 60
-  offlineScene: 
-  onlineScene: Assets/2025 M-Ayhem Game/2025 M-Ayhem Field.unity
+  headlessStartMode: 0
+  editorAutoStart: 0
+  sendRate: 60
+  unreliableBaselineRate: 1
+  unreliableRedundancy: 0
   transport: {fileID: 1286051701}
   networkAddress: localhost
   maxConnections: 10
+  disconnectInactiveConnections: 0
+  disconnectInactiveTimeout: 60
+  exceptionsDisconnect: 1
   authenticator: {fileID: 0}
+  offlineScene: 
+  onlineScene: Assets/2025 M-Ayhem Game/2025 M-Ayhem Field.unity
+  offlineSceneLoadDelay: 0
   playerPrefab: {fileID: 6425313593280089424, guid: 7afef305f4ab1c7f886de3ca27863694,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs:
-  - {fileID: 4915976631291430839, guid: ae3c067ae8cdc3a188cd2fc9e5c1f40c, type: 3}
+  spawnPrefabs: []
+  snapshotSettings:
+    bufferTimeMultiplier: 2
+    bufferLimit: 32
+    catchupNegativeThreshold: -1
+    catchupPositiveThreshold: 1
+    catchupSpeed: 0.019999999552965164
+    slowdownSpeed: 0.03999999910593033
+    driftEmaDuration: 1
+    dynamicAdjustment: 1
+    dynamicAdjustmentTolerance: 1
+    deliveryTimeEmaDuration: 2
+  evaluationMethod: 0
+  evaluationInterval: 3
+  timeInterpolationGui: 0
 --- !u!4 &1286051703
 Transform:
   m_ObjectHideFlags: 0
@@ -8240,73 +8123,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1452832800}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1466043471
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1466043473}
-  - component: {fileID: 1466043472}
-  - component: {fileID: 1466043474}
-  m_Layer: 0
-  m_Name: CodeConnector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1466043472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466043471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06fdf912bcb18724b8439b9e47cdcd56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  robot: {fileID: 1481217486}
-  oi: {fileID: 1876133578}
-  gameGui: {fileID: 1957400912}
-  commandsPort: 7661
-  feedbackPort: 7662
---- !u!4 &1466043473
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466043471}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1214, z: 0.000000022351742}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1466043474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466043471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1863564891
-  serverOnly: 1
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1478393171
 GameObject:
   m_ObjectHideFlags: 0
@@ -8373,7 +8189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ca25d1e71214af0b8c55902866d71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CommonScoringArea
-  gameGui: {fileID: 1957400912}
   points: 5
   sound: {fileID: 8300000, guid: 73095a53804f34274850f45e98b1949d, type: 3}
 --- !u!1 &1481217478
@@ -8398,6 +8213,8 @@ GameObject:
   - component: {fileID: 1481217490}
   - component: {fileID: 1481217498}
   - component: {fileID: 1481217479}
+  - component: {fileID: 1481217500}
+  - component: {fileID: 1481217499}
   m_Layer: 8
   m_Name: Robot
   m_TagString: Untagged
@@ -8427,31 +8244,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481217478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  clientAuthority: 0
-  sendInterval: 0.05
+  target: {fileID: 1481217487}
+  updateMethod: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   bufferResetMultiplier: 5
   positionSensitivity: 0
   rotationSensitivity: 0
   scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!114 &1481217484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8465,9 +8283,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 912563339
+  _assetId: 0
   serverOnly: 0
-  visible: 0
-  m_AssetId: 
+  visibility: 0
   hasSpawned: 0
 --- !u!114 &1481217486
 MonoBehaviour:
@@ -8481,9 +8299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc30f0b90eff5741a2bbe137bb2a6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  gameGui: {fileID: 1957400912}
 --- !u!4 &1481217487
 Transform:
   m_ObjectHideFlags: 0
@@ -8526,6 +8345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703b3551653234a13bb94b8aa6d505a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeviceId: 20
 --- !u!114 &1481217489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8538,6 +8358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13182ff0443c4eebba5b53e90154247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeviceId: 16
 --- !u!114 &1481217490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8547,32 +8368,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481217478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
+  target: {fileID: 1718868354}
+  updateMethod: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0
   scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 1718868354}
 --- !u!114 &1481217491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8582,32 +8403,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481217478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
+  target: {fileID: 1031992340}
+  updateMethod: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0
   scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 1031992340}
 --- !u!114 &1481217492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8617,32 +8438,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481217478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
+  target: {fileID: 486066467}
+  updateMethod: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0
   scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 486066467}
 --- !u!114 &1481217493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8652,32 +8473,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481217478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
+  target: {fileID: 646471350}
+  updateMethod: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0
   scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 646471350}
 --- !u!114 &1481217496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8687,32 +8508,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481217478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
+  target: {fileID: 142172096}
+  updateMethod: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0
   scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 142172096}
 --- !u!114 &1481217497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8722,32 +8543,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481217478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
+  target: {fileID: 1690479171}
+  updateMethod: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0
   scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 1690479171}
 --- !u!171741748 &1481217498
 ArticulationBody:
   m_ObjectHideFlags: 0
@@ -8814,6 +8635,40 @@ ArticulationBody:
   m_Immovable: 0
   m_UseGravity: 1
   m_CollisionDetectionMode: 0
+--- !u!114 &1481217499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481217478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fdf912bcb18724b8439b9e47cdcd56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CodeConnector
+  syncMethod: 0
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  commandsPort: 7661
+  feedbackPort: 7662
+--- !u!114 &1481217500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481217478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85fcb6acc6c9e94bd8155ed0296136df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OperatorInterface
+  syncMethod: 0
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &1486543720
 GameObject:
   m_ObjectHideFlags: 0
@@ -8859,6 +8714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4efdae507695a422c877e83aa710b628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallSpawner
+  syncMethod: 0
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   ballPrefab: {fileID: 2287558188988386437, guid: c865ca334c7504582b74c7f34f9efe3d,
@@ -8877,9 +8734,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
   sceneId: 2773451399
+  _assetId: 0
   serverOnly: 0
-  visible: 0
-  m_AssetId: 
+  visibility: 0
   hasSpawned: 0
 --- !u!1 &1502987845
 GameObject:
@@ -9314,10 +9171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf40a10d8b05eb4fb210efc72fcfea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandIndex: 14
-  speed: 0
+  DeviceId: 37
+  command: 0
   ballStorage: {fileID: 0}
-  storage2023: {fileID: 0}
   rollers: []
 --- !u!1 &1667008632
 GameObject:
@@ -10082,7 +9938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a8e7d7bc7292d438f1e56447af840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandIndex: 11
+  DeviceId: 35
   motorScaler: 75
   maxSpeed: 4500
   minForce: 8
@@ -10747,10 +10603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf40a10d8b05eb4fb210efc72fcfea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandIndex: 12
-  speed: 0
+  DeviceId: 36
+  command: 0
   ballStorage: {fileID: 1240595887}
-  storage2023: {fileID: 0}
   rollers:
   - {fileID: 1690479171}
   - {fileID: 142172096}
@@ -11120,71 +10975,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1867722468}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1876133575
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1876133577}
-  - component: {fileID: 1876133578}
-  - component: {fileID: 1876133579}
-  m_Layer: 0
-  m_Name: Input Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1876133577
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876133575}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1876133578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876133575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85fcb6acc6c9e94bd8155ed0296136df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  gameGui: {fileID: 1957400912}
---- !u!114 &1876133579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876133575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1114090453
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1886427311
 GameObject:
   m_ObjectHideFlags: 0
@@ -11634,18 +11424,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4541063487464406989}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1957400912 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4541063488329772701, guid: a9502fe73cf514f0296d05af4c2fb75f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4541063487464406989}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627fe0cf7bcf4f845a49e9baa8297128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1962867713
 GameObject:
   m_ObjectHideFlags: 0
@@ -13056,7 +12834,13 @@ PrefabInstance:
       propertyPath: m_Options.m_Options.Array.data[8].m_Text
       value: Top Down Robot Camera
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4982616521542050476, guid: a9502fe73cf514f0296d05af4c2fb75f,
+        type: 3}
+      propertyPath: sceneId
+      value: 1633162244
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5251971711623892675, guid: a9502fe73cf514f0296d05af4c2fb75f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4541063488329772674, guid: a9502fe73cf514f0296d05af4c2fb75f,
@@ -13081,8 +12865,6 @@ SceneRoots:
   - {fileID: 2802557582881091005}
   - {fileID: 711574939}
   - {fileID: 1227466691}
-  - {fileID: 1466043473}
-  - {fileID: 1876133577}
   - {fileID: 1286051703}
   - {fileID: 1481217487}
   - {fileID: 744900929}

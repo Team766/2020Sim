@@ -16,6 +16,8 @@ public sealed class LineSensor : StandardRobotSensor {
             return IsDetecting ? 1 : 0;
         }
     }
+
+    public override CodeDeviceType DeviceType => CodeDeviceType.LINE_SENSOR;
     
     private HashSet<Collider> colliding = new HashSet<Collider>();
     

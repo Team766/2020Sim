@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public sealed class Launcher : StandardRobotJoint
+public sealed class ToggleLauncher : StandardRobotJoint
 {
 	public BallStorage ballStorage;
 
@@ -41,4 +41,7 @@ public sealed class Launcher : StandardRobotJoint
     public override void Destroy() {
         Destroy(this);
     }
+
+    public override int SensorPosition => launched ? 1 : 0;
+    public override int SensorVelocity => 0;
 }

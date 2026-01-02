@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 
-public enum RobotMode : int {
+public enum RobotMode {
     Disabled = 0,
     Auton = 1,
     Teleop = 2,
@@ -20,7 +20,6 @@ public class GameGUI : NetworkBehaviour {
     const string SELECTED_CAMERA_PREF_KEY = "selectedCamera";
 
     public string[] sceneNames;
-    public string[] robotVariantNames;
     public Camera[] cameras;
     public int initialCamera;
     public Text scoreText;
@@ -39,24 +38,8 @@ public class GameGUI : NetworkBehaviour {
     private double robotModeStartTime = 0.0;
     [SyncVar]
     private float timeRemaining = 0.0f;
-    [SyncVar]
-    public bool haveRobotCode = false;
-    private System.Guid thisId = System.Guid.NewGuid();
-    [SyncVar]
-    private System.Guid ownerId = System.Guid.Empty;
-    
-    public RobotMode RobotMode {
-        get {
-            return robotMode;
-        }
-    }
 
-    public bool IsOwner {
-        get {
-            // TODO: Use Mirror's authority mechanism instead
-            return ownerId == thisId;
-        }
-    }
+    public RobotMode RobotMode => robotMode;
 
     void Start() {
         int cameraIndex = PlayerPrefs.GetInt(SELECTED_CAMERA_PREF_KEY, initialCamera);
@@ -79,18 +62,12 @@ public class GameGUI : NetworkBehaviour {
 
         codeStateText.text = haveRobotCode ? "Code running" : "No robot code";
 
-        float stateDuration = 0.0f;
-        switch (robotMode) {
-            case RobotMode.Disabled:
-                stateDuration = 0.0f;
-                break;
-            case RobotMode.Auton:
-                stateDuration = AUTON_DURATION;
-                break;
-            case RobotMode.Teleop:
-                stateDuration = TELEOP_DURATION;
-                break;
-        }
+        float stateDuration = robotMode switch {
+            RobotMode.Disabled => 0.0f,
+            RobotMode.Auton => AUTON_DURATION,
+            RobotMode.Teleop => TELEOP_DURATION,
+            _ => 0.0f,
+        };
         if (isServer) {
             timeRemaining = Mathf.Ceil(
                 (float)Math.Max(0.0, robotModeStartTime + stateDuration - Time.timeAsDouble));
@@ -120,14 +97,12 @@ public class GameGUI : NetworkBehaviour {
         if (dropdownIndex == 0) {
             return;
         }
-        CmdLoadScene(sceneNames[dropdownIndex - 1],
-                     robotVariantNames[dropdownIndex - 1]);
+        CmdLoadScene(sceneNames[dropdownIndex - 1]);
     }
 
     [Command(requiresAuthority = false)]
-    private void CmdLoadScene(string sceneName, string robotVariantName) {
-        Debug.Log("Loading scene " + sceneName + " " + robotVariantName);
-        RobotController.robotVariant = robotVariantName;
+    private void CmdLoadScene(string sceneName) {
+        Debug.Log("Loading scene " + sceneName);
         NetworkManager.singleton.ServerChangeScene(sceneName);
     }
     
@@ -137,20 +112,19 @@ public class GameGUI : NetworkBehaviour {
             throw new ArgumentOutOfRangeException();
         }
         if (robotMode != (RobotMode)mode) {
-            CmdSetRobotMode(thisId, ((RobotMode)mode).ToString());
+            CmdSetRobotMode(((RobotMode)mode).ToString());
         }
     }
 
     [Command(requiresAuthority = false)]
-    private void CmdSetRobotMode(System.Guid newOwnerId, string mode) {
-        SetRobotMode(newOwnerId, (RobotMode)Enum.Parse(typeof(RobotMode), mode, true));
+    private void CmdSetRobotMode(string mode) {
+        SetRobotMode((RobotMode)Enum.Parse(typeof(RobotMode), mode, true));
     }
 
     [Server]
-    public void SetRobotMode(System.Guid newOwnerId, RobotMode mode) {
+    public void SetRobotMode(RobotMode mode) {
         robotMode = mode;
         robotModeStartTime = Time.timeAsDouble;
-        ownerId = newOwnerId;
     }
 
     public void PlaySound(AudioClip audioClip) {

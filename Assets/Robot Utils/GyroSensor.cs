@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class GyroSensor : RobotSensor {
-    const int HEADING = 12;
-    const int HEADING_PRECISE = 15;
-    const int HEADING_RATE = 16;
-    const int GYRO_PITCH = 80;
-    const int GYRO_ROLL = 81;
+    const int HEADING = 0;
+    const int HEADING_PRECISE = 1;
+    const int HEADING_RATE = 2;
+    const int GYRO_PITCH = 3;
+    const int GYRO_ROLL = 4;
+
+    public override CodeDeviceType DeviceType => CodeDeviceType.GYRO_SENSOR;
 
     private float headingPrev = 0.0f;
 
@@ -24,18 +26,14 @@ public sealed class GyroSensor : RobotSensor {
         GyroRate = Vector3.Dot(transform.up, angularVelocity) * Mathf.Rad2Deg;
     }
 
-    public sealed override IEnumerable<int> FeedbackValueIndices {
-        get {
-            return new[] { HEADING, HEADING_PRECISE, HEADING_RATE, GYRO_PITCH, GYRO_ROLL };
-        }
-    }
-
-    public override void RunSensor(int[] feedbackValues) {
-        feedbackValues[HEADING] = (int)GyroAngle;
-        feedbackValues[HEADING_PRECISE] = (int)(GyroAngle * 10);
-        feedbackValues[HEADING_RATE] = (int)(GyroRate * 100);
-        feedbackValues[GYRO_PITCH] = (int)(GyroPitch * 10);
-        feedbackValues[GYRO_ROLL] = (int)(GyroRoll * 10);
+    public override void RunSensor(CodeBufferBuilder feedbackValues) {
+        int[] values = new int[5];
+        values[HEADING] = (int)GyroAngle;
+        values[HEADING_PRECISE] = (int)(GyroAngle * 10);
+        values[HEADING_RATE] = (int)(GyroRate * 100);
+        values[GYRO_PITCH] = (int)(GyroPitch * 10);
+        values[GYRO_ROLL] = (int)(GyroRoll * 10);
+        feedbackValues.DeviceData<int>(DeviceId, DeviceType, values);
     }
 
     public float Heading

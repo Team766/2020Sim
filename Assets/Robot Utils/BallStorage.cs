@@ -6,10 +6,11 @@ using Mirror;
 public class BallStorage : NetworkBehaviour {
 	public GameObject ballPrefab;
 
-    public HoldObject[] heldObjects;
+    public List<HoldObject> heldObjects;
     [SyncVar]
     public int holding = 0;
 
+    [ServerCallback]
     void Update()
     {
         for (int i = 0; i < holding; ++i)
@@ -27,13 +28,13 @@ public class BallStorage : NetworkBehaviour {
                 }
                 obj.transform.parent = heldObjects[i].transform;
                 obj.transform.localPosition = Vector3.zero;
-                heldObjects[i].held = rb;
+                heldObjects[i].held = rb.gameObject;
             }
         }
     }
 
     public bool StoreBall(Rigidbody obj) {
-        if (holding >= heldObjects.Length) {
+        if (holding >= heldObjects.Count) {
             return false;
         }
         obj.isKinematic = true;
@@ -43,7 +44,7 @@ public class BallStorage : NetworkBehaviour {
         }
         obj.transform.parent = heldObjects[holding].transform;
         obj.transform.localPosition = Vector3.zero;
-        heldObjects[holding].held = obj;
+        heldObjects[holding].held = obj.gameObject;
         ++holding;
         return true;
     }
@@ -53,7 +54,7 @@ public class BallStorage : NetworkBehaviour {
             return null;
         }
         --holding;
-        var obj = heldObjects[holding].held;
+        var obj = heldObjects[holding].held.GetComponent<Rigidbody>();
         heldObjects[holding].held = null;
         obj.transform.parent = null;
         obj.isKinematic = false;

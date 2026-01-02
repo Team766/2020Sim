@@ -1,15 +1,8 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Mirror;
 
 [RequireComponent(typeof(BallStorage))]
 public sealed class BallStorageSensor : StandardRobotSensor {
-    public override int SensorValue
-    {
-        get
-        {
-            return GetComponent<BallStorage>().holding > 0 ? 1 : 0;
-        }
-    }
+    public override int SensorValue => GetComponent<BallStorage>().holding;
+
+    public override CodeDeviceType DeviceType => CodeDeviceType.BALL_STORAGE_SENSOR;
 }

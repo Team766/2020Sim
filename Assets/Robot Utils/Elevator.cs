@@ -22,10 +22,19 @@ public sealed class Elevator : StandardRobotJoint
     public float minPosition = -0.5f;
     public float maxPosition = 0.5f;
 
+    public float encoderScale = 1000;
+
     private Vector3 positionRelativeToConnectedBody()
     {
         ConfigurableJoint joint = GetComponent<ConfigurableJoint>();
         return ((Component)joint.connectedBody ?? joint.connectedArticulationBody).transform.InverseTransformPoint(transform.position);
+    }
+
+    private Vector3 velocityRelativeToConnectedBody()
+    {
+        ConfigurableJoint joint = GetComponent<ConfigurableJoint>();
+        return ((Component)joint.connectedBody ?? joint.connectedArticulationBody).transform.InverseTransformVector(
+                joint.connectedBody ? joint.connectedBody.linearVelocity : joint.connectedArticulationBody.linearVelocity);
     }
 
     void Awake()
@@ -102,4 +111,16 @@ public sealed class Elevator : StandardRobotJoint
         Destroy(GetComponent<Rigidbody>());
         //GetComponent<Rigidbody>().isKinematic = true;
     }
+
+    public override int SensorPosition => (int)(
+        encoderScale *
+        Vector3.Dot(positionRelativeToConnectedBody() - neutralPosition,
+                    GetComponent<ConfigurableJoint>().axis)
+    );
+
+    public override int SensorVelocity => (int)(
+        encoderScale *
+        Vector3.Dot(velocityRelativeToConnectedBody(),
+                    GetComponent<ConfigurableJoint>().axis)
+    );
 }

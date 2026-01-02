@@ -7,16 +7,111 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
+using Mirror;
 
-public class CodeConnector : MonoBehaviour {
+public enum CodeDeviceType : byte {
+    JOYSTICK = 1,
+    MOTOR = 2,
+    ENCODER_SENSOR = 3,
+    GYRO_SENSOR = 4,
+    BALL_STORAGE_SENSOR = 5,
+    LINE_SENSOR = 6,
+    ROBOT_POSITION_SENSOR = 7,
+    BEACON_POSITION_SENSOR = 8,
+    COMMAND_FLAG = 9,
+    FEEDBACK_COUNTER_32 = 10,
+    FEEDBACK_COUNTER_64 = 11,
+    ROBOT_MODE = 12,
+}
+
+public static class ReservedDeviceIds {
+    public const byte TIMESTAMP = 1;
+    public const byte RESET_SIM = 2;
+    public const byte RESET_COUNTER = 3;
+    public const byte ROBOT_MODE = 4;
+    public const byte JOYSTICK_1 = 5;
+    public const byte JOYSTICK_2 = 6;
+    public const byte JOYSTICK_3 = 7;
+    public const byte JOYSTICK_4 = 8;
+
+    public const byte BEGIN_ROBOT_DEVICE_ID = 32;
+}
+
+public class CodeBufferView {
+    private readonly ArraySegment<byte> data;
+
+    public CodeBufferView() {
+        this.data = ArraySegment<byte>.Empty;
+    }
+
+    public CodeBufferView(ArraySegment<byte> data) {
+        this.data = data;
+    }
+
+    public ArraySegment<byte> DeviceData(byte deviceId, CodeDeviceType deviceType) {
+        for (int start = 0; start + 3 <= data.Count;) {
+            byte spanId = data[start++];
+            byte spanType = data[start++];
+            byte length = data[start++];
+            if (spanId == deviceId) {
+                if (spanType == (byte)deviceType) {
+                    return data.Slice(start, length);
+                } else {
+                    Debug.LogWarning($"Received Device ID {deviceId} has a different type {(CodeDeviceType)spanType} than expected {deviceType}");
+                }
+            }
+            start += length;
+        }
+        return new ArraySegment<byte>();
+    }
+
+    public ArraySegment<T> DeviceData<T>(byte deviceId, CodeDeviceType deviceType) where T : unmanaged {
+        ReadOnlySpan<byte> deviceBytes = DeviceData(deviceId, deviceType);
+        T[] deviceData = new T[deviceBytes.Length / Marshal.SizeOf<T>()];
+        deviceBytes.CopyTo(MemoryMarshal.AsBytes<T>(deviceData));
+        return deviceData;
+    }
+}
+
+public class CodeBufferBuilder {
+    private readonly byte[] data = new byte[1024];
+    private int size = 0;
+
+    public void Clear() {
+        size = 0;
+    }
+
+    public void DeviceData<T>(byte deviceId, CodeDeviceType deviceType, ReadOnlySpan<T> deviceData) where T : unmanaged {
+        var deviceBytes = MemoryMarshal.AsBytes<T>(deviceData);
+        if (deviceBytes.Length > byte.MaxValue) {
+            throw new ArgumentException("Device data is larger than 255 bytes");
+        }
+        data[size++] = deviceId;
+        data[size++] = (byte)deviceType;
+        data[size++] = (byte)deviceBytes.Length;
+        deviceBytes.CopyTo(new Span<byte>(data, size, deviceBytes.Length));
+        size += deviceBytes.Length;
+    }
+
+    public ArraySegment<byte> Get() {
+        return new ArraySegment<byte>(data, 0, size);
+    }
+}
+
+[RequireComponent(typeof(RobotController))]
+[RequireComponent(typeof(OperatorInterface))]
+public class CodeConnector : NetworkBehaviour {
     const float EXCEPTION_LOG_PERIOD = 10f;
 
-    public RobotController robot;
-    public OperatorInterface oi;
-    public GameGUI gameGui;
+    private RobotController robot;
+    private OperatorInterface oi;
     private UdpClient udpClient;
     private DateTime lastFeedback, lastCommand;
     private float lastConnectException = -1000;
+
+    [NonSerialized]
+    [SyncVar]
+    public bool hasRobotCode = false;
 
     // resetCounter is initialized to a value that (should) be different each time the simulator is started.
     private static int resetCounter = (int)((DateTime.UtcNow - DateTime.MinValue).TotalSeconds % (Int32.MaxValue / 2));
@@ -25,59 +120,23 @@ public class CodeConnector : MonoBehaviour {
     public int commandsPort = 7661;
     public int feedbackPort = 7662;
 
-    // Command indexes
-    const int RESET_SIM = 0;
+    const byte DISABLED_MODE = 0;
+    const byte AUTON_MODE = 1;
+    const byte TELEOP_MODE = 2;
 
-    // Feedback indexes
-    const int MAX_FEEDBACKS = 200;
-
-    const int TIMESTAMP_LSW = 5;
-    const int TIMESTAMP_MSW = 4;
-
-    const int RESET_COUNTER = 6;
-
-    const int ROBOT_MODE = 3;
-    const int DISABLED_MODE = 0;
-    const int AUTON_MODE = 1;
-    const int TELEOP_MODE = 2;
-
-    const int NumJoysticks = 4;
-    const int BaseAxisStart = 20;
-    const int BaseAxesPerJoystick = 4;
-    const int AdditionalAxisStart = 100;
-    const int AdditionalAxesPerJoystick = 4;
-    const int LegacyButtonsStart = 40;
-    const int LegacyButtonsPerJoystick = 8;
-    const int DenseButtonsStart = 72;
-    const int DenseButtonsPerJoystick = 20;
-
-    public static Dictionary<int, string> BaseFeedbackValueIndices {
-        get {
-            var feedbackIndices = new Dictionary<int, string>();
-            for (int i = 0; i < 8; ++i) {
-                feedbackIndices[i] = "Reserved";
-            }
-            feedbackIndices[TIMESTAMP_LSW] = "Timestamp";
-            feedbackIndices[TIMESTAMP_MSW] = "Timestamp";
-            feedbackIndices[RESET_COUNTER] = "Reset Counter";
-            feedbackIndices[ROBOT_MODE] = "Robot Mode";
-            for (var j = 0; j < NumJoysticks; ++j) {
-                for (var a = 0; a < BaseAxesPerJoystick; ++a) {
-                    feedbackIndices.Add(j * BaseAxesPerJoystick + a + BaseAxisStart, "Joystick");
-                }
-                for (var a = 0; a < AdditionalAxesPerJoystick; ++a) {
-                    feedbackIndices.Add(j * AdditionalAxesPerJoystick + a + AdditionalAxisStart, "Joystick");
-                }
-                for (var b = 0; b < LegacyButtonsPerJoystick; b++) {
-                    feedbackIndices.Add(j * LegacyButtonsPerJoystick + b + LegacyButtonsStart, "Joystick");
-                }
-                feedbackIndices.Add(j + DenseButtonsStart, "Joystick");
-            }
-            return feedbackIndices;
-        }
-    }
+    static readonly byte[] JOYSTICK_DEVICE_IDS = new [] {
+        ReservedDeviceIds.JOYSTICK_1,
+        ReservedDeviceIds.JOYSTICK_2,
+        ReservedDeviceIds.JOYSTICK_3,
+        ReservedDeviceIds.JOYSTICK_4,
+    };
+    const int AxesPerJoystick = 10;
+    const int ButtonsPerJoystick = 31;
 
     void Start() {
+        robot = GetComponent<RobotController>();
+        oi = GetComponent<OperatorInterface>();
+
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
             Application.targetFrameRate = Mathf.RoundToInt(1f / Time.fixedDeltaTime);
         }
@@ -87,7 +146,7 @@ public class CodeConnector : MonoBehaviour {
             resetCallbackRegistered = true;
         }
 
-        if (Application.platform != RuntimePlatform.WebGLPlayer) {
+        if (ApplicationArguments.PlayerRole.IsCodePlayer() && Application.platform != RuntimePlatform.WebGLPlayer) {
             Debug.Log("Starting UDP Code Connector");
             udpClient = new UdpClient(commandsPort);
             udpClient.Connect(IPAddress.Loopback, feedbackPort);
@@ -115,56 +174,48 @@ public class CodeConnector : MonoBehaviour {
         if (udpClient != null) {
             if (DateTime.Now - lastFeedback > TimeSpan.FromMilliseconds(1)) {
                 lastFeedback = DateTime.Now;
-                int[] values = new int[MAX_FEEDBACKS];
+                CodeBufferBuilder feedback = new CodeBufferBuilder();
 
-                robot.RunSensors(values);
+                robot.RunSensors(feedback);
 
                 long timestamp = (long)(Time.timeAsDouble * 1000);
-                values[TIMESTAMP_LSW] = (int)timestamp;
-                values[TIMESTAMP_MSW] = (int)(timestamp >> 32);
-                values[RESET_COUNTER] = resetCounter;
+                feedback.DeviceData<long>(ReservedDeviceIds.TIMESTAMP, CodeDeviceType.FEEDBACK_COUNTER_64, new[] { timestamp });
+                feedback.DeviceData<int>(ReservedDeviceIds.RESET_COUNTER, CodeDeviceType.FEEDBACK_COUNTER_32, new[] { resetCounter });
 
-                switch (gameGui.RobotMode) {
-                    case RobotMode.Disabled:
-                        values[ROBOT_MODE] = DISABLED_MODE;
-                        break;
-                    case RobotMode.Auton:
-                        values[ROBOT_MODE] = AUTON_MODE;
-                        break;
-                    case RobotMode.Teleop:
-                        values[ROBOT_MODE] = TELEOP_MODE;
-                        break;
-                }
-                for (var j = 0; j < NumJoysticks; ++j) {
-                    for (var a = 0; a < BaseAxesPerJoystick; ++a) {
-                        values[j * BaseAxesPerJoystick + a + BaseAxisStart] = (int)(oi.joysticks[j].axis[a] * 100);
+                feedback.DeviceData<byte>(ReservedDeviceIds.ROBOT_MODE, CodeDeviceType.ROBOT_MODE, new [] {
+                    robot.RobotMode switch {
+                        RobotMode.Disabled => DISABLED_MODE,
+                        RobotMode.Auton => AUTON_MODE,
+                        RobotMode.Teleop => TELEOP_MODE,
+                        _ => throw new ArgumentOutOfRangeException($"Unknown RobotMode value: {robot.RobotMode}"),
                     }
-                    for (var a = 0; a < AdditionalAxesPerJoystick; ++a) {
-                        values[j * AdditionalAxesPerJoystick + a + AdditionalAxisStart] = (int)(oi.joysticks[j].axis[a + BaseAxesPerJoystick] * 100);
-                    }
-                    for (var b = 0; b < LegacyButtonsPerJoystick; b++) {
-                        values[j * LegacyButtonsPerJoystick + b + LegacyButtonsStart] = oi.joysticks[j].button[b] ? 1 : 0;
-                    }
+                });
+                for (var j = 0; j < JOYSTICK_DEVICE_IDS.Length; ++j) {
+                    int[] values = new int[1 + AxesPerJoystick];
                     int denseButtonState = 0;
-                    for (var b = 0; b < DenseButtonsPerJoystick; b++) {
+                    for (var b = 0; b < Math.Min(ButtonsPerJoystick, oi.joysticks[j].button.Length); b++) {
                         denseButtonState |= (oi.joysticks[j].button[b] ? 1 : 0) << b;
                     }
-                    values[j + DenseButtonsStart] = denseButtonState;
+                    values[0] = denseButtonState;
+                    for (var a = 0; a < Math.Min(AxesPerJoystick, oi.joysticks[j].axis.Length); ++a) {
+                        values[a + 1] = (int)(oi.joysticks[j].axis[a] * 100);
+                    }
+                    feedback.DeviceData<int>(JOYSTICK_DEVICE_IDS[j], CodeDeviceType.JOYSTICK, values);
                 }
 
-                byte[] sendBytes = new byte[values.Length * sizeof(int)];
-                Buffer.BlockCopy(values, 0, sendBytes, 0, sendBytes.Length);
                 try {
-                    udpClient.Send(sendBytes, sendBytes.Length);
+                    var sendBytes = feedback.Get();
+                    System.Diagnostics.Trace.Assert(sendBytes.Offset == 0);
+                    udpClient.Send(sendBytes.Array, sendBytes.Count);
                 } catch (SocketException ex) {
-                    if (gameGui.haveRobotCode || (Time.realtimeSinceStartup - lastConnectException > EXCEPTION_LOG_PERIOD)) {
+                    if (hasRobotCode || (Time.realtimeSinceStartup - lastConnectException > EXCEPTION_LOG_PERIOD)) {
                         lastConnectException = Time.realtimeSinceStartup;
                         Debug.LogException(ex, this);
                     }
                 }
             }
 
-            Byte[] receiveBytes = null;
+            byte[] receiveBytes = null;
             while (udpClient.Available > 0) {
                 IPEndPoint e = new IPEndPoint(IPAddress.Any, commandsPort);
                 try {
@@ -174,66 +225,61 @@ public class CodeConnector : MonoBehaviour {
                 }
             }
             if (receiveBytes != null) {
-                if (receiveBytes.Length % sizeof(int) == 0) {
-                    int[] commands = new int[receiveBytes.Length / sizeof(int)];
-                    Buffer.BlockCopy(receiveBytes, 0, commands, 0, receiveBytes.Length);
+                var commands = new CodeBufferView(receiveBytes);
 
-                    if (commands.Length >= 14) {
-                        /*if (commands[RESET_SIM] > 0) {
-                            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                            Debug.Log("Reset");
-                            commands[RESET_SIM] = 0;
-                        }*/
+                //if (!commands.DeviceData<byte>(ReservedDeviceIds.RESET_SIM, CodeDeviceType.COMMAND_FLAG).IsEmpty) {
+                //    TODO: replace this with GameGUI.LoadScene
+                //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                //    Debug.Log("Reset");
+                //}
 
-                        robot.RunJoints(commands);
-                    }
-                }
+                robot.RunJoints(commands);
 
                 lastCommand = DateTime.Now;
             }
         }
 
-        gameGui.haveRobotCode = DateTime.Now - lastCommand < TimeSpan.FromSeconds(1);
+        hasRobotCode = DateTime.Now - lastCommand < TimeSpan.FromSeconds(1);
 
-        if (!gameGui.haveRobotCode) {
+        if (!hasRobotCode) {
             robot.RunJoints(GetFallbackCommands());
         }
     }
 
-    private int FloatToCommand(float value) {
-        return (int)(value * 512.0f);
+    private static int[] FloatToCommand(float value) {
+        return new[] { (int)(value * 512.0f) };
     }
 
-    private int BoolToCommand(bool value) {
-        return value ? 511 : -512;
+    private static int[] BoolToCommand(bool value) {
+        return new[] { value ? 511 : -512 };
     }
 
-    int[] GetFallbackCommands() {
-        int[] commands = new int[128];
+    CodeBufferView GetFallbackCommands() {
+        var commands = new CodeBufferBuilder();
 
         float drive = oi.joysticks[0].axis[1];
         float steer = oi.joysticks[0].axis[0];
         float leftPower = Mathf.Clamp(drive + steer, -1, 1);
         float rightPower = Mathf.Clamp(drive - steer, -1, 1);
 
-        commands[10] = FloatToCommand(-leftPower);
-        commands[11] = FloatToCommand(rightPower);
+        commands.DeviceData<int>(10, CodeDeviceType.MOTOR, FloatToCommand(-leftPower));
+        commands.DeviceData<int>(11, CodeDeviceType.MOTOR, FloatToCommand(rightPower));
 
         float intake = oi.joysticks[0].button[0] ? 1.0f : 0.0f;
-        commands[12] = FloatToCommand(intake);
+        commands.DeviceData<int>(12, CodeDeviceType.MOTOR, FloatToCommand(intake));
 
         float auxiliary = oi.joysticks[0].button[1] ? 1.0f : 0.0f;
-        commands[14] = FloatToCommand(auxiliary);
+        commands.DeviceData<int>(14, CodeDeviceType.MOTOR, FloatToCommand(auxiliary));
 
         float auxiliary2 = oi.joysticks[0].button[2] ? 0.5f : 0.0f;
-        commands[16] = FloatToCommand(auxiliary2);
+        commands.DeviceData<int>(16, CodeDeviceType.MOTOR, FloatToCommand(auxiliary2));
 
         bool intakeArm = oi.joysticks[0].button[2];
-        commands[15] = BoolToCommand(intakeArm);
+        commands.DeviceData<int>(15, CodeDeviceType.MOTOR, BoolToCommand(intakeArm));
 
         bool launch = oi.joysticks[0].button[3];
-        commands[13] = BoolToCommand(launch);
+        commands.DeviceData<int>(13, CodeDeviceType.MOTOR, BoolToCommand(launch));
 
-        return commands;
+        return new CodeBufferView(commands.Get());
     }
 }

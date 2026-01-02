@@ -1,41 +1,36 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using Mirror;
 
 public class RobotController : NetworkBehaviour {
-    public static string robotVariant = "";
-    [SyncVar]
-    private string clientRobotVariant = null;
-    private string activeRobotVariant = null;
+    private GameGUI gameGui;
 
-    public GameGUI gameGui;
-
-    RobotJoint[] Joints {
+    RobotDevice[] Devices {
         get {
-            return GetComponentsInChildren<RobotJoint>();
+            return GetComponentsInChildren<RobotDevice>();
         }
     }
-    RobotSensor[] Sensors {
+
+    public RobotMode RobotMode {
         get {
-            return GetComponentsInChildren<RobotSensor>();
+            return gameGui ? gameGui.RobotMode : RobotMode.Disabled;
         }
     }
 
     public bool IsDisabled {
         get {
-            return gameGui.RobotMode == RobotMode.Disabled;
+            return RobotMode == RobotMode.Disabled;
         }
     }
 
     void Awake()
     {
-        UpdateVariant();
+        gameGui = FindAnyObjectByType<GameGUI>();
     }
 
     void Update()
     {
-        UpdateVariant();
-
         var rigidbody = GetComponent<Rigidbody>();
         var articBody = GetComponent<ArticulationBody>();
 
@@ -57,7 +52,7 @@ public class RobotController : NetworkBehaviour {
                 articBody.useGravity = false;
                 articBody.enabled = false;
             }
-            foreach (RobotJoint j in Joints) {
+            foreach (RobotDevice j in Devices) {
                 if (j) {
                     j.Destroy();
                 }
@@ -65,65 +60,50 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    void UpdateVariant() {
-        if (isServer) {
-            clientRobotVariant = robotVariant;
-        } else if (clientRobotVariant != null) {
-            robotVariant = clientRobotVariant;
-        }
-        if (activeRobotVariant != robotVariant) {
-            if (activeRobotVariant != null) {
-                Debug.Log("Deactivating robot variant: " + activeRobotVariant);
-                var oldVariantObj = transform.Find(activeRobotVariant);
-                if (oldVariantObj != null) {
-                    Debug.Log("Found robot variant object");
-                    oldVariantObj.gameObject.SetActive(false);
-                }
-            }
-            Debug.Log("Activating robot variant: " + robotVariant);
-            var variantObj = transform.Find(robotVariant);
-            if (variantObj != null) {
-                Debug.Log("Found robot variant object");
-                variantObj.gameObject.SetActive(true);
-            }
-            activeRobotVariant = robotVariant;
-        }
-    }
-
-    internal void ValidateSensorIndices(Object origin) {
-        var sensorIndices = new Dictionary<int, string>(CodeConnector.BaseFeedbackValueIndices);
-        foreach (RobotSensor s in GetComponentsInChildren<RobotSensor>(true)) {
-            if (!s) {
+    internal byte ValidateDeviceIds(UnityEngine.Object origin) {
+        var deviceIds = new Dictionary<byte, string>();
+        foreach (RobotDevice d in GetComponentsInChildren<RobotDevice>(true)) {
+            if (!d) {
                 continue;
             }
-            foreach (int index in s.FeedbackValueIndices) {
-                if (sensorIndices.ContainsKey(index)) {
-                    Debug.LogError($"Multiple sensors use feedback index {index}: {sensorIndices[index]}, {s.name}", origin ?? s);
-                } else {
-                    sensorIndices.Add(index, s.name);
-                }
+            if (d.DeviceId < ReservedDeviceIds.BEGIN_ROBOT_DEVICE_ID) {
+                Debug.LogError($"Robot device {d.name} has a reserved DeviceId {d.DeviceId}", d);
+            }
+            if (deviceIds.ContainsKey(d.DeviceId)) {
+                Debug.LogError($"Multiple devices use DeviceId {d.DeviceId}: {deviceIds[d.DeviceId]}, {d.name}", d);
+            } else {
+                deviceIds.Add(d.DeviceId, d.name);
             }
         }
+        for (byte id = ReservedDeviceIds.BEGIN_ROBOT_DEVICE_ID; id < byte.MaxValue; ++id) {
+            if (!deviceIds.ContainsKey(id)) {
+                return id;
+            }
+        }
+        Debug.LogWarning("Robot DeviceIds have been exhausted", origin);
+        return byte.MaxValue;
     }
 
-    void OnValidate() {
-        ValidateSensorIndices(null);
+    new void OnValidate() {
+        base.OnValidate();
+        ValidateDeviceIds(null);
         Debug.Log("Robot property validation complete");
     }
 
-    public void RunJoints(int[] commands) {
+    [Command]
+    public void RunJoints(CodeBufferView commands) {
         if (IsDisabled) {
             return;
         }
-        foreach (RobotJoint j in Joints) {
+        foreach (RobotDevice j in Devices) {
             if (j) {
                 j.RunJoint(commands);
             }
         }
     }
 
-    public void RunSensors(int[] feedbackValues) {
-        foreach (RobotSensor s in Sensors) {
+    public void RunSensors(CodeBufferBuilder feedbackValues) {
+        foreach (RobotDevice s in Devices) {
             if (s) {
                 s.RunSensor(feedbackValues);
             }
@@ -131,7 +111,7 @@ public class RobotController : NetworkBehaviour {
     }
 
     void Disable() {
-        foreach (RobotJoint j in Joints) {
+        foreach (RobotDevice j in Devices) {
             if (j) {
                 j.Disable();
             }

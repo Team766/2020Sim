@@ -5,9 +5,8 @@ using System.Collections.Generic;
 public class PassiveIntake : MonoBehaviour
 {
     public BallStorage ballStorage;
-    public Storage2023 storage2023;
 
-    HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
+    private HashSet<Rigidbody> contained = new HashSet<Rigidbody>();
 
     public Rigidbody Get()
     {
@@ -48,10 +47,6 @@ public class PassiveIntake : MonoBehaviour
             if (ballStorage)
             {
                 ballStorage.StoreBall(obj);
-            }
-            if (storage2023)
-            {
-                storage2023.StoreBall(obj);
             }
             contained.Remove(obj);
         }

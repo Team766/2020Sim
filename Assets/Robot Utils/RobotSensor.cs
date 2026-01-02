@@ -1,30 +1,16 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
-public abstract class RobotSensor : MonoBehaviour {
-    public abstract void RunSensor(int[] feedbackValues);
+public abstract class RobotSensor : RobotDevice {
+    public sealed override void RunJoint(CodeBufferView commands) {}
 
-    public abstract IEnumerable<int> FeedbackValueIndices {
-        get;
-    }
+    public override void Disable() { }
 
-    void OnValidate() {
-        GetComponentInParent<RobotController>().ValidateSensorIndices(this);
-    }
+    public override void Destroy() { }
 }
 
 public abstract class StandardRobotSensor : RobotSensor {
-    public int feedbackIndex;
-
-    public sealed override IEnumerable<int> FeedbackValueIndices {
-        get {
-            return new[] { feedbackIndex };
-        }
-    }
-
-    public sealed override void RunSensor(int[] feedbackValues) {
-        feedbackValues[feedbackIndex] = SensorValue;
+    public sealed override void RunSensor(CodeBufferBuilder feedbackValues) {
+        feedbackValues.DeviceData<int>(DeviceId, DeviceType, new[] { SensorValue });
     }
 
     public abstract int SensorValue {

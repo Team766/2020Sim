@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-public class Wheel : StandardRobotJoint
+public class RotationalJoint : StandardRobotJoint
 {
     public float motorScaler;
     private Vector3 neutralPosition;
@@ -11,12 +11,14 @@ public class Wheel : StandardRobotJoint
     public float maxSpeed;
     public float minForce;
     public float currentCommand;
+    private RotaryEncoderImpl encoderImpl;
 
     void Awake()
     {
         neutralPosition = transform.localPosition;
         neutralRotation = transform.localRotation;
         neutralRotationInv = Quaternion.Inverse(neutralRotation);
+        encoderImpl = new RotaryEncoderImpl(transform);
     }
 
     private static Quaternion ProjectRotation(Quaternion q, Vector3 axis)
@@ -36,6 +38,7 @@ public class Wheel : StandardRobotJoint
             rb.position = transform.position;
             rb.rotation = transform.rotation;
         }
+        encoderImpl.FixedUpdate();
     }
 
     private Vector3 GetAxis()
@@ -50,7 +53,7 @@ public class Wheel : StandardRobotJoint
         {
             return cjoint.axis;
         }
-        var articBody = GetComponent<ConfigurableJoint>();
+        var articBody = GetComponent<ArticulationBody>();
         if (articBody)
         {
             // TODO: return articBody.anchorRotation * Vector3.right;
@@ -93,6 +96,19 @@ public class Wheel : StandardRobotJoint
         var articBody = GetComponent<ArticulationBody>();
         if (articBody)
         {
+            // From https://docs.unity3d.com/6000.3/Documentation/ScriptReference/ArticulationDrive.html:
+            // > The drive will apply force to the body that is calculated from
+            // > the current value of the drive, using this formula:
+            // > F = stiffness * (currentPosition - target) - damping * (currentVelocity - targetVelocity)
+            // For rotational joints, "force" is torque.
+            //
+            // Comparatively, the equations for the ideal physics model of a
+            // DC motor can be arranged so that:
+            // Torque = - maxTorque / maxSpeed * (currentVelocity - maxSpeed * appliedVoltage / maxVoltage)
+            // So to have the joint drive simulate a DC motor with a certain
+            // applied voltage, we can set:
+            // targetVelocity = maxSpeed * appliedVoltage / maxVoltage = maxSpeed * command
+            // damping = maxTorque / maxSpeed
             ArticulationDrive drive = articBody.xDrive;
             drive.stiffness = 0;
             drive.damping = 1.0f;
@@ -126,4 +142,8 @@ public class Wheel : StandardRobotJoint
             Destroy(articBody);
         }
     }
+
+    public override int SensorPosition => (int)encoderImpl.Angle;
+
+    public override int SensorVelocity => (int)encoderImpl.Velocity;
 }

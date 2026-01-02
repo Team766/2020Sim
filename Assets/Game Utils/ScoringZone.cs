@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class CommonScoringArea : MonoBehaviour
 {
-	public GameGUI gameGui;
+	private GameGUI gameGui;
 	public int points;
 	public AudioClip sound;
+
+	private void Awake()
+	{
+		gameGui = FindAnyObjectByType<GameGUI>();
+	}
 
 	void OnTriggerEnter(Collider c)
 	{

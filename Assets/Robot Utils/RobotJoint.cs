@@ -1,30 +1,28 @@
-using System.Collections;
-using UnityEngine;
+using System;
 
-public abstract class RobotJoint : MonoBehaviour {
-    public abstract void RunJoint(int[] commands);
+public abstract class StandardRobotJoint : RobotDevice {
+    public sealed override CodeDeviceType DeviceType => CodeDeviceType.MOTOR;
 
-    public abstract void Disable();
-
-    public abstract void Destroy();
-}
-
-public abstract class StandardRobotJoint : RobotJoint {
-    public int commandIndex;
-
-    public sealed override void RunJoint(int[] commands) {
+    public sealed override void RunJoint(CodeBufferView commands) {
+        var deviceCommands = commands.DeviceData<int>(DeviceId, DeviceType);
         float command = 0.0f;
-        if (commandIndex < commands.Length) {
-            command = commands[commandIndex] / 512.0f;
+        if (deviceCommands.Count > 0) {
+            command = deviceCommands[0] / 512.0f;
         }
         RunJoint(command);
     }
 
     public abstract void RunJoint(float command);
 
-    void OnValidate() {
-        if (commandIndex < 10) {
-            Debug.LogError($"Robot joint {this.name} has invalid commandIndex", this);
-        }
+    public sealed override void RunSensor(CodeBufferBuilder feedbackValues) {
+        feedbackValues.DeviceData<int>(DeviceId, DeviceType, new[] { SensorPosition, SensorVelocity });
+    }
+
+    public abstract int SensorPosition {
+        get;
+    }
+
+    public abstract int SensorVelocity {
+        get;
     }
 }

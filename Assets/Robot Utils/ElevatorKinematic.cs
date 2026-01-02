@@ -6,7 +6,7 @@ public sealed class ElevatorKinematic : StandardRobotJoint
 {
     public float forceScale;
     public bool oneSided;
-    public Vector3 appliedForce;
+    public float velocity;
 
     public bool isStuck;
 
@@ -19,6 +19,8 @@ public sealed class ElevatorKinematic : StandardRobotJoint
     public float position;
     public float limit;
 
+    public float encoderScale;
+
     public TwoGripper gripper;
 
     void Awake()
@@ -29,20 +31,19 @@ public sealed class ElevatorKinematic : StandardRobotJoint
 
     public override void RunJoint(float speed)
     {
-        float force = forceScale * speed;
-        if (Mathf.Abs(force) < stickForce) {
-            appliedForce = Vector3.zero;
+        velocity = forceScale * speed;
+        if (Mathf.Abs(velocity) < stickForce) {
+            velocity = 0;
             isStuck = true;
         } else {
             isStuck = false;
             if (oneSided && speed < 0) {
-                force = 0;
+                velocity = 0;
             }
             if (gripper.collidingCount > 0 && speed > 0) {
-                force = 0;
+                velocity = 0;
             }
-            appliedForce = axis * force;
-            position += force * Time.fixedDeltaTime;
+            position += velocity * Time.fixedDeltaTime;
         }
         if (position < -limit) {
             position = -limit;
@@ -60,4 +61,8 @@ public sealed class ElevatorKinematic : StandardRobotJoint
     public override void Destroy() {
         Destroy(this);
     }
+
+    public override int SensorPosition => (int)(encoderScale * position);
+
+    public override int SensorVelocity => (int)(encoderScale * velocity);
 }
