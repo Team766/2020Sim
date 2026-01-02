@@ -36,7 +36,7 @@ namespace Mirror.Examples.AdditiveScenes
             GameObject target = null;
             float distance = 100f;
 
-            foreach (NetworkConnection networkConnection in netIdentity.observers.Values)
+            foreach (NetworkConnectionToClient networkConnection in netIdentity.observers.Values)
             {
                 GameObject tempTarget = networkConnection.identity.gameObject;
                 float tempDistance = Vector3.Distance(tempTarget.transform.position, transform.position);
@@ -50,9 +50,9 @@ namespace Mirror.Examples.AdditiveScenes
 
             if (target != null)
             {
-                transform.LookAt(target.transform.position + Vector3.down);
+                transform.LookAt(new Vector3(target.transform.position.x, 0, target.transform.position.z));
                 rotation = transform.rotation;
-                networkAnimator.SetTrigger("Fire");
+                //networkAnimator.SetTrigger("Shoot");
             }
         }
     }

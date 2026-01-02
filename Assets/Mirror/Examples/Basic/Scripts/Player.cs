@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Mirror.Examples.Basic
 {
+    [AddComponentMenu("")]
     public class Player : NetworkBehaviour
     {
         // Events that the PlayerUI will subscribe to
@@ -15,7 +16,9 @@ namespace Mirror.Examples.Basic
 
         [Header("Player UI")]
         public GameObject playerUIPrefab;
+
         GameObject playerUIObject;
+        PlayerUI playerUI = null;
 
         #region SyncVars
 
@@ -115,24 +118,14 @@ namespace Mirror.Examples.Basic
         #region Client
 
         /// <summary>
-        /// Called when the local player object has been set up.
-        /// <para>This happens after OnStartClient(), as it is triggered by an ownership message from the server. This is an appropriate place to activate components or functionality that should only be active for the local player, such as cameras and input.</para>
-        /// </summary>
-        public override void OnStartLocalPlayer()
-        {
-            // Activate the main panel
-            CanvasUI.instance.mainPanel.gameObject.SetActive(true);
-        }
-
-        /// <summary>
         /// Called on every NetworkBehaviour when it is activated on a client.
         /// <para>Objects on the host have this function called, as there is a local client on the host. The values of SyncVars on object are guaranteed to be initialized correctly with the latest state from the server when this function is called on the client.</para>
         /// </summary>
         public override void OnStartClient()
         {
             // Instantiate the player UI as child of the Players Panel
-            playerUIObject = Instantiate(playerUIPrefab, CanvasUI.instance.playersPanel);
-            PlayerUI playerUI = playerUIObject.GetComponent<PlayerUI>();
+            playerUIObject = Instantiate(playerUIPrefab, CanvasUI.GetPlayersPanel());
+            playerUI = playerUIObject.GetComponent<PlayerUI>();
 
             // wire up all events to handlers in PlayerUI
             OnPlayerNumberChanged = playerUI.OnPlayerNumberChanged;
@@ -143,10 +136,29 @@ namespace Mirror.Examples.Basic
             OnPlayerNumberChanged.Invoke(playerNumber);
             OnPlayerColorChanged.Invoke(playerColor);
             OnPlayerDataChanged.Invoke(playerData);
+        }
 
+        /// <summary>
+        /// Called when the local player object has been set up.
+        /// <para>This happens after OnStartClient(), as it is triggered by an ownership message from the server. This is an appropriate place to activate components or functionality that should only be active for the local player, such as cameras and input.</para>
+        /// </summary>
+        public override void OnStartLocalPlayer()
+        {
             // Set isLocalPlayer for this Player in UI for background shading
-            if (isLocalPlayer)
-                playerUI.SetLocalPlayer();
+            playerUI.SetLocalPlayer();
+
+            // Activate the main panel
+            CanvasUI.SetActive(true);
+        }
+
+        /// <summary>
+        /// Called when the local player object is being stopped.
+        /// <para>This happens before OnStopClient(), as it may be triggered by an ownership message from the server, or because the player object is being destroyed. This is an appropriate place to deactivate components or functionality that should only be active for the local player, such as cameras and input.</para>
+        /// </summary>
+        public override void OnStopLocalPlayer()
+        {
+            // Disable the main panel for local player
+            CanvasUI.SetActive(false);
         }
 
         /// <summary>
@@ -162,10 +174,6 @@ namespace Mirror.Examples.Basic
 
             // Remove this player's UI object
             Destroy(playerUIObject);
-
-            // Disable the main panel for local player
-            if (isLocalPlayer)
-                CanvasUI.instance.mainPanel.gameObject.SetActive(false);
         }
 
         #endregion

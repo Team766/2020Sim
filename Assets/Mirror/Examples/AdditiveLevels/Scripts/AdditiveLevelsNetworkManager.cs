@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +7,8 @@ namespace Mirror.Examples.AdditiveLevels
     [AddComponentMenu("")]
     public class AdditiveLevelsNetworkManager : NetworkManager
     {
+        public static new AdditiveLevelsNetworkManager singleton => (AdditiveLevelsNetworkManager)NetworkManager.singleton;
+
         [Header("Additive Scenes - First is start scene")]
 
         [Scene, Tooltip("Add additive scenes here.\nFirst entry will be players' start scene")]
@@ -72,7 +74,7 @@ namespace Mirror.Examples.AdditiveLevels
             isInTransition = true;
 
             // This will return immediately if already faded in
-            // e.g. by UnloadAdditive above or by default startup state
+            // e.g. by UnloadAdditive or by default startup state
             yield return fadeInOut.FadeIn();
 
             // host client is on server...don't load the additive scene again
@@ -91,6 +93,7 @@ namespace Mirror.Examples.AdditiveLevels
 
             OnClientSceneChanged();
 
+            // Reveal the new scene content.
             yield return fadeInOut.FadeOut();
         }
 
@@ -99,9 +102,10 @@ namespace Mirror.Examples.AdditiveLevels
             isInTransition = true;
 
             // This will return immediately if already faded in
-            // e.g. by LoadAdditive above or by default startup state
+            // e.g. by LoadAdditive above or by default startup state.
             yield return fadeInOut.FadeIn();
 
+            // host client is on server...don't unload the additive scene here.
             if (mode == NetworkManagerMode.ClientOnly)
             {
                 yield return SceneManager.UnloadSceneAsync(sceneName);
@@ -115,8 +119,8 @@ namespace Mirror.Examples.AdditiveLevels
             OnClientSceneChanged();
 
             // There is no call to FadeOut here on purpose.
-            // Expectation is that a LoadAdditive will follow
-            // that will call FadeOut after that scene loads.
+            // Expectation is that a LoadAdditive or full scene change
+            // will follow that will call FadeOut after that scene loads.
         }
 
         /// <summary>
@@ -126,10 +130,8 @@ namespace Mirror.Examples.AdditiveLevels
         /// <param name="conn">The network connection that the scene change message arrived on.</param>
         public override void OnClientSceneChanged()
         {
-            //Debug.Log($"{System.DateTime.Now:HH:mm:ss:fff} OnClientSceneChanged {isInTransition}");
-
             // Only call the base method if not in a transition.
-            // This will be called from DoTransition after setting doingTransition to false
+            // This will be called from LoadAdditive / UnloadAdditive after setting isInTransition to false
             // but will also be called first by Mirror when the scene loading finishes.
             if (!isInTransition)
                 base.OnClientSceneChanged();
@@ -144,10 +146,8 @@ namespace Mirror.Examples.AdditiveLevels
         /// <para>The default implementation of this function calls NetworkServer.SetClientReady() to continue the network setup process.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
-        public override void OnServerReady(NetworkConnection conn)
+        public override void OnServerReady(NetworkConnectionToClient conn)
         {
-            //Debug.Log($"OnServerReady {conn} {conn.identity}");
-
             // This fires from a Ready message client sends to server after loading the online scene
             base.OnServerReady(conn);
 
@@ -157,7 +157,7 @@ namespace Mirror.Examples.AdditiveLevels
 
         // This delay is mostly for the host player that loads too fast for the
         // server to have subscenes async loaded from OnServerSceneChanged ahead of it.
-        IEnumerator AddPlayerDelayed(NetworkConnection conn)
+        IEnumerator AddPlayerDelayed(NetworkConnectionToClient conn)
         {
             // Wait for server to async load all subscenes for game instances
             while (!subscenesLoaded)

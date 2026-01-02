@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/*
-	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
-	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
-*/
-
 namespace Mirror.Examples.Basic
 {
     [AddComponentMenu("")]
@@ -15,7 +10,7 @@ namespace Mirror.Examples.Basic
         /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
-        public override void OnServerAddPlayer(NetworkConnection conn)
+        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             base.OnServerAddPlayer(conn);
             Player.ResetPlayerNumbers();
@@ -26,7 +21,7 @@ namespace Mirror.Examples.Basic
         /// <para>This is called on the Server when a Client disconnects from the Server. Use an override to decide what should happen when a disconnection is detected.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
-        public override void OnServerDisconnect(NetworkConnection conn)
+        public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
             base.OnServerDisconnect(conn);
             Player.ResetPlayerNumbers();
