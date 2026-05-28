@@ -1,40 +1,39 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 
 public class BallStorage : NetworkBehaviour {
-	public GameObject ballPrefab;
-
     public List<HoldObject> heldObjects;
-    [SyncVar]
-    public int holding = 0;
 
-    [ServerCallback]
-    void Update()
-    {
-        for (int i = 0; i < holding; ++i)
-        {
-            if (!heldObjects[i].held)
-            {
-                var obj = Instantiate(ballPrefab, this.transform.position, this.transform.rotation);
-                NetworkServer.Spawn(obj);
-                var rb = obj.GetComponent<Rigidbody>();
+    public List<Rigidbody> initialHeldObjects;
 
-                rb.isKinematic = true;
-                foreach (var c in obj.GetComponentsInChildren<Collider>())
-                {
-                    c.enabled = false;
+    void Start() {
+        if (isServer) {
+            foreach (var spec in initialHeldObjects) {
+                if (NumHolding == heldObjects.Count) {
+                    break;
                 }
-                obj.transform.parent = heldObjects[i].transform;
-                obj.transform.localPosition = Vector3.zero;
-                heldObjects[i].held = rb.gameObject;
+                Rigidbody obj;
+                if (spec.gameObject.scene.IsValid()) {
+                    // Object is already in the scene
+                    obj = spec;
+                } else {
+                    // Object is a prefab
+                    obj = Instantiate(spec);
+                    NetworkServer.Spawn(obj.gameObject);
+                }
+                StoreBall(obj);
             }
         }
     }
 
+    public int NumHolding => heldObjects.Count(h => h.held);
+
     public bool StoreBall(Rigidbody obj) {
-        if (holding >= heldObjects.Count) {
+        var holder = heldObjects.Find(h => !h.held);
+        if (!holder) {
             return false;
         }
         obj.isKinematic = true;
@@ -42,20 +41,19 @@ public class BallStorage : NetworkBehaviour {
         {
             c.enabled = false;
         }
-        obj.transform.parent = heldObjects[holding].transform;
+        obj.transform.parent = holder.transform;
         obj.transform.localPosition = Vector3.zero;
-        heldObjects[holding].held = obj.gameObject;
-        ++holding;
+        holder.held = obj.gameObject;
         return true;
     }
 
     public Rigidbody RemoveBall() {
-        if (holding == 0) {
+        var holder = heldObjects.FindLast(h => h.held);
+        if (!holder) {
             return null;
         }
-        --holding;
-        var obj = heldObjects[holding].held.GetComponent<Rigidbody>();
-        heldObjects[holding].held = null;
+        var obj = holder.held.GetComponent<Rigidbody>();
+        holder.held = null;
         obj.transform.parent = null;
         obj.isKinematic = false;
         foreach (var c in obj.GetComponentsInChildren<Collider>())

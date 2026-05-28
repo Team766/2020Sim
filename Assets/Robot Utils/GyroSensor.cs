@@ -2,14 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class GyroSensor : RobotSensor {
-    const int HEADING = 0;
-    const int HEADING_PRECISE = 1;
-    const int HEADING_RATE = 2;
-    const int GYRO_PITCH = 3;
-    const int GYRO_ROLL = 4;
-
-    public override CodeDeviceType DeviceType => CodeDeviceType.GYRO_SENSOR;
-
     private float headingPrev = 0.0f;
 
     void FixedUpdate()
@@ -26,14 +18,13 @@ public sealed class GyroSensor : RobotSensor {
         GyroRate = Vector3.Dot(transform.up, angularVelocity) * Mathf.Rad2Deg;
     }
 
-    public override void RunSensor(CodeBufferBuilder feedbackValues) {
-        int[] values = new int[5];
-        values[HEADING] = (int)GyroAngle;
-        values[HEADING_PRECISE] = (int)(GyroAngle * 10);
-        values[HEADING_RATE] = (int)(GyroRate * 100);
-        values[GYRO_PITCH] = (int)(GyroPitch * 10);
-        values[GYRO_ROLL] = (int)(GyroRoll * 10);
-        feedbackValues.DeviceData<int>(DeviceId, DeviceType, values);
+    public override void UpdateSensorValue(Team766.Simulator.SensorProto value) {
+        value.Imu = new() {
+            Yaw = GyroAngle,
+            Pitch = GyroPitch,
+            Roll = GyroRoll,
+            YawRate = GyroRate,
+        };
     }
 
     public float Heading

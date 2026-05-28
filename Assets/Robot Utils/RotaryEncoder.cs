@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public sealed class RotaryEncoder : StandardRobotSensor
+public sealed class RotaryEncoder : RobotSensor
 {
     private RotaryEncoderImpl impl;
 
@@ -19,7 +19,8 @@ public sealed class RotaryEncoder : StandardRobotSensor
         Angle = impl.Angle;
     }
 
-    public override CodeDeviceType DeviceType => CodeDeviceType.ENCODER_SENSOR;
-
-    public override int SensorValue => (int)Angle;
+    public override void UpdateSensorValue(Team766.Simulator.SensorProto value)
+    {
+        value.Encoder = new() { Value = (long)Angle };
+    }
 }

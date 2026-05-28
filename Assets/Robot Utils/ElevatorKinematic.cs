@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Team766.Simulator;
 
 public sealed class ElevatorKinematic : StandardRobotJoint
 {
@@ -29,8 +30,11 @@ public sealed class ElevatorKinematic : StandardRobotJoint
         isStuck = false;
 	}
 
-    public override void RunJoint(float speed)
+    public override void RunJoint(MotorActuatorProto command)
     {
+        // TODO: Support MotorCommandMode.POSITION (and VELOCITY?)
+
+        float speed = (float)command.Command;
         velocity = forceScale * speed;
         if (Mathf.Abs(velocity) < stickForce) {
             velocity = 0;
@@ -55,14 +59,17 @@ public sealed class ElevatorKinematic : StandardRobotJoint
     }
 
     public override void Disable() {
-        RunJoint(0.0f);
+        RunJoint(new MotorActuatorProto {
+            Mode = MotorActuatorProto.Types.Mode.PercentOutput,
+            Command = 0.0,
+        });
     }
 
     public override void Destroy() {
         Destroy(this);
     }
 
-    public override int SensorPosition => (int)(encoderScale * position);
+    public override double SensorPosition => encoderScale * position;
 
-    public override int SensorVelocity => (int)(encoderScale * velocity);
+    public override double SensorVelocity => encoderScale * velocity;
 }

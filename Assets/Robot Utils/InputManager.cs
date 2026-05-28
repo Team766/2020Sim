@@ -15,9 +15,14 @@ public class Joystick {
 
     public float[] axis = new float[NUM_AXES];
     public bool[] button = new bool[NUM_BUTTONS];
+
+    public void copyFrom(Joystick other) {
+        Array.Copy(other.axis, axis, axis.Length);
+        Array.Copy(other.button, button, button.Length);
+    }
 }
 
-public class OperatorInterface : NetworkBehaviour {
+public class InputManager : NetworkBehaviour {
     [NonSerialized]
     [SyncVar]
     public string? authPublicKey = null;
@@ -47,11 +52,11 @@ public class OperatorInterface : NetworkBehaviour {
 
     [Command(requiresAuthority = false)]
     private void CmdSetJoysticks(Joystick[] joysticks, string privateKeyChallenge) {
-        if (privateKeyChallenge != server_authPrivateKey) {
-            return;
-        }
+        //if (privateKeyChallenge != server_authPrivateKey) {
+        //    return;
+        //}
         this.joysticks = joysticks;
-        RpcSetJoysticks(joysticks);
+        //RpcSetJoysticks(joysticks);
     }
 
     [TargetRpc]
@@ -62,7 +67,7 @@ public class OperatorInterface : NetworkBehaviour {
     [ClientCallback]
     void Update () {
         if (
-            authPublicKey == ApplicationArguments.AuthPublicKey &&
+            //authPublicKey == ApplicationArguments.AuthPublicKey &&
             ApplicationArguments.PlayerRole.IsInputPlayer()
         ) {
             for (var j = 0; j < Joystick.NUM_JOYSTICKS; ++j) {

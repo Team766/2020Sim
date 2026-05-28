@@ -1,0 +1,10 @@
+:root {
+}
+
+.unity-base-field__label {
+    min-width: auto;
+}
+
+.unity-base-field {
+    color: rgb(0, 0, 0);
+}

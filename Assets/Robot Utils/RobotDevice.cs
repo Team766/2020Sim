@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Team766.Simulator;
 
 public abstract class RobotDevice : MonoBehaviour {
-    public byte DeviceId;
+    public uint DeviceId;
 
-    public abstract CodeDeviceType DeviceType { get; }
-
-    public abstract void RunJoint(CodeBufferView commands);
+    public abstract void RunJoint(CommandsPacket commands);
 
     public abstract void Disable();
 
     public abstract void Destroy();
 
-    public abstract void RunSensor(CodeBufferBuilder feedbackValues);
+    public abstract void RunSensor(FeedbackPacket feedbackValues);
 
     void Reset() {
         DeviceId = GetComponentInParent<RobotController>(true).ValidateDeviceIds(this);

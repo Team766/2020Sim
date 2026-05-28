@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Team766.Simulator;
 
 [RequireComponent(typeof(ConfigurableJoint))]
 public sealed class Elevator : StandardRobotJoint
@@ -56,10 +57,13 @@ public sealed class Elevator : StandardRobotJoint
         return 0;
     }
 
-    public override void RunJoint(float command)
-    {
+    public override void RunJoint(MotorActuatorProto command) {
+        // TODO: Support MotorCommandMode.POSITION (and VELOCITY?)
+
+        float percentOutput = (float)command.Command;
+
         float appliedForce;
-        if (Mathf.Abs(command) < stickSpeed) {
+        if (Mathf.Abs(percentOutput) < stickSpeed) {
             if (!isStuck) {
                 GetComponent<ConfigurableJoint>().xMotion = ConfigurableJointMotion.Locked;
                 GetComponent<ConfigurableJoint>().connectedAnchor = positionRelativeToConnectedBody();
@@ -67,10 +71,10 @@ public sealed class Elevator : StandardRobotJoint
             appliedForce = 0.0f;
             isStuck = true;
         } else {
-            if (command >= 0) {
-                appliedForce = forwardForceScale * command;
+            if (percentOutput >= 0) {
+                appliedForce = forwardForceScale * percentOutput;
             } else {
-                appliedForce = reverseForceScale * command;
+                appliedForce = reverseForceScale * percentOutput;
             }
             if (isStuck)
             {
@@ -102,7 +106,10 @@ public sealed class Elevator : StandardRobotJoint
     }
 
     public override void Disable() {
-        RunJoint(0.0f);
+        RunJoint(new MotorActuatorProto {
+            Mode = MotorActuatorProto.Types.Mode.PercentOutput,
+            Command = 0.0,
+        });
     }
 
     public override void Destroy() {
@@ -112,13 +119,13 @@ public sealed class Elevator : StandardRobotJoint
         //GetComponent<Rigidbody>().isKinematic = true;
     }
 
-    public override int SensorPosition => (int)(
+    public override double SensorPosition => (
         encoderScale *
         Vector3.Dot(positionRelativeToConnectedBody() - neutralPosition,
                     GetComponent<ConfigurableJoint>().axis)
     );
 
-    public override int SensorVelocity => (int)(
+    public override double SensorVelocity => (
         encoderScale *
         Vector3.Dot(velocityRelativeToConnectedBody(),
                     GetComponent<ConfigurableJoint>().axis)

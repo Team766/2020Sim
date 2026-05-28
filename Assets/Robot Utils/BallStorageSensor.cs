@@ -1,8 +1,12 @@
 using UnityEngine;
+using Team766.Simulator;
 
 [RequireComponent(typeof(BallStorage))]
-public sealed class BallStorageSensor : StandardRobotSensor {
-    public override int SensorValue => GetComponent<BallStorage>().holding;
-
-    public override CodeDeviceType DeviceType => CodeDeviceType.BALL_STORAGE_SENSOR;
+public sealed class BallStorageSensor : RobotSensor {
+    public override void UpdateSensorValue(SensorProto value) {
+        var ballStorage = GetComponent<BallStorage>();
+        value.Analog = new () {
+            Value = ballStorage.NumHolding / (double)ballStorage.heldObjects.Count,
+        };
+    }
 }

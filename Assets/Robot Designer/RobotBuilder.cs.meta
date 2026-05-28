@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 8bcdc440eca5647c8bdd4665c56f4aeb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - robotDesign: {instanceID: 0}
+  - wheelModulePrefab: {fileID: 5236282536923815166, guid: 461251bc807324c5c9e0ad49fcf72ccf,
+      type: 3}
+  - shapePrefab: {fileID: 3098279885287825079, guid: ef7899dbd2f1a412695cb284b52497d2,
+      type: 3}
+  - pivotPrefab: {fileID: 8309297836768257252, guid: cce9a3ec9126e4643b25b4982fd2f684,
+      type: 3}
+  - extensionPrefab: {fileID: 5947373016124047186, guid: 783c2b3abf78c4e159bad7fd18979211,
+      type: 3}
+  - collectorPrefab: {fileID: 6045965122981423122, guid: 805d868c55204485a9e599f18b323c63,
+      type: 3}
+  - storagePrefab: {fileID: 3868344154127306211, guid: edbd12b006e8245219e444ca53b2e861,
+      type: 3}
+  - ejectorPrefab: {fileID: 4175319008782129950, guid: fb52c9906f14b404bafcbc5f4a2d585a,
+      type: 3}
+  - grabberPrefab: {fileID: 2683431325448525071, guid: f019ba6c9107b4e0cab51184c0461089,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

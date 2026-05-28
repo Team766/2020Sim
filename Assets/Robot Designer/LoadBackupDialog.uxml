@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Robot%20Designer/Dialog.uss?fileID=7433441132597879392&amp;guid=07fcdc08799d0449886b7a5b317b8de3&amp;type=3#Dialog" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.5); padding-top: 2%; padding-right: 5%; padding-bottom: 2%; padding-left: 5%; align-items: center; justify-content: center; flex-direction: row;">
+        <ui:VisualElement style="flex-grow: 1; background-color: rgb(175, 144, 144); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); max-width: 530px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+            <ui:Label text="You previously had unsaved changes to your robot design" style="white-space: normal; font-size: 17px;" />
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-top: 16px;">
+                <ui:Button text="Discard" name="button-discard" style="margin-right: 4px;" />
+                <ui:Button text="Restore" name="button-restore" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

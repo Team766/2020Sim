@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Mirror;
+using Team766.Simulator;
 
 public class RobotController : NetworkBehaviour {
     private GameGUI gameGui;
@@ -60,28 +61,25 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    internal byte ValidateDeviceIds(UnityEngine.Object origin) {
-        var deviceIds = new Dictionary<byte, string>();
+    internal uint ValidateDeviceIds(UnityEngine.Object origin) {
+        var deviceIds = new Dictionary<uint, string>();
         foreach (RobotDevice d in GetComponentsInChildren<RobotDevice>(true)) {
             if (!d) {
                 continue;
             }
-            if (d.DeviceId < ReservedDeviceIds.BEGIN_ROBOT_DEVICE_ID) {
-                Debug.LogError($"Robot device {d.name} has a reserved DeviceId {d.DeviceId}", d);
-            }
             if (deviceIds.ContainsKey(d.DeviceId)) {
-                Debug.LogError($"Multiple devices use DeviceId {d.DeviceId}: {deviceIds[d.DeviceId]}, {d.name}", d);
+                Debug.LogError($"Multiple devices use DeviceId {d.DeviceId}: {deviceIds[d.DeviceId]}, {d.name}.{d.GetType().Name}", d);
             } else {
-                deviceIds.Add(d.DeviceId, d.name);
+                deviceIds.Add(d.DeviceId, $"{d.name}.{d.GetType().Name}");
             }
         }
-        for (byte id = ReservedDeviceIds.BEGIN_ROBOT_DEVICE_ID; id < byte.MaxValue; ++id) {
+        for (uint id = 0; id < int.MaxValue; ++id) {
             if (!deviceIds.ContainsKey(id)) {
                 return id;
             }
         }
         Debug.LogWarning("Robot DeviceIds have been exhausted", origin);
-        return byte.MaxValue;
+        return int.MaxValue;
     }
 
     new void OnValidate() {
@@ -91,7 +89,7 @@ public class RobotController : NetworkBehaviour {
     }
 
     [Command]
-    public void RunJoints(CodeBufferView commands) {
+    public void RunJoints(CommandsPacket commands) {
         if (IsDisabled) {
             return;
         }
@@ -102,7 +100,7 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    public void RunSensors(CodeBufferBuilder feedbackValues) {
+    public void RunSensors(FeedbackPacket feedbackValues) {
         foreach (RobotDevice s in Devices) {
             if (s) {
                 s.RunSensor(feedbackValues);

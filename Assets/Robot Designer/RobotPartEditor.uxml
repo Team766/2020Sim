@@ -1,0 +1,131 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Robot%20Designer/RobotEditor.uss?fileID=7433441132597879392&amp;guid=bcd18ff2b14e04086a79caebe1132ffa&amp;type=3#RobotEditor" />
+    <ui:TextField label="Part Name" name="part-name">
+        <Bindings>
+            <ui:DataBinding property="value" data-source-path="name" binding-mode="TwoWay" />
+        </Bindings>
+    </ui:TextField>
+    <ui:EnumField label="Part Type" type="RobotDesignerData+Node+Type, Assembly-CSharp" name="part-type">
+        <Bindings>
+            <ui:DataBinding property="value" data-source-path="type" binding-mode="TwoWay" />
+        </Bindings>
+    </ui:EnumField>
+    <ui:GroupBox name="location" text="Location" data-source-path="location" class="vector-fields">
+        <ui:FloatField name="location-x" label="X">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="x" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField name="location-y" label="Y">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="y" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField name="location-z" label="Z">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="z" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+    </ui:GroupBox>
+    <ui:GroupBox name="orientation" text="Orientation" data-source-path="orientation" class="vector-fields">
+        <ui:FloatField name="orientation-x" label="X">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="x" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField name="orientation-y" label="Y">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="y" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField name="orientation-z" label="Z">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="z" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+    </ui:GroupBox>
+    <ui:GroupBox name="size" text="Size" data-source-path="size" class="vector-fields">
+        <ui:FloatField name="size-x" label="X">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="x" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField name="size-y" label="Y">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="y" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField name="size-z" label="Z">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="z" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+    </ui:GroupBox>
+    <ui:GroupBox name="joint-controls" data-source-type="RobotDesignerData+Joint, Assembly-CSharp">
+        <ui:EnumField label="Drive" type="RobotDesignerData+Joint+ConstraintType, Assembly-CSharp" name="constraint-type">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="constraintType" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:EnumField>
+        <ui:DropdownField label="Constraint&#10;Reference" name="constraint-reference" choices="Immediate parent" index="0" style="display: none;" />
+        <ui:FloatField label="Drive Strength" name="constraint-strength">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="constraintStrength" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:GroupBox name="limits" text="Limits" class="vector-fields">
+            <ui:FloatField name="limit-min" label="Min">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="minimumPosition" binding-mode="TwoWay" />
+                </Bindings>
+            </ui:FloatField>
+            <ui:FloatField name="limit-max" label="Max">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="maximumPosition" binding-mode="TwoWay" />
+                </Bindings>
+            </ui:FloatField>
+        </ui:GroupBox>
+    </ui:GroupBox>
+    <ui:GroupBox name="collector-controls" data-source-path="collector">
+        <ui:FloatField label="Collect pieces&#10;per second" name="collector-flow-rate">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="flowRatePeriod" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField label="Collector&#10;startup time" name="collector-startup-time">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="startupTime" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+    </ui:GroupBox>
+    <ui:GroupBox name="ejector-controls" data-source-path="ejector">
+        <ui:FloatField label="Eject pieces&#10;per second" name="ejector-flow-rate">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="flowRatePeriod" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField label="Ejector&#10;startup time" name="ejector-startup-time">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="startupTime" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+        <ui:FloatField label="Ejector&#10;max force" name="ejector-max-force">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="maxForce" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:FloatField>
+    </ui:GroupBox>
+    <ui:GroupBox text="Compatible with" name="compatible-game-pieces-controls" class="vector-fields" style="flex-direction: row;">
+        <ui:VisualElement name="compatible-piece-types-container" style="flex-grow: 1;">
+            <ui:Toggle label="Coral" name="compatible-coral" />
+            <ui:Toggle label="Algae" name="compatible-algae" />
+        </ui:VisualElement>
+    </ui:GroupBox>
+    <ui:GroupBox name="storage-controls" data-source-path="storage">
+        <ui:IntegerField label="Piece Capacity" name="storage-capacity">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="capacity" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:IntegerField>
+    </ui:GroupBox>
+</ui:UXML>

@@ -1,0 +1,80 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="RobotPartEditor" src="project://database/Assets/Robot%20Designer/RobotPartEditor.uxml?fileID=9197481963319205126&amp;guid=a28161d2576b0404c91ab66161d82e06&amp;type=3#RobotPartEditor" />
+    <Style src="project://database/Assets/Robot%20Designer/RobotEditor.uss?fileID=7433441132597879392&amp;guid=bcd18ff2b14e04086a79caebe1132ffa&amp;type=3#RobotEditor" />
+    <ui:VisualElement data-source-type="RobotDesignerData, Assembly-CSharp" style="flex-grow: 1; width: 22%; align-self: center; background-color: rgb(175, 143, 143); border-left-width: 2px; border-right-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
+        <ui:TextField label="Robot Name" name="robot-name">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="robotName" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:TextField>
+        <ui:VisualElement name="part-tree-container" style="flex-grow: 1;">
+            <ui:TreeView name="part-tree" fixed-item-height="30" />
+        </ui:VisualElement>
+        <ui:Button text="Add Part" name="button-add-part" />
+        <ui:ScrollView>
+            <ui:VisualElement name="robot-controls">
+                <ui:EnumField label="Drivetrain&#10;Controls" type="RobotDesignerData+OperatorControlsDesign+DriveControlsLayout, Assembly-CSharp" name="drivetrain-control-layout">
+                    <Bindings>
+                        <ui:DataBinding property="value" data-source-path="operatorControls.driveControlsLayout" binding-mode="TwoWay" />
+                    </Bindings>
+                </ui:EnumField>
+                <ui:GroupBox name="drivetrain-axes" text="Drivetrain&#10;Axes" class="vector-fields">
+                    <ui:IntegerField label="Forward" max-length="1">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-path="operatorControls.forwardAxis" binding-mode="TwoWay" />
+                        </Bindings>
+                    </ui:IntegerField>
+                    <ui:IntegerField label="Lateral" max-length="1">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-path="operatorControls.lateralAxis" binding-mode="TwoWay" />
+                        </Bindings>
+                    </ui:IntegerField>
+                    <ui:IntegerField label="Steer" max-length="1">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-path="operatorControls.steerAxis" binding-mode="TwoWay" />
+                        </Bindings>
+                    </ui:IntegerField>
+                </ui:GroupBox>
+                <ui:DropdownField label="Setpoints /&#10;Buttons" name="joystick-button" choices="When Starting,Button 1,Button 2,Button 3,Button 4,Button 5,Button 6,Button 7,Button 8,Button 9,Button 10" index="0" />
+                <ui:VisualElement name="button-actions-container" style="flex-grow: 1;">
+                    <ui:Label text="When Pressed:" />
+                    <ui:ListView name="list-pressed-actions" item-template="project://database/Assets/Robot%20Designer/MotorSetpointEditor.uxml?fileID=9197481963319205126&amp;guid=f14ebfba125934977bdb477334c4a474&amp;type=3#MotorSetpointEditor" binding-source-selection-mode="AutoAssign" show-add-remove-footer="true" fixed-item-height="90" />
+                    <ui:Label text="When Released:" />
+                </ui:VisualElement>
+                <ui:ListView name="list-released-actions" item-template="project://database/Assets/Robot%20Designer/MotorSetpointEditor.uxml?fileID=9197481963319205126&amp;guid=f14ebfba125934977bdb477334c4a474&amp;type=3#MotorSetpointEditor" binding-source-selection-mode="AutoAssign" show-add-remove-footer="true" fixed-item-height="90" />
+            </ui:VisualElement>
+            <ui:VisualElement name="drivetrain-controls" data-source-path="drivetrain">
+                <ui:GroupBox name="size" text="Size" class="vector-fields">
+                    <ui:FloatField name="size-length" label="Length">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-path="length" binding-mode="TwoWay" />
+                        </Bindings>
+                    </ui:FloatField>
+                    <ui:FloatField name="size-width" label="Width">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-path="width" binding-mode="TwoWay" />
+                        </Bindings>
+                    </ui:FloatField>
+                </ui:GroupBox>
+                <ui:FloatField label="Max speed" name="drivetrain-max-speed">
+                    <Bindings>
+                        <ui:DataBinding property="value" data-source-path="maxSpeed" binding-mode="TwoWay" />
+                    </Bindings>
+                </ui:FloatField>
+                <ui:FloatField label="Acceleration" name="drivetrain-acceleration">
+                    <Bindings>
+                        <ui:DataBinding property="value" data-source-path="acceleration" binding-mode="TwoWay" />
+                    </Bindings>
+                </ui:FloatField>
+            </ui:VisualElement>
+            <ui:Instance template="RobotPartEditor" name="part-editor" data-source-type="RobotDesignerData+Node, Assembly-CSharp" />
+        </ui:ScrollView>
+        <ui:VisualElement style="flex-direction: row; justify-content: center;">
+            <ui:Button text="Import/Export" name="button-json" />
+            <ui:Button text="Save" name="button-save" />
+            <ui:Button text="Undo" name="button-undo" />
+            <ui:Button text="Redo" name="button-redo" />
+            <ui:Button text="Exit" name="button-exit" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

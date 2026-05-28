@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class LineSensor : StandardRobotSensor {
+public sealed class LineSensor : RobotSensor {
     public string detectedTag = "Line";
 
     public bool IsDetecting {
@@ -11,13 +11,9 @@ public sealed class LineSensor : StandardRobotSensor {
         }
     }
 
-    public override int SensorValue {
-        get {
-            return IsDetecting ? 1 : 0;
-        }
+    public override void UpdateSensorValue(Team766.Simulator.SensorProto value) {
+        value.Digital = new() { Value = IsDetecting };
     }
-
-    public override CodeDeviceType DeviceType => CodeDeviceType.LINE_SENSOR;
     
     private HashSet<Collider> colliding = new HashSet<Collider>();
     

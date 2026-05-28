@@ -1,28 +1,45 @@
 using System;
+using UnityEngine;
+using Team766.Simulator;
 
 public abstract class StandardRobotJoint : RobotDevice {
-    public sealed override CodeDeviceType DeviceType => CodeDeviceType.MOTOR;
+    private static readonly MotorActuatorProto defaultMotorCommand = new MotorActuatorProto {
+        Mode = MotorActuatorProto.Types.Mode.PercentOutput,
+        Command = 0.0,
+    };
 
-    public sealed override void RunJoint(CodeBufferView commands) {
-        var deviceCommands = commands.DeviceData<int>(DeviceId, DeviceType);
-        float command = 0.0f;
-        if (deviceCommands.Count > 0) {
-            command = deviceCommands[0] / 512.0f;
+    public sealed override void RunJoint(CommandsPacket commands) {
+        ActuatorProto actuator = System.Linq.Enumerable.FirstOrDefault(commands.Actuator, a => a.Id == DeviceId);
+        MotorActuatorProto motorCommand = defaultMotorCommand;
+        if (actuator == null) {
+            // Debug.LogWarning(
+            //     $"Simulation commands packet doesn't include data for device {DeviceId}");
+        } else if (actuator.TypeCase != ActuatorProto.TypeOneofCase.Motor) {
+            Debug.LogWarning(
+                $"Simulation data for actuator {DeviceId} is the wrong type {actuator.TypeCase}. Expected Motor.");
+        } else {
+            motorCommand = actuator.Motor;
         }
-        RunJoint(command);
+        RunJoint(motorCommand);
     }
 
-    public abstract void RunJoint(float command);
+    public abstract void RunJoint(MotorActuatorProto command);
 
-    public sealed override void RunSensor(CodeBufferBuilder feedbackValues) {
-        feedbackValues.DeviceData<int>(DeviceId, DeviceType, new[] { SensorPosition, SensorVelocity });
+    public sealed override void RunSensor(FeedbackPacket feedback) {
+        SensorProto proto = new();
+        proto.Id = DeviceId;
+        proto.Motor = new MotorSensorProto {
+            Position = SensorPosition,
+            Velocity = SensorVelocity,
+        };
+        feedback.Sensor.Add(proto);
     }
 
-    public abstract int SensorPosition {
+    public abstract double SensorPosition {
         get;
     }
 
-    public abstract int SensorVelocity {
+    public abstract double SensorVelocity {
         get;
     }
 }

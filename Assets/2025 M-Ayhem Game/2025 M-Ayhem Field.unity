@@ -1548,6 +1548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 367177985}
   - component: {fileID: 367177986}
+  - component: {fileID: 367177987}
   m_Layer: 8
   m_Name: Shooter
   m_TagString: Untagged
@@ -1582,13 +1583,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75fb0dc7441e4ed2b5a31bd1e63953e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Launcher2024
-  DeviceId: 38
   ballStorage: {fileID: 1240595887}
   maxForce: 1
+  launchThreshold: 0.2
+  flowRatePeriod: 0.5
+  startupTime: 0.5
+--- !u!114 &367177987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367177984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd25def836174ae896b50c8ea26f798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RollerSet
+  DeviceId: 38
   maxDegreesPerSecond: 3000
-  intake: {fileID: 1659630461}
   rollers: []
-  command: 0
 --- !u!1 &446216162
 GameObject:
   m_ObjectHideFlags: 0
@@ -5582,7 +5596,6 @@ GameObject:
   - component: {fileID: 1031992340}
   - component: {fileID: 1031992337}
   - component: {fileID: 1031992334}
-  - component: {fileID: 1031992338}
   - component: {fileID: 1031992335}
   m_Layer: 9
   m_Name: FR wheel
@@ -5697,20 +5710,6 @@ CapsuleCollider:
   m_Height: 0.04
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1031992338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031992333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a23e80869e944dfb9a7bfc98fde394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DeviceId: 11
-  Angle: 0
 --- !u!4 &1031992340
 Transform:
   m_ObjectHideFlags: 0
@@ -8345,7 +8344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703b3551653234a13bb94b8aa6d505a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeviceId: 20
+  DeviceId: 100
 --- !u!114 &1481217489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8358,7 +8357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13182ff0443c4eebba5b53e90154247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeviceId: 16
+  DeviceId: 101
 --- !u!114 &1481217490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9137,6 +9136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1659630460}
   - component: {fileID: 1659630461}
+  - component: {fileID: 1659630462}
   m_Layer: 0
   m_Name: Feeder
   m_TagString: Untagged
@@ -9171,9 +9171,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf40a10d8b05eb4fb210efc72fcfea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeviceId: 37
-  command: 0
   ballStorage: {fileID: 0}
+  intakeThreshold: 0.2
+  flowRatePeriod: 0
+  startupTime: 0
+  compatiblePieceTypes: []
+--- !u!114 &1659630462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659630459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd25def836174ae896b50c8ea26f798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RollerSet
+  DeviceId: 37
+  maxDegreesPerSecond: 800
   rollers: []
 --- !u!1 &1667008632
 GameObject:
@@ -10584,6 +10600,7 @@ GameObject:
   - component: {fileID: 1840331718}
   - component: {fileID: 1840331717}
   - component: {fileID: 1840331719}
+  - component: {fileID: 1840331720}
   m_Layer: 0
   m_Name: Intake
   m_TagString: Untagged
@@ -10603,12 +10620,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf40a10d8b05eb4fb210efc72fcfea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeviceId: 36
-  command: 0
   ballStorage: {fileID: 1240595887}
-  rollers:
-  - {fileID: 1690479171}
-  - {fileID: 142172096}
+  intakeThreshold: 0.2
+  flowRatePeriod: 0
+  startupTime: 0
+  compatiblePieceTypes: []
 --- !u!4 &1840331718
 Transform:
   m_ObjectHideFlags: 0
@@ -10647,6 +10663,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1840331720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840331716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd25def836174ae896b50c8ea26f798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RollerSet
+  DeviceId: 36
+  maxDegreesPerSecond: 800
+  rollers:
+  - {fileID: 1690479171}
+  - {fileID: 142172096}
 --- !u!1001 &1841138586
 PrefabInstance:
   m_ObjectHideFlags: 0

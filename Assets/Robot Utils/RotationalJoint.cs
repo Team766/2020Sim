@@ -1,24 +1,40 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
+using Team766.Simulator;
 
 public class RotationalJoint : StandardRobotJoint
 {
-    public float motorScaler;
     private Vector3 neutralPosition;
     private Quaternion neutralRotation;
     private Quaternion neutralRotationInv;
-    public float maxSpeed;
-    public float minForce;
-    public float currentCommand;
+    public float maxMotorSpeed = 628.32f; // radians per second
+    public float maxMotorTorque = 7.09f;  // Newton-meters (at least when using ArticulationBody)
+    public float minTorque;
+    public bool inverted;
+    public float mechanicalScalar = 1.0f;
+    public float pGain, dGain, velocityPGain;
     private RotaryEncoderImpl encoderImpl;
 
-    void Awake()
+    void Start()
     {
         neutralPosition = transform.localPosition;
         neutralRotation = transform.localRotation;
         neutralRotationInv = Quaternion.Inverse(neutralRotation);
         encoderImpl = new RotaryEncoderImpl(transform);
+
+        var articBody = GetComponent<ArticulationBody>();
+        if (articBody)
+        {
+            articBody.anchorPosition = Vector3.zero;
+            articBody.anchorRotation = Quaternion.identity;
+            var parentBody = transform.parent?.GetComponentInParent<ArticulationBody>();
+            if (parentBody)
+            {
+                articBody.matchAnchors = false;
+                articBody.parentAnchorRotation = Quaternion.Inverse(parentBody.transform.rotation) * transform.rotation;
+                articBody.parentAnchorPosition = parentBody.transform.InverseTransformPoint(transform.position);
+            }
+        }
     }
 
     private static Quaternion ProjectRotation(Quaternion q, Vector3 axis)
@@ -61,25 +77,34 @@ public class RotationalJoint : StandardRobotJoint
         return Vector3.right; // X axis
     }
 
-    public override void RunJoint(float command)
+    public MotorActuatorProto.Types.Mode commandMode;
+    public float commandSetpoint;
+
+    public override void RunJoint(MotorActuatorProto command)
     {
+        this.commandMode = command.Mode;
+        this.commandSetpoint = (float)command.Command;
+
+        //Debug.Log($"{gameObject.name} {mode} {command}");
+        float maxSpeed = maxMotorSpeed / mechanicalScalar;
+        float maxTorque = maxMotorTorque * mechanicalScalar;
+
+        // Avoid NaNs in the following calculations.
         if (maxSpeed == 0)
         {
-            Debug.LogError("maxSpeed must be non-zero");
-            maxSpeed = Math.Abs(motorScaler);
+            throw new Exception("maxSpeed must be non-zero");
         }
 
-        float targetVel = command * maxSpeed * Mathf.Sign(motorScaler);
-        float appliedForce = Mathf.Max(minForce, Mathf.Abs(command * motorScaler));
-
-        currentCommand = appliedForce * Mathf.Sign(targetVel);
+        float inversionFactor = inverted ? -1.0f : 1.0f;
+        float targetVel = commandSetpoint * maxSpeed * inversionFactor;
+        float appliedForce = Mathf.Max(minTorque, Mathf.Abs(commandSetpoint * maxTorque));
 
         // set joint motor parameters
         var hinge = GetComponent<HingeJoint>();
         if (hinge)
         {
             JointMotor myMotor = hinge.motor;
-            myMotor.targetVelocity = targetVel;
+            myMotor.targetVelocity = targetVel * Mathf.Rad2Deg;
             myMotor.force = appliedForce;
             hinge.motor = myMotor;
         }
@@ -96,30 +121,56 @@ public class RotationalJoint : StandardRobotJoint
         var articBody = GetComponent<ArticulationBody>();
         if (articBody)
         {
-            // From https://docs.unity3d.com/6000.3/Documentation/ScriptReference/ArticulationDrive.html:
-            // > The drive will apply force to the body that is calculated from
-            // > the current value of the drive, using this formula:
-            // > F = stiffness * (currentPosition - target) - damping * (currentVelocity - targetVelocity)
-            // For rotational joints, "force" is torque.
-            //
-            // Comparatively, the equations for the ideal physics model of a
-            // DC motor can be arranged so that:
-            // Torque = - maxTorque / maxSpeed * (currentVelocity - maxSpeed * appliedVoltage / maxVoltage)
-            // So to have the joint drive simulate a DC motor with a certain
-            // applied voltage, we can set:
-            // targetVelocity = maxSpeed * appliedVoltage / maxVoltage = maxSpeed * command
-            // damping = maxTorque / maxSpeed
+            articBody.jointType = ArticulationJointType.RevoluteJoint;
             ArticulationDrive drive = articBody.xDrive;
-            drive.stiffness = 0;
-            drive.damping = 1.0f;
-            drive.forceLimit = appliedForce;
-            drive.targetVelocity = targetVel;
+            maxTorque *= 1000; // TODO: Hacks
+            switch (commandMode)
+            {
+                case MotorActuatorProto.Types.Mode.PercentOutput:
+                    // From https://docs.unity3d.com/6000.3/Documentation/ScriptReference/ArticulationDrive.html:
+                    // > The drive will apply force to the body that is calculated from
+                    // > the current value of the drive, using this formula:
+                    // > F = stiffness * (currentPosition - target) - damping * (currentVelocity - targetVelocity)
+                    // For rotational joints, "force" is torque.
+                    //
+                    // Comparatively, the equations for the ideal physics model of a
+                    // DC motor can be arranged so that:
+                    // Torque = - maxTorque / maxSpeed * (currentVelocity - maxSpeed * appliedVoltage / maxVoltage)
+                    // So to have the joint drive simulate a DC motor with a certain
+                    // applied voltage, we can set:
+                    // targetVelocity = maxSpeed * appliedVoltage / maxVoltage = maxSpeed * command
+                    // damping = maxTorque / maxSpeed
+                    drive.stiffness = 0;
+                    drive.damping = maxTorque / maxSpeed;
+                    drive.targetVelocity = targetVel;
+                    break;
+                case MotorActuatorProto.Types.Mode.Position:
+                    // TODO: Compensate for Unity's different units for `target` and `targetVelocity` when setting PID gains
+                    drive.stiffness = pGain;
+                    drive.damping = dGain;
+                    drive.targetVelocity = 0;
+                    // NB: `drive.target` is in degrees but `drive.targetVelocity` is in radians/second
+                    drive.target = commandSetpoint / mechanicalScalar;
+                    drive.forceLimit = maxTorque;
+                    break;
+                case MotorActuatorProto.Types.Mode.Velocity:
+                    drive.stiffness = 0;
+                    drive.damping = velocityPGain;
+                    // NB: `drive.target` is in degrees but `drive.targetVelocity` is in radians/second
+                    drive.targetVelocity = Mathf.Clamp(inversionFactor * commandSetpoint / mechanicalScalar, -maxSpeed, -maxSpeed);
+                    drive.forceLimit = maxTorque;
+                    break;
+            }
+            drive.driveType = ArticulationDriveType.Force;
             articBody.xDrive = drive;
         }
     }
 
     public override void Disable() {
-        RunJoint(0.0f);
+        RunJoint(new MotorActuatorProto {
+            Mode = MotorActuatorProto.Types.Mode.PercentOutput,
+            Command = 0.0,
+        });
     }
 
     public override void Destroy() {
@@ -143,7 +194,7 @@ public class RotationalJoint : StandardRobotJoint
         }
     }
 
-    public override int SensorPosition => (int)encoderImpl.Angle;
+    public override double SensorPosition => encoderImpl.Angle * mechanicalScalar;
 
-    public override int SensorVelocity => (int)encoderImpl.Velocity;
+    public override double SensorVelocity => encoderImpl.Velocity * mechanicalScalar;
 }

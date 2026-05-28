@@ -2,27 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Team766.Simulator;
 
 public sealed class BeaconSensor : RobotSensor {
     public Transform[] beacons;
 
-    public override CodeDeviceType DeviceType => CodeDeviceType.BEACON_POSITION_SENSOR;
-
-    public override void RunSensor(CodeBufferBuilder feedbackValues) {
+    public override void UpdateSensorValue(SensorProto value) {
         Quaternion invRot = Quaternion.Inverse(transform.rotation);
-        feedbackValues.DeviceData<int>(DeviceId, DeviceType, beacons.SelectMany(b =>
-        {
+        value.Beacons = new ();
+        for (int i = 0; i < beacons.Length; ++i) {
+            var b = beacons[i];
+            if (!b) {
+                continue;
+            }
             Vector3 position = transform.InverseTransformPoint(b.position);
             Vector3 rotation = (invRot * b.rotation).eulerAngles;
             // In robot code, X axis is forward, Y axis is left, Z axis is up
-            return new[] {
-                (int)(1000 * position.z), // x
-                (int)(1000 * -position.x), // y
-                (int)(1000 * position.y), // z
-                (int)(1000 * ((rotation.y + 270) % 360)), // yaw
-                (int)(1000 * rotation.x), // pitch
-                (int)(1000 * rotation.z), // roll
+            var beacon = new BeaconsSensorProto.Types.Beacon();
+            beacon.Id = i;
+            beacon.Pose = new() {
+                X = position.z,
+                Y = -position.x,
+                Z = position.y,
+                Yaw = (rotation.y + 270) % 360,
+                Pitch = rotation.x,
+                Roll = rotation.z,
             };
-        }).ToArray());
+            value.Beacons.Beacon.Add(beacon);
+        }
     }
 }

@@ -4,25 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ConfigurableJoint))]
-public sealed class LinearEncoder : StandardRobotSensor
+public sealed class LinearEncoder : RobotSensor
 {
     public float encoderScale = 1000;
  
     private Vector3 neutralPosition;
 
-    public override int SensorValue
+    public override void UpdateSensorValue(Team766.Simulator.SensorProto value)
     {
-        get
-        {
-            return (int)(
+        value.Encoder = new() {
+            Value = (long)(
                 encoderScale *
                 Vector3.Dot(transform.localPosition - neutralPosition,
                             GetComponent<ConfigurableJoint>().axis)
-            );
-        }
+            ),
+        };
     }
-
-    public override CodeDeviceType DeviceType => CodeDeviceType.ENCODER_SENSOR;
 
     void Awake()
 	{

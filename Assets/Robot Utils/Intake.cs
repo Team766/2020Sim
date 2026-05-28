@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Intake : MonoBehaviour {
     public List<BallStorage> ballStorage;
 
-	public float intakeThreshold = 0.2f;
+	public float intakeThreshold = 150f;
 
 	public float flowRatePeriod = 0.2f;
 	public float startupTime = 0.0f;
@@ -46,7 +46,7 @@ public class Intake : MonoBehaviour {
 	}
 
     void FixedUpdate() {
-        if (GetComponent<RollerSet>().command / intakeThreshold >= 1.0f) {
+        if (GetComponent<RollerSet>().percentVelocity / intakeThreshold >= 1.0f) {
 			if (Time.fixedTime >= nextBallTime) {
 				var obj = Get();
 				if (obj) {

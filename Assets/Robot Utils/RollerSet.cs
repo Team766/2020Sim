@@ -1,21 +1,24 @@
 using System;
 using UnityEngine;
+using Team766.Simulator;
 
 public sealed class RollerSet : StandardRobotJoint
 {
-    public float maxDegreesPerSecond = 800;
+    public float maxMotorSpeed = 628.32f; // radians per second
+    public float minTorque;
+    public bool inverted;
+    public float mechanicalScalar = 45.0f;
 
     public Transform[] rollers;
 
-    [NonSerialized]
-    public float command;
-
     private float angle;
-    private float velocity;
+    [NonSerialized]
+    public float velocity;
+    [NonSerialized]
+    public float percentVelocity;
 
     void Update()
     {
-        velocity = maxDegreesPerSecond * command;
         float delta = velocity * Time.deltaTime;
         angle += delta;
         foreach (var roller in rollers)
@@ -24,14 +27,33 @@ public sealed class RollerSet : StandardRobotJoint
         }
     }
 
-    public override void RunJoint(float command)
+    public override void RunJoint(MotorActuatorProto command)
     {
-        this.command = command;
+        float maxDegreesPerSecond = maxMotorSpeed / mechanicalScalar * Mathf.Rad2Deg;
+
+        switch (command.Mode)
+        {
+            case MotorActuatorProto.Types.Mode.PercentOutput:
+                velocity = maxDegreesPerSecond * (float)command.Command;
+                break;
+            case MotorActuatorProto.Types.Mode.Position:
+                // Unsupported
+                break;
+            case MotorActuatorProto.Types.Mode.Velocity:
+                // Convert from revolutions/second to degrees/second
+                velocity = 360f * (float)command.Command;
+                break;
+        }
+        velocity = Mathf.Clamp(velocity, -maxDegreesPerSecond, maxDegreesPerSecond);
+        percentVelocity = velocity / maxDegreesPerSecond;
     }
 
     public override void Disable()
     {
-        RunJoint(0.0f);
+        RunJoint(new MotorActuatorProto {
+            Mode = MotorActuatorProto.Types.Mode.PercentOutput,
+            Command = 0.0,
+        });
     }
 
     public override void Destroy()
@@ -39,7 +61,7 @@ public sealed class RollerSet : StandardRobotJoint
         //Destroy(this);
     }
 
-    public override int SensorPosition => (int)angle;
+    public override double SensorPosition => angle * mechanicalScalar;
 
-    public override int SensorVelocity => (int)velocity;
+    public override double SensorVelocity => velocity * mechanicalScalar;
 }

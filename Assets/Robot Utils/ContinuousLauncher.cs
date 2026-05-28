@@ -8,7 +8,7 @@ public sealed class ContinuousLauncher : MonoBehaviour
 
 	public float maxForce;
 
-	public float launchThreshold = 0.2f;
+	public float launchThreshold = 600f;
 
 	public float flowRatePeriod = 0.5f;
 	public float startupTime = 0.5f;
@@ -16,11 +16,11 @@ public sealed class ContinuousLauncher : MonoBehaviour
 	private float nextLaunchTime = 0.0f;
 
 	void Reset() {
-		GetComponent<RollerSet>().maxDegreesPerSecond = 3000;
+		GetComponent<RollerSet>().mechanicalScalar = 12;
     }
 
 	void FixedUpdate() {
-		if (GetComponent<RollerSet>().command / launchThreshold >= 1.0f)
+		if (GetComponent<RollerSet>().percentVelocity / launchThreshold >= 1.0f)
 		{
 			if (Time.fixedTime >= nextLaunchTime)
 			{
@@ -48,11 +48,14 @@ public sealed class ContinuousLauncher : MonoBehaviour
 			return;
 		}
 
-		var command = GetComponent<RollerSet>().command;
+		var rollers = GetComponent<RollerSet>();
 
 		projectile.transform.position = this.transform.position;
 		projectile.transform.rotation = this.transform.rotation;
-		projectile.AddForce(Mathf.Clamp01(command) * maxForce * this.transform.forward, ForceMode.Impulse);
+		var force = Mathf.Clamp01(rollers.percentVelocity * Mathf.Sign(launchThreshold)) * maxForce * this.transform.forward;
+		projectile.AddForce(force, ForceMode.Impulse);
+
+		Debug.Log("Launch " + projectile.name + " at " + force);
 
 		nextLaunchTime = Time.fixedTime + flowRatePeriod;
 	}

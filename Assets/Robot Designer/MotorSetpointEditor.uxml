@@ -1,0 +1,22 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Robot%20Designer/MotorSetpointEditor.uss?fileID=7433441132597879392&amp;guid=d61f64163a0884feeb56cc4a9839afb6&amp;type=3#MotorSetpointEditor" />
+    <ui:VisualElement data-source-type="RobotDesignerData+OperatorControlsDesign+MotorSetpoint, Assembly-CSharp" style="padding-left: 20px;">
+        <ui:DropdownField name="target-node">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="jointNodeGuid" binding-mode="TwoWay" />
+            </Bindings>
+        </ui:DropdownField>
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+            <ui:EnumField type="Team766.Simulator.MotorActuatorProto+Types+Mode, Assembly-CSharp" name="command-mode" style="width: 210px;">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="mode" binding-mode="TwoWay" />
+                </Bindings>
+            </ui:EnumField>
+            <ui:FloatField name="setpoint" style="flex-grow: 1;">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="setpoint" binding-mode="TwoWay" />
+                </Bindings>
+            </ui:FloatField>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

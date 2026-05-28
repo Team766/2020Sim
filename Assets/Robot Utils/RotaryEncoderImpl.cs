@@ -27,10 +27,20 @@ public class RotaryEncoderImpl {
 
     private Vector3 GetAxis()
     {
+        var hinge = transform.GetComponent<HingeJoint>();
+        if (hinge)
+        {
+            return hinge.axis;
+        }
         var cjoint = transform.GetComponent<ConfigurableJoint>();
         if (cjoint)
         {
             return cjoint.axis;
+        }
+        var articBody = transform.GetComponent<ArticulationBody>();
+        if (articBody)
+        {
+            // TODO: return articBody.anchorRotation * Vector3.right;
         }
         return Vector3.right; // X axis
     }

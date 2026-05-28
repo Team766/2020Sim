@@ -23,8 +23,8 @@ public sealed class ToggleLauncher : StandardRobotJoint
 		projectile.AddForce(this.transform.forward * Mathf.Clamp01(ShootPower) * maxForce, ForceMode.Impulse);
     }
 
-    public override void RunJoint(float command) {
-		if (command > 0) {
+    public override void RunJoint(Team766.Simulator.MotorActuatorProto command) {
+		if (command.Command > 0) {
 			if (!launched) {
 				Launch();
 			}
@@ -42,6 +42,6 @@ public sealed class ToggleLauncher : StandardRobotJoint
         Destroy(this);
     }
 
-    public override int SensorPosition => launched ? 1 : 0;
-    public override int SensorVelocity => 0;
+    public override double SensorPosition => launched ? 1 : 0;
+    public override double SensorVelocity => 0;
 }

@@ -37,9 +37,12 @@ public class GameGUI : NetworkBehaviour {
     private RobotMode robotMode = RobotMode.Disabled;
     private double robotModeStartTime = 0.0;
     [SyncVar]
+    private bool robotModeIsCodeControlled = false;
+    [SyncVar]
     private float timeRemaining = 0.0f;
 
     public RobotMode RobotMode => robotMode;
+    public bool RobotModeIsCodeControlled => robotModeIsCodeControlled;
 
     void Start() {
         int cameraIndex = PlayerPrefs.GetInt(SELECTED_CAMERA_PREF_KEY, initialCamera);
@@ -59,8 +62,18 @@ public class GameGUI : NetworkBehaviour {
         scoreText.text = "Red score: " + redScore + "  Blue score: " + blueScore;
 
         robotModeDropdown.value = (int)robotMode;
+        robotModeDropdown.interactable = !robotModeIsCodeControlled;
 
-        codeStateText.text = haveRobotCode ? "Code running" : "No robot code";
+        var identity = NetworkClient.connection?.identity;
+        if (identity) {
+            var robot = identity.GetComponent<CodeConnector>();
+            if (robot) {
+                codeStateText.enabled = true;
+                codeStateText.text = robot.hasRobotCode ? "Code running" : "No robot code";
+            } else {
+                codeStateText.enabled = false;
+            }
+        }
 
         float stateDuration = robotMode switch {
             RobotMode.Disabled => 0.0f,
@@ -123,8 +136,14 @@ public class GameGUI : NetworkBehaviour {
 
     [Server]
     public void SetRobotMode(RobotMode mode) {
+        Debug.Log("SetRobotMode " + mode);
         robotMode = mode;
         robotModeStartTime = Time.timeAsDouble;
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSetRobotModeIsCodeControlled(bool value) {
+        robotModeIsCodeControlled = value;
     }
 
     public void PlaySound(AudioClip audioClip) {
@@ -142,5 +161,23 @@ public class GameGUI : NetworkBehaviour {
         }
         cameraDropdown.value = cameraIndex;
         PlayerPrefs.SetInt(SELECTED_CAMERA_PREF_KEY, cameraIndex);
+    }
+
+    public void RestartButtonClicked()
+    {
+        CmdLoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ExitButtonClicked()
+    {
+        if (isHost)
+        {
+            NetworkManager.singleton.StopHost();
+        }
+        else
+        {
+            NetworkManager.singleton.StopClient();
+        }
+        SceneManager.LoadScene("Menu Screen");
     }
 }

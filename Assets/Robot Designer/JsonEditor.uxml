@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Robot%20Designer/JsonEditor.uss?fileID=7433441132597879392&amp;guid=07fcdc08799d0449886b7a5b317b8de3&amp;type=3#JsonEditor" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.5); padding-top: 2%; padding-right: 5%; padding-bottom: 2%; padding-left: 5%;">
+        <ui:TextField name="json-text" multiline="true" vertical-scroller-visibility="Auto" style="flex-grow: 1; flex-shrink: 1;" />
+        <ui:VisualElement style="flex-direction: row; justify-content: flex-end; padding-right: 5%; margin-top: 10px;">
+            <ui:Button text="Cancel" name="button-cancel" />
+            <ui:Button text="Apply" name="button-apply" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

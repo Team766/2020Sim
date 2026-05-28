@@ -8,7 +8,11 @@ using Mirror;
 [RequireComponent(typeof(NetworkManager))]
 [RequireComponent(typeof(Mirror.SimpleWeb.SimpleWebTransport))]
 public class StartNetwork : MonoBehaviour {
-    void Update() {
+    void Start() {
+        var manager = NetworkManager.singleton;
+        if (!manager) {
+            return;
+        }
         if (!NetworkClient.active) {
             if (Application.platform == RuntimePlatform.WebGLPlayer) {
                 var uri = new Uri(Application.absoluteURL);
@@ -21,9 +25,18 @@ public class StartNetwork : MonoBehaviour {
                 } else {
                     websocketUri.Scheme = "ws";
                 }
-                var manager = GetComponent<NetworkManager>();
                 Debug.Log("StartNetwork client to " + websocketUri.Uri);
                 manager.StartClient(websocketUri.Uri);
+            }
+        }
+        Debug.Log("StartNetwork " + NetworkServer.active);
+        if (!NetworkServer.active) {
+            if (Utils.IsHeadless()) {
+                manager.StartServer();
+            }
+            else {
+                NetworkServer.listen = false;
+                manager.StartHost();
             }
         }
     }

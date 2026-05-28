@@ -1,0 +1,76 @@
+:root {
+}
+
+.unity-base-field__label {
+    min-width: 110px;
+    margin-top: 0;
+    margin-right: 4px;
+    margin-bottom: 0;
+    margin-left: 3px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    align-self: center;
+    -unity-font-style: bold;
+}
+
+.unity-group-box {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.vector-fields {
+    flex-direction: row;
+}
+
+.vector-fields > .unity-group-box__label {
+    align-self: center;
+    min-width: 110px;
+    margin-left: 6px;
+    margin-top: 0;
+    margin-right: 4px;
+    margin-bottom: 0;
+    padding-top: 4px;
+    padding-right: 2px;
+    padding-bottom: 4px;
+    padding-left: 1px;
+    -unity-font-style: bold;
+}
+
+.vector-fields > .unity-base-text-field {
+    flex-grow: 1;
+}
+
+.vector-fields .unity-base-field__label {
+    min-width: auto;
+    margin-top: 0;
+    margin-right: 4px;
+    margin-bottom: 0;
+    margin-left: 0;
+    -unity-font-style: normal;
+}
+
+.unity-popup-field__input {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 11px;
+    padding-right: 11px;
+    padding-bottom: 11px;
+    padding-left: 11px;
+}
+
+.unity-base-text-field__input {
+    padding-top: 7px;
+    padding-right: 7px;
+    padding-bottom: 7px;
+    padding-left: 7px;
+}
