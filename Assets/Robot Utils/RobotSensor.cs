@@ -8,6 +8,7 @@ public abstract class RobotSensor : RobotDevice {
         SensorProto proto = new();
         UpdateSensorValue(proto);
         proto.Id = DeviceId;
+        proto.IdSpace = DeviceIdSpace;
         feedback.Sensor.Add(proto);
     }
 

@@ -130,7 +130,7 @@ public class GameGUI : NetworkBehaviour {
     }
 
     [Command(requiresAuthority = false)]
-    private void CmdSetRobotMode(string mode) {
+    public void CmdSetRobotMode(string mode) {
         SetRobotMode((RobotMode)Enum.Parse(typeof(RobotMode), mode, true));
     }
 
@@ -170,14 +170,6 @@ public class GameGUI : NetworkBehaviour {
 
     public void ExitButtonClicked()
     {
-        if (isHost)
-        {
-            NetworkManager.singleton.StopHost();
-        }
-        else
-        {
-            NetworkManager.singleton.StopClient();
-        }
         SceneManager.LoadScene("Menu Screen");
     }
 }

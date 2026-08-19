@@ -1,40 +1,77 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
-public class CommonScoringArea : MonoBehaviour
+public class ScoringZone : MonoBehaviour
 {
+	public enum Team
+    {
+		Red,
+		Blue,
+		BallColor,
+    }
+
 	private GameGUI gameGui;
 	public int points;
 	public AudioClip sound;
+	public Team team = Team.BallColor;
+	public bool requireEntirelyInZone = false;
+	public List<GameObject> scored = new();
 
-	private void Awake()
+	void Start()
 	{
+		// Don't call FindAnyObjectByType in Awake because of script ordering issues.
 		gameGui = FindAnyObjectByType<GameGUI>();
 	}
 
-	void OnTriggerEnter(Collider c)
-	{
-		if (c.tag == "Ball")
+	private bool ScoreForBlue(Component c)
+    {
+		return team switch
 		{
-			if (c.GetComponent<BallProperties>().isBlue)
-				gameGui.addBlueScore(points);
-			else
-				gameGui.addRedScore(points);
+			Team.Red => false,
+			Team.Blue => true,
+			Team.BallColor => c.GetComponent<BallProperties>().isBlue,
+			_ => throw new ArgumentOutOfRangeException(nameof(team), team, "Invalid enum value."),
+		};
+	}
 
-			if (sound)
+	void OnTriggerStay(Collider c)
+	{
+		if (!c.CompareTag("Ball"))
+			return;
+
+		if (requireEntirelyInZone && !ColliderUtils.WorldSpaceBoundsContains(GetComponent<Collider>(), c.gameObject)) {
+			if (scored.Contains(c.gameObject))
 			{
-				gameGui.PlaySound(sound);
+				OnTriggerExit(c);
 			}
+			return;
+		}
+
+		if (scored.Contains(c.gameObject))
+			return;
+
+		scored.Add(c.gameObject);
+
+		if (ScoreForBlue(c))
+			gameGui.addBlueScore(points);
+		else
+			gameGui.addRedScore(points);
+
+		if (sound)
+		{
+			gameGui.PlaySound(sound);
 		}
 	}
 
 	void OnTriggerExit(Collider c)
 	{
-		if (c.tag == "Ball")
-		{
-			if (c.GetComponent<BallProperties>().isBlue)
-				gameGui.addBlueScore(-points);
-			else
-				gameGui.addRedScore(-points);
-		}
+		if (!scored.Remove(c.gameObject))
+			return;
+
+		if (ScoreForBlue(c))
+			gameGui.addBlueScore(-points);
+		else
+			gameGui.addRedScore(-points);
 	}
 }

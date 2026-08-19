@@ -4,7 +4,7 @@
 .level-button {
     font-size: 330%;
     background-color: rgb(70, 16, 120);
-    color: rgb(56, 243, 234);
+    color: rgb(208, 13, 248);
     -unity-text-outline-color: rgb(208, 13, 248);
     -unity-text-outline-width: 4px;
     -unity-font-style: normal;
@@ -29,6 +29,7 @@
 .level-button:hover {
     -unity-text-outline-color: rgb(55, 243, 234);
     background-color: rgb(89, 20, 153);
+    color: rgb(55, 243, 234);
 }
 
 .level-button:active {

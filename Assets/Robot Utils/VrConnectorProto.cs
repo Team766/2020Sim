@@ -42,35 +42,43 @@ namespace Team766.Simulator {
             "LkJlYWNvbhpCCgZCZWFjb24SLAoEcG9zZRgBIAEoCzIeLnRlYW03NjYuc2lt",
             "dWxhdG9yLlBvc2UzZFByb3RvEgoKAmlkGAIgASgDIkgKGFJvYm90UG9zaXRp",
             "b25TZW5zb3JQcm90bxIsCgRwb3NlGAEgASgLMh4udGVhbTc2Ni5zaW11bGF0",
-            "b3IuUG9zZTNkUHJvdG8i9AMKC1NlbnNvclByb3RvEgoKAmlkGAEgASgNEjQK",
-            "BW1vdG9yGAsgASgLMiMudGVhbTc2Ni5zaW11bGF0b3IuTW90b3JTZW5zb3JQ",
-            "cm90b0gAEjgKB2RpZ2l0YWwYDCABKAsyJS50ZWFtNzY2LnNpbXVsYXRvci5E",
-            "aWdpdGFsU2Vuc29yUHJvdG9IABI2CgZhbmFsb2cYDSABKAsyJC50ZWFtNzY2",
-            "LnNpbXVsYXRvci5BbmFsb2dTZW5zb3JQcm90b0gAEjgKB2VuY29kZXIYDiAB",
-            "KAsyJS50ZWFtNzY2LnNpbXVsYXRvci5FbmNvZGVyU2Vuc29yUHJvdG9IABIw",
-            "CgNpbXUYDyABKAsyIS50ZWFtNzY2LnNpbXVsYXRvci5JbXVTZW5zb3JQcm90",
-            "b0gAEjwKCXByb3hpbWl0eRgQIAEoCzInLnRlYW03NjYuc2ltdWxhdG9yLlBy",
-            "b3hpbWl0eVNlbnNvclByb3RvSAASOAoHYmVhY29ucxgRIAEoCzIlLnRlYW03",
-            "NjYuc2ltdWxhdG9yLkJlYWNvbnNTZW5zb3JQcm90b0gAEkUKDnJvYm90X3Bv",
-            "c2l0aW9uGBIgASgLMisudGVhbTc2Ni5zaW11bGF0b3IuUm9ib3RQb3NpdGlv",
-            "blNlbnNvclByb3RvSABCBgoEdHlwZSJbCg1BY3R1YXRvclByb3RvEgoKAmlk",
-            "GAEgASgNEjYKBW1vdG9yGAogASgLMiUudGVhbTc2Ni5zaW11bGF0b3IuTW90",
-            "b3JBY3R1YXRvclByb3RvSABCBgoEdHlwZSI0Cg1Kb3lzdGlja1Byb3RvEhUK",
-            "DWRlbnNlX2J1dHRvbnMYASABKAcSDAoEYXhpcxgCIAMoASJ6ChJEcml2ZXJT",
-            "dGF0aW9uUHJvdG8SMAoKcm9ib3RfbW9kZRgBIAEoDjIcLnRlYW03NjYuc2lt",
-            "dWxhdG9yLlJvYm90TW9kZRIyCghqb3lzdGljaxgCIAMoCzIgLnRlYW03NjYu",
-            "c2ltdWxhdG9yLkpveXN0aWNrUHJvdG8iqQEKDkZlZWRiYWNrUGFja2V0Ei4K",
-            "BnNlbnNvchgBIAMoCzIeLnRlYW03NjYuc2ltdWxhdG9yLlNlbnNvclByb3Rv",
-            "EhEKCXRpbWVzdGFtcBgCIAEoARIVCg1yZXNldF9jb3VudGVyGAMgASgFEj0K",
-            "DmRyaXZlcl9zdGF0aW9uGAQgASgLMiUudGVhbTc2Ni5zaW11bGF0b3IuRHJp",
-            "dmVyU3RhdGlvblByb3RvIlcKDkNvbW1hbmRzUGFja2V0EjIKCGFjdHVhdG9y",
-            "GAEgAygLMiAudGVhbTc2Ni5zaW11bGF0b3IuQWN0dWF0b3JQcm90bxIRCgly",
-            "ZXNldF9zaW0YAiABKAgqPwoJUm9ib3RNb2RlEhEKDURJU0FCTEVEX01PREUQ",
-            "ABIOCgpBVVRPTl9NT0RFEAESDwoLVEVMRU9QX01PREUQAkIZChVjb20udGVh",
-            "bTc2Ni5zaW11bGF0b3JQAQ=="));
+            "b3IuUG9zZTNkUHJvdG8iqAQKC1NlbnNvclByb3RvEgoKAmlkGAEgASgNEjIK",
+            "CGlkX3NwYWNlGAIgASgOMiAudGVhbTc2Ni5zaW11bGF0b3IuRGV2aWNlSWRT",
+            "cGFjZRI0CgVtb3RvchgLIAEoCzIjLnRlYW03NjYuc2ltdWxhdG9yLk1vdG9y",
+            "U2Vuc29yUHJvdG9IABI4CgdkaWdpdGFsGAwgASgLMiUudGVhbTc2Ni5zaW11",
+            "bGF0b3IuRGlnaXRhbFNlbnNvclByb3RvSAASNgoGYW5hbG9nGA0gASgLMiQu",
+            "dGVhbTc2Ni5zaW11bGF0b3IuQW5hbG9nU2Vuc29yUHJvdG9IABI4CgdlbmNv",
+            "ZGVyGA4gASgLMiUudGVhbTc2Ni5zaW11bGF0b3IuRW5jb2RlclNlbnNvclBy",
+            "b3RvSAASMAoDaW11GA8gASgLMiEudGVhbTc2Ni5zaW11bGF0b3IuSW11U2Vu",
+            "c29yUHJvdG9IABI8Cglwcm94aW1pdHkYECABKAsyJy50ZWFtNzY2LnNpbXVs",
+            "YXRvci5Qcm94aW1pdHlTZW5zb3JQcm90b0gAEjgKB2JlYWNvbnMYESABKAsy",
+            "JS50ZWFtNzY2LnNpbXVsYXRvci5CZWFjb25zU2Vuc29yUHJvdG9IABJFCg5y",
+            "b2JvdF9wb3NpdGlvbhgSIAEoCzIrLnRlYW03NjYuc2ltdWxhdG9yLlJvYm90",
+            "UG9zaXRpb25TZW5zb3JQcm90b0gAQgYKBHR5cGUijwEKDUFjdHVhdG9yUHJv",
+            "dG8SCgoCaWQYASABKA0SMgoIaWRfc3BhY2UYAiABKA4yIC50ZWFtNzY2LnNp",
+            "bXVsYXRvci5EZXZpY2VJZFNwYWNlEjYKBW1vdG9yGAogASgLMiUudGVhbTc2",
+            "Ni5zaW11bGF0b3IuTW90b3JBY3R1YXRvclByb3RvSABCBgoEdHlwZSI0Cg1K",
+            "b3lzdGlja1Byb3RvEhUKDWRlbnNlX2J1dHRvbnMYASABKAcSDAoEYXhpcxgC",
+            "IAMoASJ6ChJEcml2ZXJTdGF0aW9uUHJvdG8SMAoKcm9ib3RfbW9kZRgBIAEo",
+            "DjIcLnRlYW03NjYuc2ltdWxhdG9yLlJvYm90TW9kZRIyCghqb3lzdGljaxgC",
+            "IAMoCzIgLnRlYW03NjYuc2ltdWxhdG9yLkpveXN0aWNrUHJvdG8iqQEKDkZl",
+            "ZWRiYWNrUGFja2V0Ei4KBnNlbnNvchgBIAMoCzIeLnRlYW03NjYuc2ltdWxh",
+            "dG9yLlNlbnNvclByb3RvEhEKCXRpbWVzdGFtcBgCIAEoARIVCg1yZXNldF9j",
+            "b3VudGVyGAMgASgFEj0KDmRyaXZlcl9zdGF0aW9uGAQgASgLMiUudGVhbTc2",
+            "Ni5zaW11bGF0b3IuRHJpdmVyU3RhdGlvblByb3RvIokBCg5Db21tYW5kc1Bh",
+            "Y2tldBIyCghhY3R1YXRvchgBIAMoCzIgLnRlYW03NjYuc2ltdWxhdG9yLkFj",
+            "dHVhdG9yUHJvdG8SEQoJcmVzZXRfc2ltGAIgASgIEjAKCnJvYm90X21vZGUY",
+            "AyABKA4yHC50ZWFtNzY2LnNpbXVsYXRvci5Sb2JvdE1vZGUq1wEKDURldmlj",
+            "ZUlkU3BhY2USCwoHU1BFQ0lBTBABEg4KCkRJR0lUQUxfSU8QAhINCglBTkFM",
+            "T0dfSU8QAxIHCgNQV00QBBIJCgVSRUxBWRAFEgcKA1NQSRAGEgcKA0kyQxAH",
+            "EgwKCFNPTEVOT0lEEAgSEAoMQ1RSRV81X01PVE9SEAkSDAoIVEFMT05fRlgQ",
+            "ChIKCgZQSUdFT04QCxINCglDQU5fUkFOR0UQDBINCglDQU5fQ09ERVIQDRIN",
+            "CglTUEFSS19NQVgQDhINCglYUlBfTU9UT1IQDyo/CglSb2JvdE1vZGUSEQoN",
+            "RElTQUJMRURfTU9ERRAAEg4KCkFVVE9OX01PREUQARIPCgtURUxFT1BfTU9E",
+            "RRACQhkKFWNvbS50ZWFtNzY2LnNpbXVsYXRvclAB"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Team766.Simulator.RobotMode), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Team766.Simulator.DeviceIdSpace), typeof(global::Team766.Simulator.RobotMode), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.Pose3dProto), global::Team766.Simulator.Pose3dProto.Parser, new[]{ "X", "Y", "Z", "Yaw", "Pitch", "Roll" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.MotorActuatorProto), global::Team766.Simulator.MotorActuatorProto.Parser, new[]{ "Mode", "Command" }, null, new[]{ typeof(global::Team766.Simulator.MotorActuatorProto.Types.Mode) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.MotorSensorProto), global::Team766.Simulator.MotorSensorProto.Parser, new[]{ "Position", "Velocity" }, null, null, null, null),
@@ -81,8 +89,8 @@ namespace Team766.Simulator {
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.ProximitySensorProto), global::Team766.Simulator.ProximitySensorProto.Parser, new[]{ "Distance" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.BeaconsSensorProto), global::Team766.Simulator.BeaconsSensorProto.Parser, new[]{ "Beacon" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.BeaconsSensorProto.Types.Beacon), global::Team766.Simulator.BeaconsSensorProto.Types.Beacon.Parser, new[]{ "Pose", "Id" }, null, null, null, null)}),
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.RobotPositionSensorProto), global::Team766.Simulator.RobotPositionSensorProto.Parser, new[]{ "Pose" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.SensorProto), global::Team766.Simulator.SensorProto.Parser, new[]{ "Id", "Motor", "Digital", "Analog", "Encoder", "Imu", "Proximity", "Beacons", "RobotPosition" }, new[]{ "Type" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.ActuatorProto), global::Team766.Simulator.ActuatorProto.Parser, new[]{ "Id", "Motor" }, new[]{ "Type" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.SensorProto), global::Team766.Simulator.SensorProto.Parser, new[]{ "Id", "IdSpace", "Motor", "Digital", "Analog", "Encoder", "Imu", "Proximity", "Beacons", "RobotPosition" }, new[]{ "Type" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.ActuatorProto), global::Team766.Simulator.ActuatorProto.Parser, new[]{ "Id", "IdSpace", "Motor" }, new[]{ "Type" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.JoystickProto), global::Team766.Simulator.JoystickProto.Parser, new[]{ "DenseButtons", "Axis" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.DriverStationProto), global::Team766.Simulator.DriverStationProto.Parser, new[]{ "RobotMode", "Joystick" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Team766.Simulator.FeedbackPacket), global::Team766.Simulator.FeedbackPacket.Parser, new[]{ "Sensor", "Timestamp", "ResetCounter", "DriverStation" }, null, null, null, null),
@@ -93,6 +101,27 @@ namespace Team766.Simulator {
 
   }
   #region Enums
+  public enum DeviceIdSpace {
+    /// <summary>
+    /// Used for IDs that don't correspond to a physical device.
+    /// </summary>
+    [pbr::OriginalName("SPECIAL")] Special = 1,
+    [pbr::OriginalName("DIGITAL_IO")] DigitalIo = 2,
+    [pbr::OriginalName("ANALOG_IO")] AnalogIo = 3,
+    [pbr::OriginalName("PWM")] Pwm = 4,
+    [pbr::OriginalName("RELAY")] Relay = 5,
+    [pbr::OriginalName("SPI")] Spi = 6,
+    [pbr::OriginalName("I2C")] I2C = 7,
+    [pbr::OriginalName("SOLENOID")] Solenoid = 8,
+    [pbr::OriginalName("CTRE_5_MOTOR")] Ctre5Motor = 9,
+    [pbr::OriginalName("TALON_FX")] TalonFx = 10,
+    [pbr::OriginalName("PIGEON")] Pigeon = 11,
+    [pbr::OriginalName("CAN_RANGE")] CanRange = 12,
+    [pbr::OriginalName("CAN_CODER")] CanCoder = 13,
+    [pbr::OriginalName("SPARK_MAX")] SparkMax = 14,
+    [pbr::OriginalName("XRP_MOTOR")] XrpMotor = 15,
+  }
+
   public enum RobotMode {
     [pbr::OriginalName("DISABLED_MODE")] DisabledMode = 0,
     [pbr::OriginalName("AUTON_MODE")] AutonMode = 1,
@@ -3072,6 +3101,7 @@ namespace Team766.Simulator {
     public SensorProto(SensorProto other) : this() {
       _hasBits0 = other._hasBits0;
       id_ = other.id_;
+      idSpace_ = other.idSpace_;
       switch (other.TypeCase) {
         case TypeOneofCase.Motor:
           Motor = other.Motor.Clone();
@@ -3133,6 +3163,33 @@ namespace Team766.Simulator {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void ClearId() {
       _hasBits0 &= ~1;
+    }
+
+    /// <summary>Field number for the "id_space" field.</summary>
+    public const int IdSpaceFieldNumber = 2;
+    private readonly static global::Team766.Simulator.DeviceIdSpace IdSpaceDefaultValue = global::Team766.Simulator.DeviceIdSpace.Special;
+
+    private global::Team766.Simulator.DeviceIdSpace idSpace_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Team766.Simulator.DeviceIdSpace IdSpace {
+      get { if ((_hasBits0 & 2) != 0) { return idSpace_; } else { return IdSpaceDefaultValue; } }
+      set {
+        _hasBits0 |= 2;
+        idSpace_ = value;
+      }
+    }
+    /// <summary>Gets whether the "id_space" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasIdSpace {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "id_space" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearIdSpace() {
+      _hasBits0 &= ~2;
     }
 
     /// <summary>Field number for the "motor" field.</summary>
@@ -3274,6 +3331,7 @@ namespace Team766.Simulator {
         return true;
       }
       if (Id != other.Id) return false;
+      if (IdSpace != other.IdSpace) return false;
       if (!object.Equals(Motor, other.Motor)) return false;
       if (!object.Equals(Digital, other.Digital)) return false;
       if (!object.Equals(Analog, other.Analog)) return false;
@@ -3291,6 +3349,7 @@ namespace Team766.Simulator {
     public override int GetHashCode() {
       int hash = 1;
       if (HasId) hash ^= Id.GetHashCode();
+      if (HasIdSpace) hash ^= IdSpace.GetHashCode();
       if (typeCase_ == TypeOneofCase.Motor) hash ^= Motor.GetHashCode();
       if (typeCase_ == TypeOneofCase.Digital) hash ^= Digital.GetHashCode();
       if (typeCase_ == TypeOneofCase.Analog) hash ^= Analog.GetHashCode();
@@ -3321,6 +3380,10 @@ namespace Team766.Simulator {
       if (HasId) {
         output.WriteRawTag(8);
         output.WriteUInt32(Id);
+      }
+      if (HasIdSpace) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) IdSpace);
       }
       if (typeCase_ == TypeOneofCase.Motor) {
         output.WriteRawTag(90);
@@ -3368,6 +3431,10 @@ namespace Team766.Simulator {
         output.WriteRawTag(8);
         output.WriteUInt32(Id);
       }
+      if (HasIdSpace) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) IdSpace);
+      }
       if (typeCase_ == TypeOneofCase.Motor) {
         output.WriteRawTag(90);
         output.WriteMessage(Motor);
@@ -3413,6 +3480,9 @@ namespace Team766.Simulator {
       if (HasId) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
       }
+      if (HasIdSpace) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) IdSpace);
+      }
       if (typeCase_ == TypeOneofCase.Motor) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Motor);
       }
@@ -3451,6 +3521,9 @@ namespace Team766.Simulator {
       }
       if (other.HasId) {
         Id = other.Id;
+      }
+      if (other.HasIdSpace) {
+        IdSpace = other.IdSpace;
       }
       switch (other.TypeCase) {
         case TypeOneofCase.Motor:
@@ -3524,6 +3597,10 @@ namespace Team766.Simulator {
             break;
           case 8: {
             Id = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            IdSpace = (global::Team766.Simulator.DeviceIdSpace) input.ReadEnum();
             break;
           }
           case 90: {
@@ -3619,6 +3696,10 @@ namespace Team766.Simulator {
             break;
           case 8: {
             Id = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            IdSpace = (global::Team766.Simulator.DeviceIdSpace) input.ReadEnum();
             break;
           }
           case 90: {
@@ -3738,6 +3819,7 @@ namespace Team766.Simulator {
     public ActuatorProto(ActuatorProto other) : this() {
       _hasBits0 = other._hasBits0;
       id_ = other.id_;
+      idSpace_ = other.idSpace_;
       switch (other.TypeCase) {
         case TypeOneofCase.Motor:
           Motor = other.Motor.Clone();
@@ -3778,6 +3860,33 @@ namespace Team766.Simulator {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void ClearId() {
       _hasBits0 &= ~1;
+    }
+
+    /// <summary>Field number for the "id_space" field.</summary>
+    public const int IdSpaceFieldNumber = 2;
+    private readonly static global::Team766.Simulator.DeviceIdSpace IdSpaceDefaultValue = global::Team766.Simulator.DeviceIdSpace.Special;
+
+    private global::Team766.Simulator.DeviceIdSpace idSpace_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Team766.Simulator.DeviceIdSpace IdSpace {
+      get { if ((_hasBits0 & 2) != 0) { return idSpace_; } else { return IdSpaceDefaultValue; } }
+      set {
+        _hasBits0 |= 2;
+        idSpace_ = value;
+      }
+    }
+    /// <summary>Gets whether the "id_space" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasIdSpace {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "id_space" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearIdSpace() {
+      _hasBits0 &= ~2;
     }
 
     /// <summary>Field number for the "motor" field.</summary>
@@ -3828,6 +3937,7 @@ namespace Team766.Simulator {
         return true;
       }
       if (Id != other.Id) return false;
+      if (IdSpace != other.IdSpace) return false;
       if (!object.Equals(Motor, other.Motor)) return false;
       if (TypeCase != other.TypeCase) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -3838,6 +3948,7 @@ namespace Team766.Simulator {
     public override int GetHashCode() {
       int hash = 1;
       if (HasId) hash ^= Id.GetHashCode();
+      if (HasIdSpace) hash ^= IdSpace.GetHashCode();
       if (typeCase_ == TypeOneofCase.Motor) hash ^= Motor.GetHashCode();
       hash ^= (int) typeCase_;
       if (_unknownFields != null) {
@@ -3862,6 +3973,10 @@ namespace Team766.Simulator {
         output.WriteRawTag(8);
         output.WriteUInt32(Id);
       }
+      if (HasIdSpace) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) IdSpace);
+      }
       if (typeCase_ == TypeOneofCase.Motor) {
         output.WriteRawTag(82);
         output.WriteMessage(Motor);
@@ -3880,6 +3995,10 @@ namespace Team766.Simulator {
         output.WriteRawTag(8);
         output.WriteUInt32(Id);
       }
+      if (HasIdSpace) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) IdSpace);
+      }
       if (typeCase_ == TypeOneofCase.Motor) {
         output.WriteRawTag(82);
         output.WriteMessage(Motor);
@@ -3896,6 +4015,9 @@ namespace Team766.Simulator {
       int size = 0;
       if (HasId) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
+      }
+      if (HasIdSpace) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) IdSpace);
       }
       if (typeCase_ == TypeOneofCase.Motor) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Motor);
@@ -3914,6 +4036,9 @@ namespace Team766.Simulator {
       }
       if (other.HasId) {
         Id = other.Id;
+      }
+      if (other.HasIdSpace) {
+        IdSpace = other.IdSpace;
       }
       switch (other.TypeCase) {
         case TypeOneofCase.Motor:
@@ -3947,6 +4072,10 @@ namespace Team766.Simulator {
             Id = input.ReadUInt32();
             break;
           }
+          case 16: {
+            IdSpace = (global::Team766.Simulator.DeviceIdSpace) input.ReadEnum();
+            break;
+          }
           case 82: {
             global::Team766.Simulator.MotorActuatorProto subBuilder = new global::Team766.Simulator.MotorActuatorProto();
             if (typeCase_ == TypeOneofCase.Motor) {
@@ -3977,6 +4106,10 @@ namespace Team766.Simulator {
             break;
           case 8: {
             Id = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            IdSpace = (global::Team766.Simulator.DeviceIdSpace) input.ReadEnum();
             break;
           }
           case 82: {

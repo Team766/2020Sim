@@ -13,8 +13,8 @@ public class StartNetwork : MonoBehaviour {
         if (!manager) {
             return;
         }
-        if (!NetworkClient.active) {
-            if (Application.platform == RuntimePlatform.WebGLPlayer) {
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
+            if (!NetworkClient.active) {
                 var uri = new Uri(Application.absoluteURL);
                 var websocketUri = new UriBuilder();
                 websocketUri.Host = uri.Host;
@@ -28,16 +28,28 @@ public class StartNetwork : MonoBehaviour {
                 Debug.Log("StartNetwork client to " + websocketUri.Uri);
                 manager.StartClient(websocketUri.Uri);
             }
-        }
-        Debug.Log("StartNetwork " + NetworkServer.active);
-        if (!NetworkServer.active) {
-            if (Utils.IsHeadless()) {
-                manager.StartServer();
+        } else {
+            if (!NetworkServer.active) {
+                if (Utils.IsHeadless()) {
+                    Debug.Log("StartNetwork server");
+                    manager.StartServer();
+                }
+                else {
+                    Debug.Log("StartNetwork host");
+                    NetworkServer.listen = false;
+                    manager.StartHost();
+                }
             }
-            else {
-                NetworkServer.listen = false;
-                manager.StartHost();
-            }
         }
+    }
+
+    void OnDestroy() {
+        var manager = NetworkManager.singleton;
+        if (!manager) {
+            return;
+        }
+        Debug.Log("StartNetwork stop");
+        // Should work properly regardless if we have are host or server-only.
+        manager.StopHost();
     }
 }

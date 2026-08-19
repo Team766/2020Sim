@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationalJoint
   DeviceId: 0
+  DeviceIdSpace: 10
   maxMotorSpeed: 0
   maxMotorTorque: 0
   minTorque: 0
@@ -161,7 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 0
+  DeviceIdSpace: 13
   Angle: 0
+  countsPerRevolution: 360
 --- !u!135 &7979180423730027124
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -370,6 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 0
+  DeviceIdSpace: 10
   maxMotorSpeed: 0
   maxMotorTorque: 0
   minTorque: 0

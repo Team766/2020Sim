@@ -77,6 +77,7 @@ public class CodeConnector : NetworkBehaviour {
     const int MaxButtonsPerJoystick = 31;
 
     void Start() {
+        // Don't call FindAnyObjectByType in Awake because of script ordering issues.
         gameGui = FindAnyObjectByType<GameGUI>();
         robot = GetComponent<RobotController>();
         oi = GetComponent<InputManager>();
@@ -183,7 +184,7 @@ public class CodeConnector : NetworkBehaviour {
                         _ => throw new ArgumentOutOfRangeException($"Unknown RobotMode value: {robot.RobotMode}"),
                     };
                     if (newRobotMode != gameGui.RobotMode) {
-                        gameGui.SetRobotMode(newRobotMode);
+                        gameGui.CmdSetRobotMode(newRobotMode.ToString());
                     }
                     gameGui.CmdSetRobotModeIsCodeControlled(true);
                 } else {

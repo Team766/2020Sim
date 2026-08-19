@@ -9,14 +9,14 @@ public abstract class StandardRobotJoint : RobotDevice {
     };
 
     public sealed override void RunJoint(CommandsPacket commands) {
-        ActuatorProto actuator = System.Linq.Enumerable.FirstOrDefault(commands.Actuator, a => a.Id == DeviceId);
+        ActuatorProto actuator = System.Linq.Enumerable.FirstOrDefault(commands.Actuator, a => a.Id == DeviceId && (!a.HasIdSpace || a.IdSpace == DeviceIdSpace));
         MotorActuatorProto motorCommand = defaultMotorCommand;
         if (actuator == null) {
             // Debug.LogWarning(
-            //     $"Simulation commands packet doesn't include data for device {DeviceId}");
+            //     $"Simulation commands packet doesn't include data for device {DeviceIdSpace} {DeviceId}");
         } else if (actuator.TypeCase != ActuatorProto.TypeOneofCase.Motor) {
             Debug.LogWarning(
-                $"Simulation data for actuator {DeviceId} is the wrong type {actuator.TypeCase}. Expected Motor.");
+                $"Simulation data for actuator {DeviceIdSpace} {DeviceId} is the wrong type {actuator.TypeCase}. Expected Motor.");
         } else {
             motorCommand = actuator.Motor;
         }
@@ -28,6 +28,7 @@ public abstract class StandardRobotJoint : RobotDevice {
     public sealed override void RunSensor(FeedbackPacket feedback) {
         SensorProto proto = new();
         proto.Id = DeviceId;
+        proto.IdSpace = DeviceIdSpace;
         proto.Motor = new MotorSensorProto {
             Position = SensorPosition,
             Velocity = SensorVelocity,

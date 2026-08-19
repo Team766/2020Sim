@@ -6,8 +6,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class RobotEditor : MonoBehaviour
 {
+#if UNITY_EDITOR
+    [InitializeOnLoadMethod]
+#else
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+#endif
+    public static void RegisterMyConverters()
+    {
+        var group = new ConverterGroup("ShowWhenDrivetrainTypeIsSwerve");
+        group.AddConverter((ref RobotDesignerData.Drivetrain.Type value) => new StyleEnum<DisplayStyle>(
+            value == RobotDesignerData.Drivetrain.Type.Swerve
+            ? DisplayStyle.Flex
+            : DisplayStyle.None));
+        ConverterGroups.RegisterConverterGroup(group);
+    }
+
     public UIDocument document;
     public JsonEditor jsonEditor;
     public UnsavedChangesDialog unsavedChangesDialog;

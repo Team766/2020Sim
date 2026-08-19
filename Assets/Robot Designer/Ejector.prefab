@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RollerSet
   DeviceId: 11
+  DeviceIdSpace: 10
   maxMotorSpeed: 628.32
   minTorque: 0
   inverted: 0

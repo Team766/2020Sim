@@ -22,9 +22,10 @@ public class RampBalanceScore : MonoBehaviour
     private bool wasPreviouslyScored = false;
     private int robotCollisionCount = 0;
 
-    private void Awake()
+    void Start()
     {
-        gameGui = FindAnyObjectByType<GameGUI>();
+        // Don't call FindAnyObjectByType in Awake because of script ordering issues.
+        gameGui = FindAnyObjectByType<GameGUI>(FindObjectsInactive.Include);
     }
 
     void Update()
@@ -59,14 +60,14 @@ public class RampBalanceScore : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
-        if (c.transform.root.name == "Robot") {
+        if (c.transform.root.GetComponent<RobotController>() != null) {
             ++robotCollisionCount;
         }
     }
 
     void OnCollisionExit(Collision c)
     {
-        if (c.transform.root.name == "Robot") {
+        if (c.transform.root.GetComponent<RobotController>() != null) {
             --robotCollisionCount;
         }
     }

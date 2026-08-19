@@ -5,6 +5,11 @@
             <ui:DataBinding property="value" data-source-path="name" binding-mode="TwoWay" />
         </Bindings>
     </ui:TextField>
+    <ui:IntegerField label="Device ID" readonly="true" name="device-id" class="device-id">
+        <Bindings>
+            <ui:DataBinding property="value" data-source-path="deviceId" binding-mode="TwoWay" />
+        </Bindings>
+    </ui:IntegerField>
     <ui:EnumField label="Part Type" type="RobotDesignerData+Node+Type, Assembly-CSharp" name="part-type">
         <Bindings>
             <ui:DataBinding property="value" data-source-path="type" binding-mode="TwoWay" />

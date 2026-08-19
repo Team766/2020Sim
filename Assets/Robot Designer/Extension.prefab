@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElevatorArticulation
   DeviceId: 0
+  DeviceIdSpace: 10
   maxMotorSpeed: 0
   maxMotorTorque: 0
   inverted: 0

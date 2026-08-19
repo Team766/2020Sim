@@ -930,6 +930,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 22
+  DeviceIdSpace: 2
   detectedTag: Line
 --- !u!1 &361236516
 GameObject:
@@ -1105,6 +1106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 20
+  DeviceIdSpace: 2
   detectedTag: Line
 --- !u!20 &407349417 stripped
 Camera:
@@ -1800,6 +1802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 7
+  DeviceIdSpace: 8
   ballStorage: {fileID: 801970430}
   ShootPower: 0.6
   maxForce: 2.5
@@ -2510,6 +2513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallStorageSensor
   DeviceId: 4
+  DeviceIdSpace: 3
 --- !u!114 &801970430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2549,6 +2553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GyroSensor
   DeviceId: 1
+  DeviceIdSpace: 11
 --- !u!114 &801970432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2562,6 +2567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotPositionSensor
   DeviceId: 2
+  DeviceIdSpace: 1
 --- !u!114 &801970433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3718,6 +3724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IntakeArm
   DeviceId: 6
+  DeviceIdSpace: 8
   maxMotorSpeed: 1000
   maxMotorTorque: 1000
   minTorque: 0
@@ -3726,6 +3733,7 @@ MonoBehaviour:
   pGain: 0
   dGain: 0
   velocityPGain: 0
+  sensorVelocity: 0
   commandMode: 0
   commandSetpoint: 0
 --- !u!59 &1261176099
@@ -3846,6 +3854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RollerSet
   DeviceId: 17
+  DeviceIdSpace: 10
   maxMotorSpeed: 628.32
   minTorque: 0
   inverted: 0
@@ -4543,6 +4552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationalJoint
   DeviceId: 13
+  DeviceIdSpace: 10
   maxMotorSpeed: 628.32
   maxMotorTorque: 7.09
   minTorque: 30
@@ -4551,6 +4561,7 @@ MonoBehaviour:
   pGain: 0
   dGain: 0
   velocityPGain: 0
+  sensorVelocity: 0
   commandMode: 0
   commandSetpoint: 0
 --- !u!59 &1700568755
@@ -4711,7 +4722,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotaryEncoder
   DeviceId: 14
+  DeviceIdSpace: 0
   Angle: 0
+  countsPerRevolution: 360
 --- !u!20 &1705344640 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1083323307, guid: e0708bec2cb6b301f974c7ccdbccd37f,
@@ -4972,6 +4985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 21
+  DeviceIdSpace: 2
   detectedTag: Line
 --- !u!1 &1837079961
 GameObject:
@@ -5740,6 +5754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationalJoint
   DeviceId: 10
+  DeviceIdSpace: 10
   maxMotorSpeed: 628.32
   maxMotorTorque: 7.09
   minTorque: 30
@@ -5748,6 +5763,7 @@ MonoBehaviour:
   pGain: 0
   dGain: 0
   velocityPGain: 0
+  sensorVelocity: 0
   commandMode: 0
   commandSetpoint: 0
 --- !u!59 &2143239232
@@ -5829,7 +5845,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotaryEncoder
   DeviceId: 11
+  DeviceIdSpace: 0
   Angle: 0
+  countsPerRevolution: 360
 --- !u!1001 &399527973411122988
 PrefabInstance:
   m_ObjectHideFlags: 0

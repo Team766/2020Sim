@@ -42,7 +42,16 @@ public static class ApplicationArguments
     public static readonly string AuthPublicKey = GetArgument("robotPublicKey", editorValue: "thePublicKey");
     public static readonly string AuthPrivateKey = GetArgument("robotPrivateKey", editorValue: "itsSecret");
 
-    private static T GetArgument<T>(string argumentName, T editorValue)
+    private static string GetArgument(string argumentName, string editorValue)
+    {
+#if UNITY_EDITOR
+        return editorValue;
+#else
+        return GetArgument(argumentName);
+#endif
+    }
+
+    private static T GetArgument<T>(string argumentName, T editorValue) where T : struct, Enum
     {
 #if UNITY_EDITOR
         return editorValue;

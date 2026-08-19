@@ -53,6 +53,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcdc440eca5647c8bdd4665c56f4aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotBuilder
+  syncMethod: 0
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   robotDesign: {fileID: 0}
   wheelModulePrefab: {fileID: 5236282536923815166, guid: 461251bc807324c5c9e0ad49fcf72ccf,
     type: 3}
@@ -228,7 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703b3551653234a13bb94b8aa6d505a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeviceId: 100
+  DeviceId: 1
+  DeviceIdSpace: 11
 --- !u!114 &4176303175210067478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 101
+  DeviceIdSpace: 1
 --- !u!114 &8933207225876711330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,4 +261,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeviceId: 102
+  DeviceIdSpace: 1
   beacons: []

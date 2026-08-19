@@ -6,8 +6,11 @@ using Mirror;
 
 public class RobotBuilder : NetworkBehaviour
 {
-    private static readonly uint[] DRIVE_LEFT_MOTOR_IDS = new uint[] { 32, 33, 34 };
-    private static readonly uint[] DRIVE_RIGHT_MOTOR_IDS = new uint[] { 35, 36, 37 };
+    //private static readonly uint[] DRIVE_LEFT_MOTOR_IDS = new uint[] { 32, 33, 34 };
+    //private static readonly uint[] DRIVE_RIGHT_MOTOR_IDS = new uint[] { 35, 36, 37 };
+    private static readonly uint[] DRIVE_LEFT_MOTOR_IDS = new uint[] { 32, 34 };
+    private static readonly uint[] DRIVE_RIGHT_MOTOR_IDS = new uint[] { 33, 35 };
+    private static readonly uint[] STEER_MOTOR_IDS = new uint[] { 36, 37, 38, 39 };
     private static readonly SwerveControls.Motors DRIVE_SWERVE_MOTOR_IDS = new()
     {
         frontLeftDrive = 32,
@@ -97,6 +100,10 @@ public class RobotBuilder : NetworkBehaviour
 
     public void UpdateRobot()
     {
+        if (!NetworkServer.active && NetworkClient.active)
+        {
+            return;
+        }
         if (!robotDesign)
         {
             return;
@@ -167,13 +174,25 @@ public class RobotBuilder : NetworkBehaviour
         steer.maxMotorTorque = ONE_MOTOR_MAX_TORQUE;
         steer.maxMotorSpeed = ONE_MOTOR_MAX_SPEED;
         steer.mechanicalScalar = DRIVETRAIN_STEER_GEAR_RATIO;
+        if (design.type == RobotDesignerData.Drivetrain.Type.Differential)
+        {
+            steer.enabled = false;
+            steer.GetComponent<ArticulationBody>().jointType = ArticulationJointType.FixedJoint;
+        }
+        else
+        {
+            steer.enabled = true;
+        }
         var steerSensor = steer.GetComponent<RotaryEncoder>();
         steerSensor.DeviceId = spec.steerSensorDeviceId;
         var drive = go.transform.Find("steer/drive").GetComponent<RotationalJoint>();
         drive.DeviceId = spec.driveDeviceId;
-        drive.maxMotorTorque = DRIVE_WHEEL_RADIUS * design.acceleration * ROBOT_MASS; // TODO: 1.0 / wheelModuleLocations.Count
-        drive.maxMotorSpeed = design.maxSpeed / DRIVE_WHEEL_RADIUS;
-        drive.mechanicalScalar = 1.0f;
+        float motorTorque = DRIVE_WHEEL_RADIUS * design.acceleration * ROBOT_MASS; // TODO: 1.0 / wheelModuleLocations.Count
+        float motorSpeed = design.maxSpeed / DRIVE_WHEEL_RADIUS;
+        float mechanicalScalar = ONE_MOTOR_MAX_SPEED / motorSpeed;
+        drive.maxMotorTorque = motorTorque / mechanicalScalar;
+        drive.maxMotorSpeed = ONE_MOTOR_MAX_SPEED;
+        drive.mechanicalScalar = mechanicalScalar;
     }
 
     private void UpdateNode(RobotDesignerData.Node design, Transform parent)

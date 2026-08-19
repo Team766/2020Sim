@@ -1,0 +1,616 @@
+{
+    "version": 1,
+    "robotName": "Yogi Bear",
+    "drivetrain": {
+        "type": 1,
+        "length": 0.47999998927116396,
+        "width": 0.47999998927116396,
+        "maxSpeed": 4.267199993133545,
+        "acceleration": 7.619999885559082
+    },
+    "children": [
+        {
+            "guid": "9cdae507-598e-4812-9164-63d28487f5f0",
+            "name": "Bumper, Front",
+            "deviceId": 0,
+            "location": {
+                "x": 0.0,
+                "y": 0.05000000074505806,
+                "z": 0.30000001192092898
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.6800000071525574,
+                "y": 0.07999999821186066,
+                "z": 0.07999999821186066
+            },
+            "type": 0,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "collector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 1.0
+            },
+            "storage": {
+                "capacity": 1,
+                "compatiblePieceTypes": []
+            },
+            "children": []
+        },
+        {
+            "guid": "5ef7a2c7-cf18-4674-a1c3-42001982ab66",
+            "name": "Bumper, Rear",
+            "deviceId": 0,
+            "location": {
+                "x": 0.0,
+                "y": 0.05000000074505806,
+                "z": -0.30000001192092898
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.6800000071525574,
+                "y": 0.07999999821186066,
+                "z": 0.07999999821186066
+            },
+            "type": 0,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "collector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 1.0
+            },
+            "storage": {
+                "capacity": 1,
+                "compatiblePieceTypes": []
+            },
+            "children": []
+        },
+        {
+            "guid": "2623ee1a-58c4-472b-ae95-3dec68abc78d",
+            "name": "Bumper, Right",
+            "deviceId": 0,
+            "location": {
+                "x": 0.30000001192092898,
+                "y": 0.05000000074505806,
+                "z": 0.0
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.07999999821186066,
+                "y": 0.07999999821186066,
+                "z": 0.6800000071525574
+            },
+            "type": 0,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "collector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 1.0
+            },
+            "storage": {
+                "capacity": 1,
+                "compatiblePieceTypes": []
+            },
+            "children": []
+        },
+        {
+            "guid": "efa3f213-5f40-42a9-a3f8-42200641474a",
+            "name": "Bumper, Left",
+            "deviceId": 0,
+            "location": {
+                "x": -0.30000001192092898,
+                "y": 0.05000000074505806,
+                "z": 0.0
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.07999999821186066,
+                "y": 0.07999999821186066,
+                "z": 0.6800000071525574
+            },
+            "type": 0,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "collector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 1.0
+            },
+            "storage": {
+                "capacity": 1,
+                "compatiblePieceTypes": []
+            },
+            "children": []
+        },
+        {
+            "guid": "730c21d9-4c40-47ac-b7d3-0d94a5bc3abf",
+            "name": "Elevator",
+            "deviceId": 51,
+            "location": {
+                "x": 0.0,
+                "y": 0.11999999731779099,
+                "z": 0.27000001072883608
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.30000001192092898,
+                "y": 0.4000000059604645,
+                "z": 0.10000000149011612
+            },
+            "type": 2,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 0.0,
+                "maxSpeed": 0.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 39.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.550000011920929
+            },
+            "collector": {
+                "flowRatePeriod": 0.0,
+                "startupTime": 0.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.0,
+                "startupTime": 0.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 0.0
+            },
+            "storage": {
+                "capacity": 0,
+                "compatiblePieceTypes": []
+            },
+            "children": [
+                {
+                    "guid": "3c5c4767-1fb6-4980-a120-93261d308420",
+                    "name": "Manipulator",
+                    "deviceId": 53,
+                    "location": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.20000000298023225
+                    },
+                    "orientation": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "size": {
+                        "x": 0.5,
+                        "y": 0.20000000298023225,
+                        "z": 0.20000000298023225
+                    },
+                    "type": 6,
+                    "pivot": {
+                        "constraintType": 0,
+                        "constraintStrength": 0.0,
+                        "maxSpeed": 0.0,
+                        "inverted": false,
+                        "minimumPosition": 0.0,
+                        "maximumPosition": 0.0
+                    },
+                    "extension": {
+                        "constraintType": 0,
+                        "constraintStrength": 0.0,
+                        "maxSpeed": 0.0,
+                        "inverted": false,
+                        "minimumPosition": 0.0,
+                        "maximumPosition": 0.0
+                    },
+                    "collector": {
+                        "flowRatePeriod": 0.20000000298023225,
+                        "startupTime": 0.0,
+                        "compatiblePieceTypes": []
+                    },
+                    "ejector": {
+                        "flowRatePeriod": 0.20000000298023225,
+                        "startupTime": 0.0,
+                        "compatiblePieceTypes": [],
+                        "maxForce": 1.0
+                    },
+                    "storage": {
+                        "capacity": 0,
+                        "compatiblePieceTypes": []
+                    },
+                    "children": []
+                }
+            ]
+        },
+        {
+            "guid": "d0a96baf-6a81-43e7-bc7d-e44142a3a89a",
+            "name": "Elevator fixed left",
+            "deviceId": 0,
+            "location": {
+                "x": -0.20000000298023225,
+                "y": 0.4000000059604645,
+                "z": 0.27000001072883608
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.05000000074505806,
+                "y": 0.6000000238418579,
+                "z": 0.05000000074505806
+            },
+            "type": 0,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "collector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 1.0
+            },
+            "storage": {
+                "capacity": 1,
+                "compatiblePieceTypes": []
+            },
+            "children": []
+        },
+        {
+            "guid": "810bfa1e-4e56-477f-99c2-0a3798c56174",
+            "name": "Elevator fixed right",
+            "deviceId": 54,
+            "location": {
+                "x": 0.20000000298023225,
+                "y": 0.4000000059604645,
+                "z": 0.27000001072883608
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.05000000074505806,
+                "y": 0.6000000238418579,
+                "z": 0.05000000074505806
+            },
+            "type": 0,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "collector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 1.0
+            },
+            "storage": {
+                "capacity": 1,
+                "compatiblePieceTypes": []
+            },
+            "children": []
+        },
+        {
+            "guid": "4c319824-6a74-4d23-8aa1-385364dd9e67",
+            "name": "Battery",
+            "deviceId": 55,
+            "location": {
+                "x": 0.0,
+                "y": 0.07000000029802323,
+                "z": -0.17000000178813935
+            },
+            "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.1809999942779541,
+                "y": 0.07999999821186066,
+                "z": 0.16699999570846559
+            },
+            "type": 0,
+            "pivot": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "extension": {
+                "constraintType": 0,
+                "constraintStrength": 1.0,
+                "maxSpeed": 30.0,
+                "inverted": false,
+                "minimumPosition": 0.0,
+                "maximumPosition": 0.0
+            },
+            "collector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": []
+            },
+            "ejector": {
+                "flowRatePeriod": 0.10000000149011612,
+                "startupTime": 1.0,
+                "compatiblePieceTypes": [],
+                "maxForce": 1.0
+            },
+            "storage": {
+                "capacity": 1,
+                "compatiblePieceTypes": []
+            },
+            "children": []
+        }
+    ],
+    "operatorControls": {
+        "driveControlsLayout": 0,
+        "forwardAxis": 1,
+        "lateralAxis": 0,
+        "steerAxis": 3,
+        "startup": {
+            "motors": [
+                {
+                    "jointNodeGuid": "730c21d9-4c40-47ac-b7d3-0d94a5bc3abf",
+                    "mode": 2,
+                    "setpoint": 0.25
+                }
+            ]
+        },
+        "buttons": [
+            {
+                "button": 0,
+                "pressed": {
+                    "motors": [
+                        {
+                            "jointNodeGuid": "3c5c4767-1fb6-4980-a120-93261d308420",
+                            "mode": 1,
+                            "setpoint": 1.0
+                        }
+                    ]
+                },
+                "released": {
+                    "motors": [
+                        {
+                            "jointNodeGuid": "3c5c4767-1fb6-4980-a120-93261d308420",
+                            "mode": 1,
+                            "setpoint": 0.0
+                        }
+                    ]
+                }
+            },
+            {
+                "button": 1,
+                "pressed": {
+                    "motors": [
+                        {
+                            "jointNodeGuid": "3c5c4767-1fb6-4980-a120-93261d308420",
+                            "mode": 1,
+                            "setpoint": -1.0
+                        }
+                    ]
+                },
+                "released": {
+                    "motors": [
+                        {
+                            "jointNodeGuid": "3c5c4767-1fb6-4980-a120-93261d308420",
+                            "mode": 1,
+                            "setpoint": 0.0
+                        }
+                    ]
+                }
+            },
+            {
+                "button": 2,
+                "pressed": {
+                    "motors": []
+                },
+                "released": {
+                    "motors": []
+                }
+            },
+            {
+                "button": 3,
+                "pressed": {
+                    "motors": []
+                },
+                "released": {
+                    "motors": []
+                }
+            },
+            {
+                "button": 6,
+                "pressed": {
+                    "motors": [
+                        {
+                            "jointNodeGuid": "730c21d9-4c40-47ac-b7d3-0d94a5bc3abf",
+                            "mode": 2,
+                            "setpoint": 500.0
+                        }
+                    ]
+                },
+                "released": {
+                    "motors": []
+                }
+            },
+            {
+                "button": 7,
+                "pressed": {
+                    "motors": [
+                        {
+                            "jointNodeGuid": "730c21d9-4c40-47ac-b7d3-0d94a5bc3abf",
+                            "mode": 2,
+                            "setpoint": 0.0
+                        }
+                    ]
+                },
+                "released": {
+                    "motors": []
+                }
+            },
+            {
+                "button": 4,
+                "pressed": {
+                    "motors": []
+                },
+                "released": {
+                    "motors": []
+                }
+            },
+            {
+                "button": 5,
+                "pressed": {
+                    "motors": []
+                },
+                "released": {
+                    "motors": []
+                }
+            }
+        ]
+    }
+}

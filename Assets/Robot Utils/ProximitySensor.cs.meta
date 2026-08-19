@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 904a9fab4318b42398ab86adfb297da4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - depthSensorShader: {fileID: 4800000, guid: 703da82a893994e3c8bb4d2f367101fe, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

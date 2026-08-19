@@ -82,8 +82,18 @@ public class RotationalJoint : StandardRobotJoint
 
     public override void RunJoint(MotorActuatorProto command)
     {
+        if (!isActiveAndEnabled)
+        {
+            return;
+        }
+
         this.commandMode = command.Mode;
         this.commandSetpoint = (float)command.Command;
+
+        if (commandMode == MotorActuatorProto.Types.Mode.PercentOutput)
+        {
+            commandSetpoint = Mathf.Clamp(commandSetpoint, -1.0f, 1.0f);
+        }
 
         //Debug.Log($"{gameObject.name} {mode} {command}");
         float maxSpeed = maxMotorSpeed / mechanicalScalar;

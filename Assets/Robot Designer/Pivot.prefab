@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationalJoint
   DeviceId: 0
+  DeviceIdSpace: 10
   maxMotorSpeed: 0
   maxMotorTorque: 0
   minTorque: 0

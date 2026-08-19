@@ -5,7 +5,8 @@
             <ui:Button text="2020 Infinite Recharge" name="level-2020" class="level-button" />
             <ui:Button text="2024 Crescendo" name="level-2024" class="level-button" />
             <ui:Button text="2025 M-Ayhem" name="level-mayhem2025" class="level-button" />
-            <ui:Button text="Checkerboard" name="level-checkerboard" class="level-button" />
+            <ui:Button text="2026 M-Ayhem" name="level-mayhem2026" class="level-button" />
+            <ui:Button text="XRP" name="level-xrp" class="level-button" />
             <ui:VisualElement name="spacer" style="flex-grow: 0.25;" />
             <ui:Button text="Robot Editor" name="level-robot-editor" class="level-button" />
             <ui:VisualElement name="robot-preview" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Menu%20Screen/Menu%20Robot%20Render%20Texture.renderTexture?fileID=8400000&amp;guid=98d3fc9aedf984c67a52a2a27ce51f3e&amp;type=2#Menu Robot Render Texture&quot;); -unity-background-scale-mode: scale-and-crop; margin-top: 5%; width: 130%; align-self: center;" />

@@ -27,10 +27,10 @@ public class SkidSteerArcadeControls : IDriveControls
 
     public void Update(Joystick joystick, GyroSensor gyro, Dictionary<uint, ActuatorProto> commands)
     {
-        float drive = joystick.axis[driveAxis];
-        float steer = joystick.axis[steerAxis];
-        float leftPower = Mathf.Clamp(drive + steer, -1, 1);
-        float rightPower = Mathf.Clamp(drive - steer, -1, 1);
+        float drive = -joystick.axis[driveAxis];
+        float steer = -joystick.axis[steerAxis];
+        float leftPower = -Mathf.Clamp(drive - steer, -1, 1);
+        float rightPower = Mathf.Clamp(drive + steer, -1, 1);
 
         foreach (uint id in leftMotors)
         {

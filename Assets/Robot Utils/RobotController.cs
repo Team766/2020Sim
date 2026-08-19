@@ -25,9 +25,14 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    void Awake()
+    void Start()
     {
+        // Don't call FindAnyObjectByType in Awake because of script ordering issues.
         gameGui = FindAnyObjectByType<GameGUI>();
+        if (!gameGui)
+        {
+            Debug.LogWarning("RobotController isn't connected to a GameGUI");
+        }
     }
 
     void Update()
@@ -61,25 +66,19 @@ public class RobotController : NetworkBehaviour {
         }
     }
 
-    internal uint ValidateDeviceIds(UnityEngine.Object origin) {
-        var deviceIds = new Dictionary<uint, string>();
+    internal void ValidateDeviceIds(UnityEngine.Object origin) {
+        var deviceIds = new Dictionary<DeviceIdKey, string>();
         foreach (RobotDevice d in GetComponentsInChildren<RobotDevice>(true)) {
             if (!d) {
                 continue;
             }
-            if (deviceIds.ContainsKey(d.DeviceId)) {
-                Debug.LogError($"Multiple devices use DeviceId {d.DeviceId}: {deviceIds[d.DeviceId]}, {d.name}.{d.GetType().Name}", d);
+            DeviceIdKey key = new(d.DeviceId, d.DeviceIdSpace);
+            if (deviceIds.ContainsKey(key)) {
+                Debug.LogError($"Multiple devices use DeviceId {d.DeviceIdSpace} {d.DeviceId}: {deviceIds[key]}, {d.name}.{d.GetType().Name}", d);
             } else {
-                deviceIds.Add(d.DeviceId, $"{d.name}.{d.GetType().Name}");
+                deviceIds.Add(key, $"{d.name}.{d.GetType().Name}");
             }
         }
-        for (uint id = 0; id < int.MaxValue; ++id) {
-            if (!deviceIds.ContainsKey(id)) {
-                return id;
-            }
-        }
-        Debug.LogWarning("Robot DeviceIds have been exhausted", origin);
-        return int.MaxValue;
     }
 
     new void OnValidate() {

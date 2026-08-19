@@ -12,6 +12,13 @@ public class RobotDesignerData : ScriptableObject
     [Serializable]
     public class Drivetrain
     {
+        public enum Type
+        {
+            Swerve = 0,
+            Differential = 1,
+        }
+
+        public Type type = Type.Swerve;
         public float length = 30 * INCHES_TO_METERS;
         public float width = 30 * INCHES_TO_METERS;
         // Defaults based on SDS Mk4i L2 modules
@@ -26,7 +33,7 @@ public class RobotDesignerData : ScriptableObject
         {
             // TODO: Free,
             // TODO: Locked,
-            Driven,
+            Driven = 0,
             // TODO: Sprung,
         }
 
@@ -71,13 +78,13 @@ public class RobotDesignerData : ScriptableObject
     {
         public enum Type
         {
-            Shape,
-            Pivot,
-            Extension,
-            Collector,
-            Ejector,
-            Storage,
-            Grabber,
+            Shape = 0,
+            Pivot = 1,
+            Extension = 2,
+            Collector = 3,
+            Ejector = 4,
+            Storage = 5,
+            Grabber = 6,
         }
 
         public string guid = Guid.NewGuid().ToString();
@@ -105,9 +112,9 @@ public class RobotDesignerData : ScriptableObject
     {
         public enum DriveControlsLayout
         {
-            SkidSteerArcadeControls,
-            SwerveRobotOrientedControls,
-            SwerveFieldOrientedControls,
+            SkidSteerArcadeControls = 0,
+            SwerveRobotOrientedControls = 1,
+            SwerveFieldOrientedControls = 2,
         }
 
         [Serializable]
@@ -169,7 +176,12 @@ public class RobotDesignerData : ScriptableObject
 
     public static RobotDesignerData LoadFromPlayerPrefs()
     {
-        return Load(PlayerPrefs.GetString(PLAYER_PREFS_KEY));
+        var serialized = PlayerPrefs.GetString(PLAYER_PREFS_KEY);
+        if (string.IsNullOrWhiteSpace(serialized))
+        {
+            return Resources.Load<RobotDesignerData>("DefaultRobotDesign");
+        }
+        return Load(serialized);
     }
 
     public static void SaveToPlayerPrefs(RobotDesignerData robotDesign)

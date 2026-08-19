@@ -11,7 +11,8 @@ public class MenuScreenUI : MonoBehaviour
     private Button level2020;
     private Button level2024;
     private Button level2025mayhem;
-    private Button levelCheckerboard;
+    private Button level2026mayhem;
+    private Button levelXrp;
     private Button levelRobotEditor;
 
     void OnEnable()
@@ -21,13 +22,15 @@ public class MenuScreenUI : MonoBehaviour
         level2020 = root.Q<Button>("level-2020");
         level2024 = root.Q<Button>("level-2024");
         level2025mayhem = root.Q<Button>("level-mayhem2025");
-        levelCheckerboard = root.Q<Button>("level-checkerboard");
+        level2026mayhem = root.Q<Button>("level-mayhem2026");
+        levelXrp = root.Q<Button>("level-xrp");
         levelRobotEditor = root.Q<Button>("level-robot-editor");
 
         level2020.clicked += Level2020ButtonClicked;
         level2024.clicked += Level2024ButtonClicked;
         level2025mayhem.clicked += Level2025MayhemButtonClicked;
-        levelCheckerboard.clicked += LevelCheckerboardButtonClicked;
+        level2026mayhem.clicked += Level2026MayhemButtonClicked;
+        levelXrp.clicked += LevelXrpButtonClicked;
         levelRobotEditor.clicked += LevelRobotEditorButtonClicked;
     }
 
@@ -36,7 +39,8 @@ public class MenuScreenUI : MonoBehaviour
         level2020.clicked -= Level2020ButtonClicked;
         level2024.clicked -= Level2024ButtonClicked;
         level2025mayhem.clicked -= Level2025MayhemButtonClicked;
-        levelCheckerboard.clicked -= LevelCheckerboardButtonClicked;
+        level2026mayhem.clicked -= Level2026MayhemButtonClicked;
+        levelXrp.clicked -= LevelXrpButtonClicked;
         levelRobotEditor.clicked -= LevelRobotEditorButtonClicked;
     }
 
@@ -55,9 +59,14 @@ public class MenuScreenUI : MonoBehaviour
         SceneManager.LoadScene("2025 M-Ayhem Field");
     }
 
-    private void LevelCheckerboardButtonClicked()
+    private void Level2026MayhemButtonClicked()
     {
-        SceneManager.LoadScene("Checkerboard");
+        SceneManager.LoadScene("2026 M-Ayhem Field");
+    }
+
+    private void LevelXrpButtonClicked()
+    {
+        SceneManager.LoadScene("XRP Field");
     }
 
     private void LevelRobotEditorButtonClicked()

@@ -11,8 +11,9 @@ public class Goal : MonoBehaviour {
 	public float respawnRandomRange = 0.0f;
 	public AudioClip sound;
 
-	private void Awake()
+	void Start()
 	{
+		// Don't call FindAnyObjectByType in Awake because of script ordering issues.
 		gameGui = FindAnyObjectByType<GameGUI>();
 	}
 

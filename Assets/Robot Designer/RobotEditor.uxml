@@ -44,6 +44,11 @@
                 <ui:ListView name="list-released-actions" item-template="project://database/Assets/Robot%20Designer/MotorSetpointEditor.uxml?fileID=9197481963319205126&amp;guid=f14ebfba125934977bdb477334c4a474&amp;type=3#MotorSetpointEditor" binding-source-selection-mode="AutoAssign" show-add-remove-footer="true" fixed-item-height="90" />
             </ui:VisualElement>
             <ui:VisualElement name="drivetrain-controls" data-source-path="drivetrain">
+                <ui:EnumField label="Type" type="RobotDesignerData+Drivetrain+Type, Assembly-CSharp" name="drivetrain-control-layout">
+                    <Bindings>
+                        <ui:DataBinding property="value" data-source-path="type" binding-mode="TwoWay" />
+                    </Bindings>
+                </ui:EnumField>
                 <ui:GroupBox name="size" text="Size" class="vector-fields">
                     <ui:FloatField name="size-length" label="Length">
                         <Bindings>
@@ -66,10 +71,31 @@
                         <ui:DataBinding property="value" data-source-path="acceleration" binding-mode="TwoWay" />
                     </Bindings>
                 </ui:FloatField>
+                <ui:IntegerField label="Front Left Drive &#10;Device ID" readonly="true" name="fld-device-id" value="32" class="drive-device-id device-id" />
+                <ui:IntegerField label="Front Right Drive &#10;Device ID" readonly="true" name="frd-device-id" value="33" class="drive-device-id device-id" />
+                <ui:IntegerField label="Rear Left Drive &#10;Device ID" readonly="true" name="bld-device-id" value="34" class="drive-device-id device-id">
+                    <Bindings />
+                </ui:IntegerField>
+                <ui:IntegerField label="Rear Right Drive &#10;Device ID" readonly="true" name="brd-device-id" value="35" class="drive-device-id device-id">
+                    <Bindings />
+                </ui:IntegerField>
+                <ui:VisualElement name="steer-device-ids" style="flex-grow: 1;">
+                    <ui:IntegerField label="Front Left Steer &#10;Device ID" readonly="true" name="fls-device-id" value="36" class="drive-device-id device-id" />
+                    <ui:IntegerField label="Front Right Steer &#10;Device ID" readonly="true" name="frs-device-id" value="37" class="drive-device-id device-id" />
+                    <ui:IntegerField label="Rear Left Steer&#x9; &#10;Device ID" readonly="true" name="bls-device-id" value="38" class="drive-device-id device-id">
+                        <Bindings />
+                    </ui:IntegerField>
+                    <ui:IntegerField label="Rear Right Steer &#10;Device ID" readonly="true" name="brs-device-id" value="39" class="drive-device-id device-id">
+                        <Bindings />
+                    </ui:IntegerField>
+                    <Bindings>
+                        <ui:DataBinding property="style.display" data-source-path="type" binding-mode="ToTarget" source-to-ui-converters="ShowWhenDrivetrainTypeIsSwerve" />
+                    </Bindings>
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:Instance template="RobotPartEditor" name="part-editor" data-source-type="RobotDesignerData+Node, Assembly-CSharp" />
         </ui:ScrollView>
-        <ui:VisualElement style="flex-direction: row; justify-content: center;">
+        <ui:VisualElement name="bottom-button-bar" style="flex-direction: row; justify-content: center;">
             <ui:Button text="Import/Export" name="button-json" />
             <ui:Button text="Save" name="button-save" />
             <ui:Button text="Undo" name="button-undo" />
