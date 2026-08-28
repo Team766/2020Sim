@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IDriveControls
 {
-    void Update(Joystick joystick, GyroSensor gyro, Dictionary<uint, ActuatorProto> commands);
+    void Update(Joystick joystick, Transform robot, Dictionary<DeviceIdKey, ActuatorProto> commands);
 }
 
 public class SkidSteerArcadeControls : IDriveControls
@@ -25,7 +25,7 @@ public class SkidSteerArcadeControls : IDriveControls
         this.rightMotors = rightMotors;
     }
 
-    public void Update(Joystick joystick, GyroSensor gyro, Dictionary<uint, ActuatorProto> commands)
+    public void Update(Joystick joystick, Transform robot, Dictionary<DeviceIdKey, ActuatorProto> commands)
     {
         float drive = -joystick.axis[driveAxis];
         float steer = -joystick.axis[steerAxis];
@@ -76,7 +76,7 @@ public abstract class SwerveControls : IDriveControls
         this.motors = motors;
     }
 
-    public void Update(Vector2 driveCommand, float steerCommand, Dictionary<uint, ActuatorProto> commands)
+    public void Update(Vector2 driveCommand, float steerCommand, Dictionary<DeviceIdKey, ActuatorProto> commands)
     {
         float frontLeftDrive;
         float frontLeftSteer;
@@ -139,7 +139,7 @@ public abstract class SwerveControls : IDriveControls
         OperatorControls.ApplyMotorSetpoint(new() { deviceId = motors.rearRightSteer,  mode = MotorActuatorProto.Types.Mode.Position,      setpoint = rearRightSteer  }, commands);
     }
 
-    public abstract void Update(Joystick joystick, GyroSensor gyro, Dictionary<uint, ActuatorProto> commands);
+    public abstract void Update(Joystick joystick, Transform robot, Dictionary<DeviceIdKey, ActuatorProto> commands);
 }
 
 public class SwerveRobotOrientedControls : SwerveControls
@@ -157,7 +157,7 @@ public class SwerveRobotOrientedControls : SwerveControls
         this.steerAxis = steerAxis;
     }
 
-    public override void Update(Joystick joystick, GyroSensor gyro, Dictionary<uint, ActuatorProto> commands)
+    public override void Update(Joystick joystick, Transform robot, Dictionary<DeviceIdKey, ActuatorProto> commands)
     {
         Update(new (-joystick.axis[forwardAxis], -joystick.axis[lateralAxis]), -joystick.axis[steerAxis], commands);
     }
@@ -178,12 +178,13 @@ public class SwerveFieldOrientedControls : SwerveControls
         this.steerAxis = steerAxis;
     }
 
-    public override void Update(Joystick joystick, GyroSensor gyro, Dictionary<uint, ActuatorProto> commands)
+    public override void Update(Joystick joystick, Transform robot, Dictionary<DeviceIdKey, ActuatorProto> commands)
     {
         Vector2 fieldCommand = new (-joystick.axis[forwardAxis], -joystick.axis[lateralAxis]);
         float steerCommand = -joystick.axis[steerAxis];
 
-        Vector2 robotCommand = fieldCommand.Rotate(gyro.Heading);
+        // TODO: compensate for alliance
+        Vector2 robotCommand = fieldCommand.Rotate((robot.eulerAngles.y + 90) * Mathf.Deg2Rad);
 
         Update(robotCommand, steerCommand, commands);
     }
@@ -195,6 +196,7 @@ public class OperatorControls
     public class MotorSetpoint
     {
         public uint deviceId;
+        public DeviceIdSpace deviceIdSpace;
         public MotorActuatorProto.Types.Mode mode = MotorActuatorProto.Types.Mode.PercentOutput;
         public float setpoint;
     }
@@ -220,17 +222,23 @@ public class OperatorControls
     public List<ButtonActions> buttons = new();
 
 
-    public void Update(Joystick joystick, GyroSensor gyro, Dictionary<uint, ActuatorProto> commands)
+    public void Update(Joystick joystick, Joystick previousJoystick, Transform robot, Dictionary<DeviceIdKey, ActuatorProto> commands)
     {
-        driveControls?.Update(joystick, gyro, commands);
+        driveControls?.Update(joystick, robot, commands);
         foreach (var bmap in buttons)
         {
-            var appliedSetpoint = joystick.button[bmap.button] ? bmap.pressed : bmap.released;
-            ApplySetpoint(appliedSetpoint, commands);
+            if (joystick.button[bmap.button] && !previousJoystick.button[bmap.button])
+            {
+                ApplySetpoint(bmap.pressed, commands);
+            }
+            else if (!joystick.button[bmap.button] && previousJoystick.button[bmap.button])
+            {
+                ApplySetpoint(bmap.released, commands);
+            }
         }
     }
 
-    public static void ApplySetpoint(OperatorControls.RobotSetpoint setpoint, Dictionary<uint, ActuatorProto> commands)
+    public static void ApplySetpoint(OperatorControls.RobotSetpoint setpoint, Dictionary<DeviceIdKey, ActuatorProto> commands)
     {
         if (setpoint == null)
         {
@@ -242,7 +250,7 @@ public class OperatorControls
         }
     }
 
-    public static void ApplyMotorSetpoint(OperatorControls.MotorSetpoint setpoint, Dictionary<uint, ActuatorProto> commands)
+    public static void ApplyMotorSetpoint(OperatorControls.MotorSetpoint setpoint, Dictionary<DeviceIdKey, ActuatorProto> commands)
     {
         if (setpoint == null)
         {
@@ -251,10 +259,11 @@ public class OperatorControls
 
         var command = new ActuatorProto();
         command.Id = setpoint.deviceId;
+        command.IdSpace = setpoint.deviceIdSpace;
         command.Motor = new() {
             Mode = setpoint.mode,
             Command = setpoint.setpoint,
         };
-        commands[setpoint.deviceId] = command;
+        commands[new(setpoint.deviceId, setpoint.deviceIdSpace)] = command;
     }
 }

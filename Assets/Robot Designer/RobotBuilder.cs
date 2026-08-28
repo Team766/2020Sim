@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
@@ -89,8 +90,9 @@ public class RobotBuilder : NetworkBehaviour
         }
     }
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return null;
         if (!robotDesign)
         {
             robotDesign = RobotDesignerData.LoadFromPlayerPrefs();
@@ -425,24 +427,25 @@ public class RobotBuilder : NetworkBehaviour
 
     private OperatorControls.MotorSetpoint Realize(RobotDesignerData.OperatorControlsDesign.MotorSetpoint design)
     {
-        uint? deviceId = FindDeviceId(design.jointNodeGuid);
-        if (!deviceId.HasValue)
+        DeviceIdKey deviceId = FindDeviceId(design.jointNodeGuid);
+        if (deviceId == null)
         {
             return null;
         }
         return new()
         {
-            deviceId = deviceId.Value,
+            deviceId = deviceId.DeviceId,
+            deviceIdSpace = deviceId.IdSpace,
             mode = design.mode,
             setpoint = design.setpoint,
         };
     }
 
-    private uint? FindDeviceId(string deviceNodeGuid)
+    private DeviceIdKey FindDeviceId(string deviceNodeGuid)
     {
         foreach (var child in robotDesign.children)
         {
-            uint? result = FindDeviceId(child, deviceNodeGuid);
+            DeviceIdKey result = FindDeviceId(child, deviceNodeGuid);
             if (result != null)
             {
                 return result;
@@ -451,15 +454,15 @@ public class RobotBuilder : NetworkBehaviour
         return null;
     }
 
-    private static uint? FindDeviceId(RobotDesignerData.Node node, string deviceNodeGuid)
+    private static DeviceIdKey FindDeviceId(RobotDesignerData.Node node, string deviceNodeGuid)
     {
         if (node.guid == deviceNodeGuid)
         {
-            return node.deviceId;
+            return new (node.deviceId, node.deviceIdSpace);
         }
         foreach (var child in node.children)
         {
-            uint? result = FindDeviceId(child, deviceNodeGuid);
+            DeviceIdKey result = FindDeviceId(child, deviceNodeGuid);
             if (result != null)
             {
                 return result;

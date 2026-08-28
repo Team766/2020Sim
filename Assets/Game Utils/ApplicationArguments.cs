@@ -44,20 +44,12 @@ public static class ApplicationArguments
 
     private static string GetArgument(string argumentName, string editorValue)
     {
-#if UNITY_EDITOR
-        return editorValue;
-#else
-        return GetArgument(argumentName);
-#endif
+        return GetArgument(argumentName) ?? editorValue;
     }
 
     private static T GetArgument<T>(string argumentName, T editorValue) where T : struct, Enum
     {
-#if UNITY_EDITOR
-        return editorValue;
-#else
-        return GetArgument<T>(argumentName);
-#endif
+        return GetArgument<T>(argumentName) ?? editorValue;
     }
 
     private static string GetArgument(string argumentName)
@@ -78,8 +70,13 @@ public static class ApplicationArguments
 #endif
     }
 
-    private static T GetArgument<T>(string argumentName) where T : struct, Enum
+    private static T? GetArgument<T>(string argumentName) where T : struct, Enum
     {
-        return Enum.Parse<T>(GetArgument(argumentName), true);
+        string argStr = GetArgument(argumentName);
+        if (argStr == null)
+        {
+            return null;
+        }
+        return Enum.Parse<T>(argStr, true);
     }
 }

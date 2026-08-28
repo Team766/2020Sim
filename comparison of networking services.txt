@@ -1,0 +1,5 @@
+Unity netcode: pricing model seems bad
+
+steam: doesn't support webgl (since Steam is a desktop app)
+
+Photon: Fusion and Quantum are not supported by the local server

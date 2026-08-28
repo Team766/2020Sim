@@ -12,9 +12,9 @@ public sealed class RollerSet : StandardRobotJoint
     public Transform[] rollers;
 
     private float angle;
-    [NonSerialized]
+    //[NonSerialized]
     public float velocity;
-    [NonSerialized]
+    //[NonSerialized]
     public float percentVelocity;
 
     void Update()

@@ -204,18 +204,21 @@ public class CodeConnector : NetworkBehaviour {
         }
     }
 
-    internal readonly Dictionary<uint, ActuatorProto> codelessCommands = new();
+    internal readonly Dictionary<DeviceIdKey, ActuatorProto> codelessCommands = new();
+    private Joystick codelessPrevJoystick = new();
 
     CommandsPacket GetCodelessCommands() {
         if (operatorControls != null)
         {
-            operatorControls.Update(oi.joysticks[0], GetComponent<GyroSensor>(), codelessCommands);
+            operatorControls.Update(oi.joysticks[0], codelessPrevJoystick, transform, codelessCommands);
+            codelessPrevJoystick.copyFrom(oi.joysticks[0]);
         }
 
         CommandsPacket packet = new();
-        foreach (var (deviceId, command) in codelessCommands)
+        foreach (var ((deviceId, idSpace), command) in codelessCommands)
         {
             command.Id = deviceId;
+            command.IdSpace = idSpace;
             packet.Actuator.Add(command);
         }
         return packet;
