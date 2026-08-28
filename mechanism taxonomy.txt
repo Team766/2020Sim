@@ -1,0 +1,63 @@
+drivetrains
+ - skid steer
+   - WCD
+ - holonomic
+   - swerve
+   - mecanum
+   - kiwi
+
+fixed shape - gray
+ - provides collider
+ - implies mass?
+
+extensions - blue/cyan
+ - elevators
+   - cascade
+   - continuous
+   - independent
+   - differential
+ - telescoping tubes
+
+pivots - purple/magenta
+ - arms
+   - single joint
+   - (virtual) four bar
+ - wrist
+   - roll
+   - pitch
+ - turret
+ - shooter angle (i.e. hood angle)
+
+joint controls
+ - sprung(climbers), driven, locked, free
+   - base reference frame
+ - limited range of motion: min/max
+   - required for extension joints
+
+collector - green
+ - roller claw (double roller)
+   - wide vs narrow
+ - top roller
+   - mecanum centering
+ - side rollers
+ - pinch claw
+
+storage - yellow
+ - hopper (en masse)
+ - indexer/conveyor (specific)
+
+ejector - red
+   - kicker
+   - dumper
+ - hooded single-wheel shooter
+ - double-wheel (counter-rotating) shooter
+ - catapult
+ - linear puncher
+
+manipulator controls
+ - processing period (between consecutive balls)
+ - initialization time (button press to first ball)
+ - size dimensions
+ - compatible kind(s) of game pieces
+
+grabber for hanging - this is just intakes?

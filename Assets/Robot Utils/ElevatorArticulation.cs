@@ -49,6 +49,13 @@ public sealed class ElevatorArticulation : StandardRobotJoint
         }
     }
 
+    public double sensorPosition;
+
+    void Update()
+    {
+        sensorPosition = SensorPosition;
+    }
+
     public override void RunJoint(MotorActuatorProto command)
     {
         float maxSpeed = maxMotorSpeed / mechanicalScalar;
@@ -59,7 +66,7 @@ public sealed class ElevatorArticulation : StandardRobotJoint
             throw new Exception("maxSpeed must be non-zero");
         }
 
-        float inversionFactor = inverted ? -1.0f : 1.0f;
+        float inversionFactor = inverted ? 1.0f : -1.0f;
         //float appliedForce = Mathf.Abs(command.Command * maxForce);
 
         var articBody = GetComponent<ArticulationBody>();

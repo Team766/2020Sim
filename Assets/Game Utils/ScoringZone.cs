@@ -43,6 +43,7 @@ public class ScoringZone : MonoBehaviour
 		if (requireEntirelyInZone && !ColliderUtils.WorldSpaceBoundsContains(GetComponent<Collider>(), c.gameObject)) {
 			if (scored.Contains(c.gameObject))
 			{
+				Debug.Log("Spill " + c);
 				OnTriggerExit(c);
 			}
 			return;
@@ -50,6 +51,8 @@ public class ScoringZone : MonoBehaviour
 
 		if (scored.Contains(c.gameObject))
 			return;
+
+		Debug.Log("Enter " + c);
 
 		scored.Add(c.gameObject);
 
@@ -66,6 +69,7 @@ public class ScoringZone : MonoBehaviour
 
 	void OnTriggerExit(Collider c)
 	{
+		Debug.Log("Exit " + c);
 		if (!scored.Remove(c.gameObject))
 			return;
 

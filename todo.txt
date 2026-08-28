@@ -1,0 +1,85 @@
+elevator joint
+ - occasionally drops to 0 position (?)
+   - related to sim stalls?
+
+
+
+
+add top deflector on chassis (to keep blocks from getting stuck inside)
+
+Yogi Bear can't (reliably) transition from straight forward drive into a left arc turn
+
+RobotBuilder.Start() seems to make robot start off the ground when run immediately (before RobotController sets the robot as `immovable`?)
+
+
+
+disabling colliders in BallStorage is making ScoringZone.OnTriggerExit not fire
+
+add graphic feedback if UDP socket can't be bound
+
+serialize enums as json strings instead of ints
+
+
+Yogi Bear is glitching when driving backwards
+
+ElevatorArticulation seems to be inverted
+
+
+add editor for maxSpeed to joints
+fix calculation of maxSpeed to mechanicalScalar and/or units of maxSpeed for extension joints
+
+label axes (X, Y, Z) on grid background in orthographic views
+
+when in-game, only show the part of the Extension blue box between the origin and the current position, not the full range of motion
+
+game piece compatibility controls
+
+
+put scaled part of Gripper(/Collector/Storage) in a subobject, so that we don't scale a held object
+
+
+add better visualization of drivetrain (size)
+ - need an indication of the front of the robot
+
+
+configurable pre-match start position
+
+
+operator control mappings
+ - make operator controls' units match joint units (even though mechanical scalar on the joint may not be 1)
+ - make field-oriented controls be alliance-oriented
+ - automatic turret and shooter angle control
+
+
+robot-following camera(s)
+
+
+fix Z fighting by adding a small random value to all dimensions
+
+
+figure out physics joints units
+
+
+keyboard shortcuts for undo and redo
+
+drag to move/rotate/resize parts
+
+drag to restructure part hierarchy
+
+software-configurable pid gains
+
+
+ball storage should be a queue not a stack?
+
+
+implement grabber for hanging
+
+implement (virtual) four bar mechanisms
+
+implement other types of drivetrains
+ - skid steer
+   - WCD
+ - holonomic
+   - swerve
+   - mecanum
+   - kiwi

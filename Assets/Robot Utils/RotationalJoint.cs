@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System;
 using Team766.Simulator;
+using System.Collections.Generic;
 
 public class RotationalJoint : StandardRobotJoint
 {
     private Vector3 neutralPosition;
     private Quaternion neutralRotation;
     private Quaternion neutralRotationInv;
-    public float maxMotorSpeed = 628.32f; // radians per second
+    public float maxMotorSpeed = 100 * 360; // degrees per second
     public float maxMotorTorque = 7.09f;  // Newton-meters (at least when using ArticulationBody)
     public float minTorque;
     public bool inverted;
@@ -15,7 +16,9 @@ public class RotationalJoint : StandardRobotJoint
     public float pGain, dGain, velocityPGain;
     private RotaryEncoderImpl encoderImpl;
 
-    void Start()
+    public double sensorVelocity;
+
+    void Awake()
     {
         neutralPosition = transform.localPosition;
         neutralRotation = transform.localRotation;
@@ -55,6 +58,7 @@ public class RotationalJoint : StandardRobotJoint
             rb.rotation = transform.rotation;
         }
         encoderImpl.FixedUpdate();
+        sensorVelocity = SensorVelocity;
     }
 
     private Vector3 GetAxis()
@@ -131,9 +135,9 @@ public class RotationalJoint : StandardRobotJoint
         var articBody = GetComponent<ArticulationBody>();
         if (articBody)
         {
+            maxTorque *= 25; // TODO: hacks
             articBody.jointType = ArticulationJointType.RevoluteJoint;
             ArticulationDrive drive = articBody.xDrive;
-            maxTorque *= 1000; // TODO: Hacks
             switch (commandMode)
             {
                 case MotorActuatorProto.Types.Mode.PercentOutput:
@@ -151,29 +155,55 @@ public class RotationalJoint : StandardRobotJoint
                     // targetVelocity = maxSpeed * appliedVoltage / maxVoltage = maxSpeed * command
                     // damping = maxTorque / maxSpeed
                     drive.stiffness = 0;
-                    drive.damping = maxTorque / maxSpeed;
-                    drive.targetVelocity = targetVel;
+                    drive.damping = maxTorque / maxSpeed; // TODO: need to convert from radians to degrees?
+                    drive.targetVelocity = targetVel * Mathf.Rad2Deg;
                     break;
                 case MotorActuatorProto.Types.Mode.Position:
                     // TODO: Compensate for Unity's different units for `target` and `targetVelocity` when setting PID gains
                     drive.stiffness = pGain;
                     drive.damping = dGain;
                     drive.targetVelocity = 0;
-                    // NB: `drive.target` is in degrees but `drive.targetVelocity` is in radians/second
+                    // NB: `drive.target` is in degrees
                     drive.target = commandSetpoint / mechanicalScalar;
                     drive.forceLimit = maxTorque;
                     break;
                 case MotorActuatorProto.Types.Mode.Velocity:
                     drive.stiffness = 0;
                     drive.damping = velocityPGain;
-                    // NB: `drive.target` is in degrees but `drive.targetVelocity` is in radians/second
-                    drive.targetVelocity = Mathf.Clamp(inversionFactor * commandSetpoint / mechanicalScalar, -maxSpeed, -maxSpeed);
+                    // NB: `drive.targetVelocity` is in radians/second
+                    drive.targetVelocity = Mathf.Clamp(inversionFactor * commandSetpoint / mechanicalScalar, -maxSpeed, -maxSpeed) * Mathf.Rad2Deg;
                     drive.forceLimit = maxTorque;
                     break;
             }
             drive.driveType = ArticulationDriveType.Force;
             articBody.xDrive = drive;
+
+            //if (this.name == "drive")
+            //{
+            //    var targets = new List<float>();
+            //    articBody.GetDriveTargetVelocities(targets);
+            //    Debug.Log(this.name + " rtargets " + string.Join(", ", targets));
+
+            //    var forces = new List<float>();
+            //    articBody.GetDriveForces(forces);
+            //    Debug.Log(this.name + " rforces " + string.Join(", ", forces));
+
+            //    Debug.Log(this.name + " forces " + Dump(articBody.jointForce));
+            //    Debug.Log(this.name + " velocity " + Dump(articBody.jointVelocity));
+            //}
         }
+    }
+
+    private static string Dump(ArticulationReducedSpace v)
+    {
+        var l = v.dofCount;
+        var s = "";
+        for (int i = 0; i < l; ++i)
+        {
+            s += v[i];
+            s += " ";
+        }
+        return s;
     }
 
     public override void Disable() {

@@ -243,6 +243,7 @@ MonoBehaviour:
   pGain: 1000
   dGain: 100
   velocityPGain: 0
+  sensorPosition: 0
 --- !u!1 &5947373016124047186
 GameObject:
   m_ObjectHideFlags: 0

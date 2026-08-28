@@ -90,6 +90,7 @@ public class RobotDesignerData : ScriptableObject
         public string guid = Guid.NewGuid().ToString();
         public string name;
         public uint deviceId;
+        public DeviceIdSpace deviceIdSpace;
 
         public Vector3 location = Vector3.zero;
         public Vector3 orientation = Vector3.zero;
