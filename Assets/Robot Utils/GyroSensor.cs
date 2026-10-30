@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class GyroSensor : RobotSensor {
+    public float headingOffset = 0.0f;
     private float headingPrev = 0.0f;
 
     void FixedUpdate()
@@ -31,7 +32,7 @@ public sealed class GyroSensor : RobotSensor {
     {
         get
         {
-            return transform.eulerAngles.y;
+            return transform.eulerAngles.y + headingOffset;
         }
     }
 

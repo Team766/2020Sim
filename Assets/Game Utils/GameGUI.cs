@@ -19,6 +19,8 @@ public class GameGUI : NetworkBehaviour {
 
     const string SELECTED_CAMERA_PREF_KEY = "selectedCamera";
 
+    public StartPositionDialog startPositionDialog;
+
     public string[] sceneNames;
     public Camera[] cameras;
     public int initialCamera;
@@ -171,5 +173,9 @@ public class GameGUI : NetworkBehaviour {
     public void ExitButtonClicked()
     {
         SceneManager.LoadScene("Menu Screen");
+    }
+
+    public void StartPositionButtonClicked() {
+        startPositionDialog.gameObject.SetActive(true);
     }
 }

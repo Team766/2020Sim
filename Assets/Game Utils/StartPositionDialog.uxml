@@ -1,0 +1,21 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Robot%20Designer/Dialog.uss?fileID=7433441132597879392&amp;guid=07fcdc08799d0449886b7a5b317b8de3&amp;type=3#Dialog" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.5); padding-top: 2%; padding-right: 5%; padding-bottom: 2%; padding-left: 5%; align-items: center; justify-content: center; flex-direction: row;">
+        <ui:VisualElement style="flex-grow: 1; background-color: rgb(175, 144, 144); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); max-width: 600px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+            <ui:Vector2Field label="Robot Start Position" name="position" />
+            <ui:FloatField label="Robot Start Heading" value="0" name="heading" />
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-top: 16px;">
+                <ui:Button text="Red 1" name="button-red1" style="background-color: rgb(188, 94, 94);" />
+                <ui:Button text="Red 2" name="button-red2" style="background-color: rgb(188, 94, 94);" />
+                <ui:Button text="Red 3" name="button-red3" style="background-color: rgb(188, 94, 94);" />
+                <ui:Button text="Blue 1" name="button-blue1" style="background-color: rgb(94, 94, 188);" />
+                <ui:Button text="Blue 2" name="button-blue2" style="background-color: rgb(94, 94, 188);" />
+                <ui:Button text="Blue 3" name="button-blue3" style="background-color: rgb(94, 94, 188);" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-top: 16px;">
+                <ui:Button text="Cancel" name="button-cancel" />
+                <ui:Button text="Save" name="button-save" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -33,6 +33,21 @@ public class RobotController : NetworkBehaviour {
         {
             Debug.LogWarning("RobotController isn't connected to a GameGUI");
         }
+        if (StartPositionDialog.GetStartPosition() is Pose2 startPose) {
+            var startPosition = new Vector3(startPose.position.x, this.transform.position.y, startPose.position.y);
+            var startRotation = Quaternion.Euler(0, startPose.rotation, 0);
+            Debug.Log("Start position: " + startPosition + " @ " + startRotation);
+            var articBody = GetComponent<ArticulationBody>();
+            if (articBody)
+            {
+                articBody.TeleportRoot(startPosition, startRotation);
+            }
+            else
+            {
+                this.transform.position = startPosition;
+                this.transform.rotation = startRotation;
+            }
+        }
     }
 
     void Update()
@@ -113,5 +128,29 @@ public class RobotController : NetworkBehaviour {
                 j.Disable();
             }
         }
+    }
+
+    public GameObject ballPrefab;
+
+    [Command(requiresAuthority = false)]
+    public void cmdLoadBall()
+    {
+        LoadBall();
+    }
+
+    [Server]
+    void LoadBall()
+    {
+        foreach (BallStorage stor in GetComponentsInChildren<BallStorage>(true)) {
+            if (stor.NumHolding == stor.heldObjects.Count) {
+                continue;
+            }
+            var obj = Instantiate(ballPrefab, this.transform.position, this.transform.rotation);
+            NetworkServer.Spawn(obj);
+            var rigidbody = obj.GetComponent<Rigidbody>();
+            stor.StoreBall(rigidbody);
+            return;
+        }
+        Debug.Log("No ball storage capacity remaining");
     }
 }
