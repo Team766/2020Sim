@@ -35,7 +35,8 @@ public class RobotController : NetworkBehaviour {
         }
         if (StartPositionDialog.GetStartPosition() is Pose2 startPose) {
             var startPosition = new Vector3(startPose.position.x, this.transform.position.y, startPose.position.y);
-            var startRotation = Quaternion.Euler(0, startPose.rotation, 0);
+            // NB: The start position dialog uses X-forward, but robots in Unity are Z-forward, so we add 90 degrees to the rotation.
+            var startRotation = Quaternion.Euler(0, startPose.rotation + 90, 0);
             Debug.Log("Start position: " + startPosition + " @ " + startRotation);
             var articBody = GetComponent<ArticulationBody>();
             if (articBody)

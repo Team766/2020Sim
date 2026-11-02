@@ -25,4 +25,16 @@ public static class MathUtils
     {
         return Mathf.Atan2(v.y, v.x);
     }
+
+    public static Pose GetPose(this Transform transform)
+    {
+        transform.GetPositionAndRotation(out Vector3 position, out Quaternion rotation);
+        return new Pose(position, rotation);
+    }
+
+    public static Pose GetLocalPose(this Transform transform)
+    {
+        transform.GetLocalPositionAndRotation(out Vector3 localPosition, out Quaternion localRotation);
+        return new Pose(localPosition, localRotation);
+    }
 }
